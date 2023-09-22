@@ -13,7 +13,7 @@ class Server(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     users = db.relationship('User', back_populates='servers')
-    channels =  db.relationship('Channel', back_populates='server', cascade="all, delete")
+    channels =  db.relationship('Channel', back_populates='servers', cascade="all, delete")
 
     def to_dict(self):
         return {
