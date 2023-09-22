@@ -6,4 +6,15 @@ class Server(db.Model):
     name = db.Column(db.String(255), nullable=False)
     image_url = db.Column(db.String(255), nullable=False)
     private = db.Column(db.Boolean, default=False)
-    owner_id - db.Column(db.Integer, db.ForeignKey('user.id', nullable=False))
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id', nullable=False))
+    users = db.relationship('User', back_populates='servers')
+    channels =  db.relationship('Channel', back_populates='server', cascade="all, delete")
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'image_url': self.image_url,
+            'private': self.private,
+            'owner_id': self.owner_id,
+        }
