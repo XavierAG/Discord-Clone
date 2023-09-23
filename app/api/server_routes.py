@@ -81,9 +81,12 @@ def edit_server(server_id):
 @server_routes.route('/<int:server_id>', methods=['DELETE'])
 @login_required
 def delete_server(server_id):
+    """
+    Delete a server by its ID by an authorized user
+    """
     server = Server.query.get(server_id)
     if not server:
-        return { "message": "Server does not exist" }
+        return { "message": "Server does not exist" }, 400
     if server.owner_id == current_user.id:
         handle_delete_server(server.to_dict())
         db.session.delete(server)
