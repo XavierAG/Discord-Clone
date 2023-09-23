@@ -45,7 +45,7 @@ def create_server():
     return { "message": "Server created!"}
 
 
-#Editing Servers
+#Editing Serverss
 @server_routes.route('/<int:server_id>', methods=['PUT'])
 @login_required
 def edit_server(server_id):
