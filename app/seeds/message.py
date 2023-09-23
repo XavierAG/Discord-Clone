@@ -1,6 +1,7 @@
 from app.models import db, Message
 from sqlalchemy.sql import text
 
+#Seeder for Messages
 def seed_messages():
     message1= Message(
         content= 'I am the best Comment you will ever see',
