@@ -6,6 +6,7 @@ from app.forms import ServerForm, ChannelForm
 
 server_routes = Blueprint('servers', __name__)
 
+#Get All Servers route
 @server_routes.route('/', methods=['GET'])
 @login_required
 def get_all_servers():
