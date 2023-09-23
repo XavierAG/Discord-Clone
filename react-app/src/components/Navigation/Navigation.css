@@ -1,7 +1,16 @@
 .profile-dropdown {
+  display: flex;
+  justify-self: flex-end;
   position: absolute;
+  top: 2rem;
+  right: 1rem;
 }
 
 .hidden {
   display: none;
+}
+
+#landing_container {
+  display: flex;
+  justify-content: space-between;
 }
