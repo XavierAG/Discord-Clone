@@ -40,14 +40,7 @@ def create_server():
         errors = validation_errors_to_error_messages(form.errors)
         return {'errors': errors}, 400
 
-<<<<<<< HEAD
-    return { "message": "Server created!"}
-
-
-#Editing Serverss
-=======
 # Edit server
->>>>>>> dad7d20 (added error handling in server routes!)
 @server_routes.route('/<int:server_id>', methods=['PUT'])
 @login_required
 def edit_server(server_id):
