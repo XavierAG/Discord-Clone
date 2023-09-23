@@ -5,7 +5,9 @@ from app.socket import handle_add_channel, handle_edit_server, handle_delete_ser
 from app.models import Server, User, db
 from app.forms import ServerForm, ChannelForm
 
+
 server_routes = Blueprint('servers', __name__)
+
 
 # Get all public servers
 @server_routes.route('/', methods=['GET'])
@@ -17,11 +19,13 @@ def get_all_servers():
     public_servers = Server.query.filter(Server.private == False).all()
     return {'servers': [server.to_dict() for server in public_servers]}
 
+
 # Create server
 @server_routes.route('/', methods=['POST'])
 @login_required
 def create_server():
     form = ServerForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_server = Server(
             name=form.data["name"],
@@ -35,17 +39,22 @@ def create_server():
         # Emit a Socket Event to notify clients about the new server
         handle_add_server(new_server.to_dict())
 
-        return {'message': 'Server created successfully'}
+        return new_server.to_dict()
     else:
         errors = validation_errors_to_error_messages(form.errors)
         return {'errors': errors}, 400
+
 
 # Edit server
 @server_routes.route('/<int:server_id>', methods=['PUT'])
 @login_required
 def edit_server(server_id):
+    """
+    Update a server by its ID by an authorized user
+    """
     print('SERVER ID:', server_id)
     form = ServerForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
     server = Server.query.get(server_id)
 
     if server is None:
@@ -60,7 +69,28 @@ def edit_server(server_id):
         # Emit a Socket Event to notify clients about the server edit
         handle_edit_server(server.to_dict())
 
-        return {'message': 'Server edited successfully'}
+        return server.to_dict()
+    elif server.owner_id != current_user.id:
+        return {'message': 'User unauthorized to edit server'}, 400
+    else:
+        errors = validation_errors_to_error_messages(form.errors)
+        return {'errors': errors}, 400
+
+
+# Delete a server
+@server_routes.route('/<int:server_id>', methods=['DELETE'])
+@login_required
+def delete_server(server_id):
+    server = Server.query.get(server_id)
+    if not server:
+        return { "message": "Server does not exist" }
+    if server.owner_id == current_user.id:
+        handle_delete_server(server.to_dict())
+        db.session.delete(server)
+        db.session.commit()
+        return { "message": "Server successfully deleted" }
+    elif server.owner_id != current_user.id:
+        return { "message": "Must server owner to delete" }, 400
     else:
         errors = validation_errors_to_error_messages(form.errors)
         return {'errors': errors}, 400
