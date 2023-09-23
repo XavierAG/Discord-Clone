@@ -49,13 +49,14 @@ def create_server():
 @server_routes.route('/<int:server_id>', methods=['PUT'])
 @login_required
 def edit_server(server_id):
+    print('SERVER ID:', server_id)
     form = ServerForm()
 
     server = Server.query.get(server_id)
 
     if form.validate_on_submit() and server.owner_id == current_user.id:
-        server.name = form.data['name'],
-        server.image_url = form.data['image_url'],
+        server.name = form.data['name']
+        server.image_url = form.data['image_url']
         server.private = form.data['private']
         db.session.commit()
 
