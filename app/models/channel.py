@@ -14,12 +14,11 @@ class Channel(db.Model):
     servers= db.relationship('Server', back_populates='channels')
     messages= db.relationship('Message', back_populates='channels', cascade='all, delete')
 
-
-def to_dict(self):
-    return {
-        'id': self.id,
-        'name':self.name,
-        # 'messages': {},
-        # 'servers': {},
-        'server_id': self.server_id
-    }
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name':self.name,
+            # 'messages': {},
+            # 'servers': {},
+            'server_id': self.server_id
+        }
