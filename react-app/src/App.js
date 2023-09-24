@@ -12,14 +12,14 @@ import Dashboard from "./components/Dashboard";
 
 function App() {
   const dispatch = useDispatch();
-  const userState = useSelector(state => state.session.user);
-  console.log('USER STATE:', userState);
+  const sessionUser = useSelector(state => state.session.user);
+  console.log('USER STATE:', sessionUser);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
-  const unauthenticated = (
+  const unauthorized = (
     <Switch>
       <Route path="/login">
         <LoginFormPage />
@@ -36,7 +36,7 @@ function App() {
     </Switch>
   )
 
-  const authenticated = (
+  const authorized = (
     <Switch>
       <Route exact path="/">
         <Dashboard />
@@ -50,11 +50,11 @@ function App() {
   return (
     <>
       {isLoaded &&
-        !userState &&
-        unauthenticated}
+        !sessionUser &&
+        unauthorized}
       {isLoaded &&
-        userState &&
-        authenticated}
+        sessionUser &&
+        authorized}
     </>
   );
 }
