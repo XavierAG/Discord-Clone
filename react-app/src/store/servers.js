@@ -28,7 +28,7 @@ export const deleteServer = (serverId) => ({
 // Server Thunks
 // Get all Public Servers
 export const getServersThunk = () => async (dispatch) => {
-  const res = await fetch("/api/servers");
+  const res = await fetch("/api/servers/");
   const data = await res.json();
   console.log("FETCH RESPONSE:", data);
   dispatch(getServers(data));
@@ -37,12 +37,13 @@ export const getServersThunk = () => async (dispatch) => {
 
 //Create a Server
 export const postServerThunk = (server) => async (dispatch) => {
-  const res = await fetch("/api/servers", {
+  const res = await fetch("/api/servers/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(server),
   });
   const data = await res.json();
+  console.log("response after creating:", data);
   dispatch(postServer(data));
   return data;
 };
@@ -78,11 +79,17 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_SERVERS: {
       let allServers = {};
-      console.log("ACTION SERVERS:", action.servers);
       const { servers } = action.servers;
-      // console.log("servers:", servers);
       servers.forEach((server) => (allServers[server.id] = { ...server }));
       return { allServers: { ...allServers } };
+    }
+    case POST_SERVERS: {
+      return { ...state, [action.server.id]: action.server };
+    }
+    case EDIT_SERVERS: {
+      const newState = { ...state };
+      newState[action.server.id] = action.server;
+      return newState;
     }
     default:
       return state;

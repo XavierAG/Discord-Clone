@@ -19,7 +19,7 @@ def get_all_servers():
 
 # Create server
 @server_routes.route('/', methods=['POST'])
-@login_required
+# @login_required
 def create_server():
     form = ServerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -43,7 +43,7 @@ def create_server():
 
 # Edit server
 @server_routes.route('/<int:server_id>', methods=['PUT'])
-@login_required
+# @login_required
 def edit_server(server_id):
     """
     Update a server by its ID by an authorized user
