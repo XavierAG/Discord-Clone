@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-// import { useDispatch } from "react-redux";
-// import { logout } from "../../store/session";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/session";
 import { NavLink } from 'react-router-dom';
 // import OpenModalButton from "../OpenModalButton";
 // import LoginFormModal from "../LoginFormModal";
 // import SignupFormModal from "../SignupFormModal";
 
 function ProfileButton({ user }) {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const sessionUser = useSelector((state) => state.session.user);
+  // console.log('SESSION USER:', sessionUser)
 
   // const openMenu = () => {
   //   if (showMenu) return;
@@ -30,10 +32,10 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  // const handleLogout = (e) => {
-  //   e.preventDefault();
-  //   dispatch(logout());
-  // };
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(logout());
+  };
 
   // const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   // const closeMenu = () => setShowMenu(false);
@@ -69,7 +71,24 @@ function ProfileButton({ user }) {
     //     )}
     //   </ul>
     // </>
-    <NavLink exact to="/login">Login</NavLink>
+    <>
+      <div id="nav-session-links">
+
+        {sessionUser ?
+          <button
+            onClick={handleLogout}
+            className="login-logout"
+          >
+            Log Out
+          </button> :
+          <NavLink
+            exact to="/login"
+            className="login-logout"
+          >
+            Login
+          </NavLink>}
+      </div>
+    </>
     // <NavLink exact to="/signup">Sign up</NavLink>
   );
 }
