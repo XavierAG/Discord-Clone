@@ -14,46 +14,13 @@ import Dashboard from "./components/Dashboard";
 
 function App() {
   const dispatch = useDispatch();
-  const userState = useSelector(state => state.session.user);
-  console.log('USER STATE:', userState);
+  const sessionUser = useSelector(state => state.session.user);
+  console.log('USER STATE:', sessionUser);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
-  const unauthorized = (
-    <Switch>
-      <Route path="/login">
-        <LoginFormPage />
-      </Route>
-      <Route path="/signup">
-        <SignupFormPage />
-      </Route>
-      <Route exact path="/">
-        <LandingPage />
-      </Route>
-      <Route exact path="/servers">
-        <PublicServers />
-      </Route>
-    </Switch>
-  )
-
-  const authorized = (
-    <Switch>
-      <Route exact path="/">
-        <Dashboard />
-      </Route>
-      <Route exact path='/servers/create'>
-        <CreateServerForm />
-      </Route>
-      <Route exact path='/servers/:id/update'>
-        <EditServerForm />
-      </Route>
-      <Route exact path="/servers">
-        <PublicServers />
-      </Route>
-    </Switch>
-  )
 
   return (
     <>
@@ -68,6 +35,18 @@ function App() {
           </Route>
           <Route exact path="/">
             <LandingPage />
+          </Route>
+          <Route exact path="/servers">
+            <PublicServers />
+          </Route>
+          <Route exact path="/app">
+            <Dashboard />
+          </Route>
+          <Route exact path='/servers/create'>
+            <CreateServerForm />
+          </Route>
+          <Route exact path='/servers/:id/update'>
+            <EditServerForm />
           </Route>
           <Route exact path="/servers">
             <PublicServers />
