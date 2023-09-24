@@ -14,6 +14,8 @@ import Dashboard from "./components/Dashboard";
 
 function App() {
   const dispatch = useDispatch();
+  const userState = useSelector(state => state.session.user);
+  console.log('USER STATE:', userState);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
@@ -49,12 +51,6 @@ function App() {
 
   return (
     <>
-      {isLoaded &&
-        !sessionUser &&
-        unauthorized}
-      {isLoaded &&
-        sessionUser &&
-        authorized}
       {/* <Navigation isLoaded={isLoaded} /> */}
       {isLoaded && (
         <Switch>
