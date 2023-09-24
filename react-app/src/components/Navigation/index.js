@@ -2,8 +2,9 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import './Navigation.css';
 import { techUsed } from '../../assets/helpers/block-text';
+import './Navigation.css';
+import logo from '../../assets/images/logo-original-white-transparency.png';
 
 function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
@@ -14,6 +15,11 @@ function Navigation({ isLoaded }) {
 				exact to="/"
 				id='landing-nav-home'
 			>
+				<img
+					alt='logo'
+					id='landing-nav-logo'
+					src={logo}
+				/>
 				Biscord
 			</NavLink>
 			<div id='landing-nav-mid-container'>

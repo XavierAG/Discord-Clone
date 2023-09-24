@@ -5,7 +5,7 @@ import Navigation from "../Navigation";
 import { landingIntro } from "../../assets/helpers/block-text";
 import { Link } from "react-router-dom";
 import './index.css'
-import img from '../../assets/images/landing-background-2.jpg'
+import img from '../../assets/images/landing-background.jpg'
 
 
 const LandingPage = () => {
@@ -22,7 +22,11 @@ const LandingPage = () => {
       id='landing-background'
     >
       <div id="landing-img-container">
-        <img alt='landing' id="landing-img" src={img} />
+        <img
+          alt='landing'
+          id="landing-img"
+          src={img}
+        />
       </div>
       <Navigation isLoaded={isLoaded} />
       <div id="landing-body-container">
