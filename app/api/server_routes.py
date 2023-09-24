@@ -9,7 +9,7 @@ server_routes = Blueprint('servers', __name__)
 
 # Get all public servers
 @server_routes.route('/', methods=['GET'])
-@login_required
+# @login_required
 def get_all_servers():
     """
     Query a list of all servers not set to private
