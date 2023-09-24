@@ -7,6 +7,7 @@ import PublicServers from "./components/PublicServers";
 import { authenticate } from "./store/session";
 // import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
+// import WebSockets from "./components/WebSockets";
 
 function App() {
   const dispatch = useDispatch();

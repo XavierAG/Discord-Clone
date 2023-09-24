@@ -30,9 +30,8 @@ export const deleteServer = (serverId) => ({
 export const getServersThunk = () => async (dispatch) => {
   const res = await fetch("/api/servers");
   const data = await res.json();
-  console.log("Data:", data);
+  console.log("FETCH RESPONSE:", data);
   dispatch(getServers(data));
-  console.log("data.servers", data);
   return data;
 };
 
@@ -75,13 +74,13 @@ const initialState = { allServers: {} };
 
 // Server Reducer
 
-export default function serverReducer(state = initialState, action) {
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_SERVERS: {
       let allServers = {};
-      console.log("Actions:", action.servers);
+      console.log("ACTION SERVERS:", action.servers);
       const { servers } = action.servers;
-      console.log("servers:", servers);
+      // console.log("servers:", servers);
       servers.forEach((server) => (allServers[server.id] = { ...server }));
       return { allServers: { ...allServers } };
     }

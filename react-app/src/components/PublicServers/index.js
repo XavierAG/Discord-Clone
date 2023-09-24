@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store/session";
 
@@ -7,8 +7,10 @@ import * as serverActions from "../../store/servers";
 
 export default function PublicServers() {
   const dispatch = useDispatch();
-  const allServers = useSelector((state) => state);
-  console.log("all ServerS!!:", allServers);
+  const allServers = useSelector((state) => (
+    state.servers.allServers ? state.servers.allServers : {}
+  ));
+  console.log("STATE:", allServers);
   const servers = Object.values(allServers);
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -25,7 +27,7 @@ export default function PublicServers() {
         {servers.map((server) => (
           <div key={server.id}>
             <h1>{server.name}</h1>
-            <p>:{server.private}</p>
+            <p>{server.private ? 'Private' : 'Public'}</p>
           </div>
         ))}
       </div>
