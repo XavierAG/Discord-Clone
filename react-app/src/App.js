@@ -14,8 +14,6 @@ import Dashboard from "./components/Dashboard";
 
 function App() {
   const dispatch = useDispatch();
-  const sessionUser = useSelector(state => state.session.user);
-  console.log('USER STATE:', sessionUser);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
@@ -71,10 +69,6 @@ function App() {
           </Route>
           <Route exact path="/servers">
             <PublicServers />
-            <CreateServerForm />
-          </Route>
-          <Route exact path="/servers/:serverId">
-            <EditServerForm />
           </Route>
         </Switch>
       )}
