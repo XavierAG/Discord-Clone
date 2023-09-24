@@ -4,6 +4,8 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import PublicServers from "./components/PublicServers";
+import CreateServerForm from "./components/CreateServerForm";
+import EditServerForm from "./components/EditServerForm";
 import { authenticate } from "./store/session";
 // import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
@@ -55,6 +57,27 @@ function App() {
       {isLoaded &&
         sessionUser &&
         authorized}
+      {/* <Navigation isLoaded={isLoaded} /> */}
+      {isLoaded && (
+        <Switch>
+          <Route path="/login">
+            <LoginFormPage />
+          </Route>
+          <Route path="/signup">
+            <SignupFormPage />
+          </Route>
+          <Route exact path="/">
+            <LandingPage />
+          </Route>
+          <Route exact path="/servers">
+            <PublicServers />
+            <CreateServerForm />
+          </Route>
+          <Route exact path="/servers/:serverId">
+            <EditServerForm />
+          </Route>
+        </Switch>
+      )}
     </>
   );
 }
