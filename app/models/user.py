@@ -13,6 +13,10 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    image_url = db.Column(db.String(255))
+
+    servers = db.relationship('Server', back_populates='users', cascade="all, delete")
+    messages = db.relationship("Message", back_populates='users', cascade="all, delete")
 
     @property
     def password(self):
