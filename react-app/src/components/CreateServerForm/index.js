@@ -10,6 +10,7 @@ const CreateServerForm = () => {
     image_url: "",
     private: false,
     owner_id: 1,
+    owner_id: 1, // Replace with the actual owner_id
   });
 
   const handleInputChange = (e) => {
@@ -20,11 +21,15 @@ const CreateServerForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postServerThunk(serverData));
+    // Dispatch the postServerThunk action with the server data
+    dispatch(postServerThunk(serverData));
+    // Reset the form or perform any other desired actions
     setServerData({
       name: "",
       image_url: "",
       private: false,
       owner_id: 1,
+      owner_id: 1, // Reset owner_id if needed
     });
   };
 
