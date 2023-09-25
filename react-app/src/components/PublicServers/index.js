@@ -7,6 +7,7 @@ import * as serverActions from "../../store/servers";
 
 export default function PublicServers() {
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user)
   const allServers = useSelector((state) => (
     state.servers.allServers ? state.servers.allServers : {}
   ));
