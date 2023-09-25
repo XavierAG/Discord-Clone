@@ -95,7 +95,7 @@ def edit_server(server_id):
         return {'errors': errors}, 400
 
 
-# Delete a server
+# Delete a server based on id
 @server_routes.route('/<int:server_id>', methods=['DELETE'])
 @login_required
 def delete_server(server_id):
