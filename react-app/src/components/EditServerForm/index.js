@@ -1,49 +1,54 @@
-import React, { useState, useEffect } from "react";
+// AddServerForm.js
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { editServerThunk } from "../../store/servers";
 
-export const EditServerForm = (serverData) => {
+const EditServerForm = () => {
   const dispatch = useDispatch();
-  const [server, setServer] = useState(serverData);
-
-  useEffect(() => {
-    // Log the serverData for debugging
-    console.log("serverData:", serverData);
-
-    // Check if serverData is defined and not empty before setting it
-    if (serverData && Object.keys(serverData).length > 0) {
-      setServer(serverData);
-    }
-  }, [serverData]);
+  const [serverData, setServerData] = useState({
+    name: "",
+    image_url: "",
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setServer({ ...server, [name]: value });
+    setServerData({ ...serverData, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Dispatch the editServerThunk action with the updated server data
-    dispatch(editServerThunk(server.id, server));
+    dispatch(editServerThunk(serverData));
+    setServerData({
+      name: "",
+      image_url: "",
+    });
   };
 
   return (
     <div>
       <h2>Edit Server</h2>
       <form onSubmit={handleSubmit}>
-        {/* Add your input fields here */}
         <div>
           <label htmlFor="name">Server Name:</label>
           <input
             type="text"
             id="name"
             name="name"
-            value={server.name || ""}
+            value={serverData.name}
             onChange={handleInputChange}
           />
         </div>
-        {/* Add more input fields as needed */}
-        <button type="submit">Update Server</button>
+        <div>
+          <label htmlFor="image_url">Image URL:</label>
+          <input
+            type="text"
+            id="image_url"
+            name="image_url"
+            value={serverData.image_url}
+            onChange={handleInputChange}
+          />
+        </div>
+        <button type="submit">Create Server</button>
       </form>
     </div>
   );
