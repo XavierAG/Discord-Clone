@@ -38,6 +38,10 @@ function App() {
           </Route>
           <Route exact path="/servers">
             <PublicServers />
+            <CreateServerForm />
+          </Route>
+          <Route exact path="/servers/:serverId">
+            <EditServerForm />
           </Route>
           <Route exact path="/app">
             <Dashboard />
