@@ -30,19 +30,52 @@ def get_server_details(server_id):
         server_data['channels'] = [channel.to_dict() for channel in server.channels]
         return {'server': server_data}
 
+
 #Get Channels for Server based on Server ID #
 @server_routes.route('/<int:server_id>/channels')
 @login_required
 def server_channels(server_id):
+    """
+    Queries a list of all public channels in a server by server id
+    """
     channels = Channel.query.filter(Channel.server_id == server_id).all()
 
     return {'channels': [channel.to_dict() for channel in channels]}
+
+
+@server_routes.route('/<int:server_id>/channels', methods=['POST'])
+@login_required
+def create_channel(server_id):
+    """
+    Posts a new channel to a server by server id by an authorized user
+    """
+    server = Server.query.get(server_id)
+    form = ChannelForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit() and server.owner_id == current_user.id:
+        new_channel = Channel(
+            name=form.data['name'],
+            server_id=server_id
+        )
+        db.session.add(new_channel)
+        db.session.commit()
+
+        # Emit a Socket Event to notify clients about the new channel
+        handle_add_channel(new_channel.to_dict())
+
+        return new_channel.to_dict()
+    else:
+        errors = validation_errors_to_error_messages(form.errors)
+        return {'errors': errors}, 400
 
 
 # Create server
 @server_routes.route('/', methods=['POST'])
 @login_required
 def create_server():
+    """
+    Posts a new server to the database by an authorized user
+    """
     form = ServerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
@@ -62,6 +95,7 @@ def create_server():
     else:
         errors = validation_errors_to_error_messages(form.errors)
         return {'errors': errors}, 400
+
 
 # Edit server
 @server_routes.route('/<int:server_id>', methods=['PUT'])
