@@ -21,17 +21,13 @@ const CreateServerForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Reset form fields after submission
+    dispatch(postServerThunk(serverData));
     setServerData({
       name: "",
       image_url: "",
       private: false,
-      owner_id: 1, // Reset owner_id if needed
+      owner_id: 1,
     });
-
-    // You can dispatch your server data here
-    dispatch(postServerThunk(serverData)); // Make sure you have the correct action and reducer for this
   };
 
   return (
