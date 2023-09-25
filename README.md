@@ -1,148 +1,553 @@
-# Flask React Project
+### Get the Current User
 
-This is the starter for the Flask React project.
+Returns the information about the current user that is logged in.
 
-## Getting started
-1. Clone this repository (only this branch)
+- Require Authentication: true
 
-2. Install dependencies
+- Request
 
-      ```bash
-      pipenv install -r requirements.txt
-      ```
-
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
-
-4. Make sure the SQLite3 database connection URL is in the **.env** file
-
-5. This starter organizes all tables inside the `flask_schema` schema, defined
-   by the `SCHEMA` environment variable.  Replace the value for
-   `SCHEMA` with a unique name, **making sure you use the snake_case
-   convention**.
-
-6. Get into your pipenv, migrate your database, seed your database, and run your Flask app
-
-   ```bash
-   pipenv shell
-   ```
-
-   ```bash
-   flask db upgrade
-   ```
-
-   ```bash
-   flask seed all
-   ```
-
-   ```bash
-   flask run
-   ```
-
-7. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+- Method: GET
+  - URL: /api/session
+  - Body: none
 
 
-## Deployment through Render.com
 
-First, refer to your Render.com deployment articles for more detailed
-instructions about getting started with [Render.com], creating a production
-database, and deployment debugging tips.
+- Successful Response when there is a logged in user
 
-From the [Dashboard], click on the "New +" button in the navigation bar, and
-click on "Web Service" to create the application that will be deployed.
+- Status Code: 200
 
-Look for the name of the application you want to deploy, and click the "Connect"
-button to the right of the name.
+- Headers:
 
-Now, fill out the form to configure the build and start commands, as well as add
-the environment variables to properly deploy the application.
+- Content-Type: application/json
 
-### Part A: Configure the Start and Build Commands
+- Body:
+    ```json
 
-Start by giving your application a name.
+{
 
-Leave the root directory field blank. By default, Render will run commands from
-the root directory.
+"user": {
 
-Make sure the Environment field is set set to "Python 3", the Region is set to
-the location closest to you, and the Branch is set to "main".
+"id": 1,
 
-Next, add your Build command. This is a script that should include everything
-that needs to happen _before_ starting the server.
+"firstName": "John",
 
-For your Flask project, enter the following command into the Build field, all in
-one line:
+"lastName": "Smith",
 
-```shell
-# build command - enter all in one line
-npm install --prefix react-app &&
-npm run build --prefix react-app &&
-pip install -r requirements.txt &&
-pip install psycopg2 &&
-flask db upgrade &&
-flask seed all
+"email": "john.smith@gmail.com",
+
+"username": "JohnSmith"
+
+}
+
+}
+
+```
+   - Successful Response when there is no logged in user
+
+- Status Code: 200
+
+- Headers:
+
+- Content-Type: application/json
+
+- Body:
+
+```json
+
+{
+
+"user": null
+
+}
+
 ```
 
-This script will install dependencies for the frontend, and run the build
-command in the __package.json__ file for the frontend, which builds the React
-application. Then, it will install the dependencies needed for the Python
-backend, and run the migration and seed files.
+### Log In a User
 
-Now, add your start command in the Start field:
+Logs in a current user with valid credentials and returns the current user's
 
-```shell
-# start script
-gunicorn app:app
+information.
+
+- Require Authentication: false
+
+- Request
+
+- Method: POST
+
+- URL: /api/session
+
+- Headers:
+
+- Content-Type: application/json
+
+- Body:
+
+```json
+
+{
+
+"email": "john.smith@gmail.com",
+
+"password": "secret password"
+
+}
+
 ```
 
-_If you are using websockets, use the following start command instead for increased performance:_
+- Successful Response
 
-`gunicorn --worker-class eventlet -w 1 app:app`
+- Status Code: 200
 
-### Part B: Add the Environment Variables
+- Headers:
 
-Click on the "Advanced" button at the bottom of the form to configure the
-environment variables your application needs to access to run properly. In the
-development environment, you have been securing these variables in the __.env__
-file, which has been removed from source control. In this step, you will need to
-input the keys and values for the environment variables you need for production
-into the Render GUI.
+- Content-Type: application/json
 
-Click on "Add Environment Variable" to start adding all of the variables you
-need for the production environment.
+- Body:
 
-Add the following keys and values in the Render GUI form:
+```json
 
-- SECRET_KEY (click "Generate" to generate a secure secret for production)
-- FLASK_ENV production
-- FLASK_APP app
-- SCHEMA (your unique schema name, in snake_case)
-- REACT_APP_BASE_URL (use render.com url, located at top of page, similar to
-  https://this-application-name.onrender.com)
+{
 
-In a new tab, navigate to your dashboard and click on your Postgres database
-instance.
+"user": {
 
-Add the following keys and values:
+"id": 1,
 
-- DATABASE_URL (copy value from Internal Database URL field)
+"firstName": "John",
 
-_Note: Add any other keys and values that may be present in your local __.env__
-file. As you work to further develop your project, you may need to add more
-environment variables to your local __.env__ file. Make sure you add these
-environment variables to the Render GUI as well for the next deployment._
+"lastName": "Smith",
 
-Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your
-application every time you push to main.
+"email": "john.smith@gmail.com",
 
-Now, you are finally ready to deploy! Click "Create Web Service" to deploy your
-project. The deployment process will likely take about 10-15 minutes if
-everything works as expected. You can monitor the logs to see your build and
-start commands being executed, and see any errors in the build process.
+"username": "JohnSmith"
 
-When deployment is complete, open your deployed site and check to see if you
-successfully deployed your Flask application to Render! You can find the URL for
-your site just below the name of the Web Service at the top of the page.
+}
 
-[Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/
+}
+
+```
+
+- Error Response: Invalid credentials
+
+- Status Code: 401
+
+- Headers:
+
+- Content-Type: application/json
+
+- Body:
+
+```json
+
+{
+
+"message": "Invalid credentials"
+
+}
+
+```
+
+- Error response: Body validation errors
+
+- Status Code: 400
+
+- Headers:
+
+- Content-Type: application/json
+
+- Body:
+
+```json
+
+{
+
+"message": "Bad Request", // (or "Validation error" if generated by Sequelize),
+
+"errors": {
+
+"email": "Email is required",
+
+"password": "Password is required"
+
+}
+
+}
+
+```
+
+### Sign Up a User
+
+Creates a new user, logs them in as the current user, and returns the current
+
+user's information.
+
+- Require Authentication: false
+
+- Request
+
+- Method: POST
+
+- URL: /api/users
+
+- Headers:
+
+- Content-Type: application/json
+
+- Body:
+
+```json
+
+{
+
+"firstName": "John",
+
+"lastName": "Smith",
+
+"email": "john.smith@gmail.com",
+
+"username": "JohnSmith",
+
+"password": "secret password"
+
+}
+
+```
+
+- Successful Response
+
+- Status Code: 200
+
+- Headers:
+
+- Content-Type: application/json
+
+- Body:
+
+```json
+
+{
+
+"user": {
+
+"id": 1,
+
+"firstName": "John",
+
+"lastName": "Smith",
+
+"email": "john.smith@gmail.com",
+
+"username": "JohnSmith"
+
+}
+
+}
+
+```
+
+- Error response: User already exists with the specified email
+
+- Status Code: 500
+
+- Headers:
+
+- Content-Type: application/json
+
+- Body:
+
+```json
+
+{
+
+"message": "User already exists",
+
+"errors": {
+
+"email": "User with that email already exists"
+
+}
+
+}
+
+```
+
+- Error response: User already exists with the specified username
+
+- Status Code: 500
+
+- Headers:
+
+- Content-Type: application/json
+
+- Body:
+
+```json
+
+{
+
+"message": "User already exists",
+
+"errors": {
+
+"username": "User with that username already exists"
+
+}
+
+}
+
+```
+
+- Error response: Body validation errors
+
+- Status Code: 400
+
+- Headers:
+
+- Content-Type: application/json
+
+- Body:
+
+```json
+
+{
+
+"message": "Bad Request", // (or "Validation error" if generated by Sequelize),
+
+"errors": {
+
+"email": "Invalid email",
+
+"firstName": "First Name is required",
+
+"lastName": "Last Name is required"
+
+}
+
+}
+
+```
+
+## Servers
+
+### Get all Servers
+
+Returns all the servers.
+
+- Require Authentication: false
+- Request
+  - Method: GET
+  - URL: /api/servers
+  - Body: none
+- Successful Response
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+  ```json
+  "Servers": [
+  	{
+  		"id": 1,
+  		"name": "cool server",
+  		"image_url": "https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg",
+  	    "private": False,
+  	    "owner_id" = 1
+  	}
+  ]
+  ```
+
+````
+
+## Get all Servers joined or organized by the Current User
+Returns all the Servers
+
+- Require Authentication: true
+- Request
+	- Method: GET
+	- URL: /api/servers/current
+	- Body: none
+- Successful Response
+	- Status Code: 200
+	- Headers:
+		- Content-Type: application/json
+	- Body:
+	```json
+{
+	"Servers": [
+		{
+			"id": 1,
+			"name": "cool server",
+			"image_url": "https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg",
+		    "private": False,
+		    "owner_id" = 1
+		}
+	]
+}
+````
+
+## Get details of a Server from an id
+
+Returns the details of a group specified by its id
+
+- Require Authentication: false
+- Request
+  - Method: GET
+  - URL: /api/servers/current
+  - Body: none
+- Successful Response - Status Code: 200 - Headers: - Content-Type: application/json - Body:
+  ```json
+  {
+  "id": 1,
+  "name": "cool server",
+  "image_url": "https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg",
+   "private": False,
+   "owner_id" = 1
+   "Channels": [
+   {
+   "id": 1,
+   "name": "image url",
+   },
+   ]
+  }
+
+````
+
+- Error response: Couldn't find a Server with the specified id
+	- Status Code: 404
+	- Headers:
+		- Content-Type: application/json
+	- Body:
+	```json
+	"message": "Server couldn't be found"
+````
+
+### Create a Server
+
+Creates and returns a new server.
+
+- Require Authentication: true
+- Request - Method: POST - URL: /api/servers - Headers: - Content-Type: application/json - Body:
+  ```json
+  {
+  "name": "cool server",
+  "image_url": "https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg",
+   "private": True
+  }
+
+````
+- Successful Response
+	- Status Code:201
+	- Headers:
+		- Content-Type: application/json
+	- Body:
+	```json
+	{
+		"id": 1,
+		"name": "cool server",
+		"image_url": "https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg",
+		 "private": False,
+		 "owner_id" = 1
+	}
+````
+
+- Error Response: Body validation error - Status Code: 400 - Headers: - Content-Type: applictaion/json - Body:
+  ```json
+  {
+  "message": "Bad Request",
+  "errors": {
+  "name": "Name must be 100 characters or less",
+  "private": "Private must be a boolean",
+  }
+  }
+
+````
+
+### Edit a Server
+Updates and returns an existing server.
+- Require Authentication: true
+- Require proper authentication: Server must belong to the current user
+- Request
+	- Method: PUT
+	- URL: api/servers/<int:server_id>
+	- Headers:
+		- Content-Type: application/json
+	- Body:
+	```json
+	{
+	"name": "cool server2",
+		"image_url": "https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg",
+		 "private": True
+	}
+````
+
+- Successful Response
+  - Status Code:201
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+  ```json
+  {
+  	"id": 1,
+  	"name": "cool server",
+  	"image_url": "https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg",
+  	 "private": False,
+  	 "owner_id" = 1
+  }
+  ```
+
+````
+- Error Response: Body validation error
+	- Status Code: 400
+	- Headers:
+		- Content-Type: applictaion/json
+	- Body:
+	```json
+	{
+	"message": "Bad Request",
+    "errors": {
+    "name": "Name must be 100 characters or less",
+    "private": "Private must be a boolean",
+  }
+}
+````
+
+- Error response: Couldn't find a Server with the specified id
+  - Status Code: 404
+  - Headers:
+    - Content-Type: application/json
+  - Body
+  ```json
+  "message": "Server couldn't be found"
+  ```
+
+````
+
+### Delete a Server
+Deletes an existing server.
+- Require Authentication: true
+- Require proper authentication: Server must belong to the current user
+- Request
+	- Method: DELETE
+	- URL: /api/servers/<int:server_id>
+	- Body: none
+- Successful Response
+	- Status Code: 200
+	- Headers:
+		- Content-Type: application/json
+	- Body:
+	``` json
+	{
+		"message": "Server successfully deleted"
+	}
+````
+
+- Error response: Couldn't find a Server with the specified id
+  - Status Code: 404
+  - Headers:
+    - Content-Type: application/json
+  - Body
+  ```json
+  "message": "Server couldn't be found"
+  ```
+
+```
+
+```
