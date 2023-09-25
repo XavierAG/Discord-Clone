@@ -26,7 +26,7 @@ const CreateServerForm = () => {
       name: "",
       image_url: "",
       private: false,
-      owner_id: 1,
+      owner_id: sessionUser.id,
     });
   };
 
