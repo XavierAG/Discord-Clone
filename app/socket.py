@@ -25,9 +25,9 @@ def handle_delete_channel(data):
     socketio.emit("delete_channel", data)
 
 
-def handle_add_message(data, server_id):
-    print(server_id)
-    socketio.emit("add_message", {"data": data, "server_id": server_id})
+def handle_add_message(data, channel_id):
+    print(channel_id)
+    socketio.emit("add_message", {"data": data, "channel_id": channel_id})
 
 
 def handle_edit_message(data, server_id):

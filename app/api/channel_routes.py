@@ -1,9 +1,9 @@
 from .auth_routes import validation_errors_to_error_messages
 from flask import Blueprint, jsonify, session, request
 from flask_login import login_required, current_user
-from app.models import Server, Channel ,User, db
-from app.forms import ChannelForm
-from app.socket import handle_add_channel, handle_delete_channel, handle_edit_channel
+from app.models import Server, Channel ,User, Message, db
+from app.forms import ChannelForm, MessageForm
+from app.socket import handle_add_channel, handle_delete_channel, handle_edit_channel, handle_add_message
 
 
 channel_routes = Blueprint('channels', __name__)
@@ -49,6 +49,36 @@ def delete_channel(channel_id):
         return {"result": "Sucessfully Deleted Channel"}
     elif server.owner_id != current_user.id:
          return { "message": "Must server owner to delete" }, 400
+    else:
+        errors = validation_errors_to_error_messages(form.errors)
+        return {"errors": errors}, 400
+
+
+# Get all Messages of a Channel based on its ID
+@channel_routes.route('/<int:channel_id>/messages', methods=['GET'])
+@login_required
+def get_channel_messages(channel_id):
+    messages = Message.query.filter(Message.channel_id == channel_id).all()
+
+    return {'messages': [message.to_dict() for message in messages]}
+
+@channel_routes.route('/<int:channel_id>/messages', methods=['POST'])
+@login_required
+def send_message(channel_id):
+    form = MessageForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        new_message = Message(
+            content = form.data['content'],
+            channel_id = channel_id,
+            owner_id= current_user.id
+        )
+        db.session.add(new_message)
+        db.session.commit()
+
+        handle_add_message(new_message.to_dict(), channel_id) #Passing in Channel_id as argument(socket event)
+        return new_message.to_dict()
     else:
         errors = validation_errors_to_error_messages(form.errors)
         return {"errors": errors}, 400
