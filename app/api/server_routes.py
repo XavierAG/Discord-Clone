@@ -9,7 +9,7 @@ server_routes = Blueprint('servers', __name__)
 
 # Get all public servers
 @server_routes.route('/', methods=['GET'])
-# @login_required
+@login_required
 def get_all_servers():
     """
     Query a list of all servers not set to private
@@ -32,6 +32,7 @@ def get_server_details(server_id):
 
 #Get Channels for Server based on Server ID #
 @server_routes.route('/<int:server_id>/channels')
+@login_required
 def server_channels(server_id):
     channels = Channel.query.filter(Channel.server_id == server_id).all()
 
@@ -40,7 +41,7 @@ def server_channels(server_id):
 
 # Create server
 @server_routes.route('/', methods=['POST'])
-# @login_required
+@login_required
 def create_server():
     form = ServerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -64,7 +65,7 @@ def create_server():
 
 # Edit server
 @server_routes.route('/<int:server_id>', methods=['PUT'])
-# @login_required
+@login_required
 def edit_server(server_id):
     """
     Update a server by its ID by an authorized user
