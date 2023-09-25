@@ -52,6 +52,52 @@ export const EditServerForm = () => {
     fetchServer();
   }, [server_id]);
 
+  
+    // const handleInputChange = (e) => {
+    //   const { name, value } = e.target;
+    //   setServerData({ ...serverData, [name]: value });
+    // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const serverData = {name, image_url:imageUrl, private:isPrivate}
+
+    const response = await dispatch(editServerThunk(server_id, serverData));
+    // setServerData({
+    //   name: name,
+    //   image_url:,
+    //   private: serverData.private,
+    //   owner_id: sessionUser.id,
+    // });
+
+  };
+
+  useEffect(() => {
+    const fetchServer = async () =>{
+      try {
+        const response = await fetch(`/api/servers/${server_id}`)
+        if (response.ok) {
+          const data = await response.json()
+          console.log('this is the old server data: ',data.server);
+          if (data && data.server) {
+            const oldServer = data.server
+            setName(oldServer.name)
+            setImageUrl(oldServer.image_url)
+            setIsPrivate(oldServer.private)
+          }
+        }
+        else{
+          console.log(server_id);
+          throw new Error('failed to fetch server data')
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchServer()
+  },[server_id])
+
   return (
     <div>
       <h2>Edit your Server</h2>
