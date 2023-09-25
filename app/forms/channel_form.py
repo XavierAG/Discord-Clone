@@ -5,4 +5,4 @@ from wtforms.validators import DataRequired
 
 class ChannelForm(FlaskForm):
   name = StringField('Name', validators=[DataRequired()])
-  private = BooleanField('Name', validators=[DataRequired()])
+  private = BooleanField('Private')

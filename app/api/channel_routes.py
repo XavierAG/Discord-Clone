@@ -15,4 +15,20 @@ def edit_channel(channel_id):
     """
     Updates the record of a channel by channel id by an authorized user
     """
-    pass
+    form = ChannelForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    channel = Channel.query.get(channel_id)
+    server = Server.query.get(channel.server_id)
+
+    if channel is None:
+        return {'errors': 'Channel not found'}, 404
+
+    if form.validate_on_submit() and server.owner_id == current_user.id:
+        channel.name = form.data['name']
+        channel.private = form.data['private']
+        db.session.commit()
+        handle_edit_channel(channel.to_dict())
+
+        return channel.to_dict()
+
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
