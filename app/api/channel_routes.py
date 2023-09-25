@@ -15,3 +15,4 @@ def edit_channel(channel_id):
     """
     Updates the record of a channel by channel id by an authorized user
     """
+    pass
