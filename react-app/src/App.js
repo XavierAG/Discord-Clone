@@ -49,7 +49,7 @@ function App() {
           <Route exact path='/servers/create'>
             <CreateServerForm />
           </Route>
-          <Route exact path='/servers/:id/update'>
+          <Route exact path='/servers/:server_id/update'>
             <EditServerForm />
           </Route>
           <Route exact path="/servers">
