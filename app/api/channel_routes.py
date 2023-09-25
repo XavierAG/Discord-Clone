@@ -62,6 +62,8 @@ def get_channel_messages(channel_id):
 
     return {'messages': [message.to_dict() for message in messages]}
 
+
+# Send a new Message in a Channel base on its ID by an authorized user
 @channel_routes.route('/<int:channel_id>/messages', methods=['POST'])
 @login_required
 def send_message(channel_id):
