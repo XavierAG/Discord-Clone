@@ -8,7 +8,7 @@ from app.socket import handle_add_channel, handle_delete_channel, handle_edit_ch
 
 channel_routes = Blueprint('channels', __name__)
 
-
+# PUT Route for Editing a Channel based on its ID
 @channel_routes.route('/<int:channel_id>', methods=['PUT'])
 @login_required
 def edit_channel(channel_id):
