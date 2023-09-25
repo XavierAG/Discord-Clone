@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { editServerThunk } from "../../store/servers";
-import { Redirect, useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export const EditServerForm = () => {
   const sessionUser = useSelector((state) => state.session.user)
