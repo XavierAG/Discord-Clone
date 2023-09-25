@@ -48,30 +48,15 @@ export const EditServerForm = () => {
       } catch (error) {
         console.log(error);
       }
-    };
-    fetchServer();
-  }, [server_id]);
+    }
+    fetchServer()
+  },[server_id])
 
   
     // const handleInputChange = (e) => {
     //   const { name, value } = e.target;
     //   setServerData({ ...serverData, [name]: value });
     // };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const serverData = {name, image_url:imageUrl, private:isPrivate}
-
-    const response = await dispatch(editServerThunk(server_id, serverData));
-    // setServerData({
-    //   name: name,
-    //   image_url:,
-    //   private: serverData.private,
-    //   owner_id: sessionUser.id,
-    // });
-
-  };
 
   useEffect(() => {
     const fetchServer = async () =>{
