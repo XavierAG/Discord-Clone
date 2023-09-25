@@ -32,3 +32,23 @@ def edit_channel(channel_id):
         return channel.to_dict()
 
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
+#Delete Channels based on Channels Id
+@channel_routes.route('/<int:channel_id>', methods=['DELETE'])
+@login_required
+def delete_channel(channel_id):
+    channel = Channel.query.get(channel_id)
+    server = Server.query.get(channel.server_id)
+
+    if not channel:
+         return { "message": "Channel does not exist" }, 400
+    if server.owner_id == current_user.id:
+        handle_delete_channel(channel.to_dict())
+        db.session.delete(channel)
+        db.session.commit()
+        return {"result": "Sucessfully Deleted Channel"}
+    elif server.owner_id != current_user.id:
+         return { "message": "Must server owner to delete" }, 400
+    else:
+        errors = validation_errors_to_error_messages(form.errors)
+        return {"errors": errors}, 400
