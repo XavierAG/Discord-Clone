@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { editServerThunk } from "../../store/servers";
+import { Redirect, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export const EditServerForm = () => {
   const sessionUser = useSelector((state) => state.session.user)
+  const history = useHistory()
   const { server_id } = useParams();
   const [name, setName] = useState('')
   const [imageUrl, setImageUrl] = useState('')
-  const [isPrivate, setIsPrivate] = useState('')
+  const [isPrivate, setIsPrivate] = useState(false)
   const dispatch = useDispatch();
 
   
@@ -29,7 +31,7 @@ export const EditServerForm = () => {
     //   private: serverData.private,
     //   owner_id: sessionUser.id,
     // });
-
+    history.push(`/servers/${server_id}`)
   };
 
   useEffect(() => {
@@ -59,7 +61,7 @@ export const EditServerForm = () => {
 
   return (
     <div>
-    <h2>Add a New Server</h2>
+    <h2>Edit your Server</h2>
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="name">Server Name:</label>
@@ -88,10 +90,10 @@ export const EditServerForm = () => {
           id="private"
           name="private"
           checked={isPrivate}
-          onChange={e => setIsPrivate(e.target.value)}
+          onChange={e => setIsPrivate(e.target.checked)}
         />
       </div>
-      <button type="submit">Create Server</button>
+      <button type="submit">Update Server</button>
     </form>
   </div>
   );
