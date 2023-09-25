@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { editServerThunk } from "../../store/servers";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom";
 
 export const EditServerForm = () => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -12,17 +12,6 @@ export const EditServerForm = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const dispatch = useDispatch();
-
-  // Handle Submitting
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const serverData = { name, image_url: imageUrl, private: isPrivate };
-
-    const response = await dispatch(editServerThunk(server_id, serverData));
-
-    history.push(`/servers/${server_id}`);
-  };
 
   useEffect(() => {
     const fetchServer = async () => {
@@ -47,6 +36,20 @@ export const EditServerForm = () => {
     };
     fetchServer();
   }, [server_id]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const serverData = { name, image_url: imageUrl, private: isPrivate };
+
+    const response = await dispatch(editServerThunk(server_id, serverData));
+
+    if (response) {
+      history.push(`/servers/${server_id}`);
+    } else {
+      console.error("Server update failed");
+    }
+  };
 
   return (
     <div>
