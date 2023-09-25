@@ -504,3 +504,194 @@ Deletes an existing server.
   "message": "Server couldn't be found"
 }
 ```
+
+### Get all messages in a channel by its ID
+
+Returns the messages in a channel specified by its id.
+
+- Require Authentication: true
+- Request
+  <!--!!START SILENT -->
+
+  - Method: GET
+  - URL: /api/channels/:channelId/messages
+    <!--!!END -->
+    <!--!!ADD -->
+    <!-- * Method: ? -->
+    <!-- * URL: ? -->
+    <!--!!END_ADD -->
+  - Body: none
+
+- Successful Response: If you ARE logged in, you should see the selected server, associated channel, and messages on that channel for a public server.
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "messages": [
+        {
+          "content": "I am the best Comment you will ever see"
+        },
+        {
+          "content": "I am the best Person to write stuff in here"
+        },
+        {
+          "content": "Jimmy is a G"
+        },
+        {
+          "content": "Brad please send me your Barbers number!"
+        },
+        {
+          "content": "David please help Brad grow some hair!"
+        }
+      ]
+    }
+    ```
+
+- Error response: Couldn't find a Channel with the specified id
+
+  - Status Code: 404
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Channel couldn't be found"
+    }
+    ```
+
+- Error response: Server record is set to private
+
+  - Status Code: 400
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Server is set to private"
+    }
+    ```
+
+### Create a new Message for a Channel based on the Channel's ID
+
+Post a new message in a channel specified by ID.
+
+- Require Authentication: true
+- Require Authorization: Current User must be a member of the server
+- Request
+  <!--!!START SILENT -->
+
+  - Method: POST
+  - URL: /api/channels/:channelId/messages
+    <!--!!END -->
+    <!--!!ADD -->
+    <!-- * Method: ? -->
+    <!-- * URL: ? -->
+    <!--!!END_ADD -->
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "content": "This is a new message on the channel :)",
+      "channel_id": 2,
+      "owner_id": 3
+    }
+    ```
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "This is a new message on the channel :)"
+    }
+    ```
+
+- Error response: Couldn't find an Channel with the specified id
+
+  - Status Code: 404
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Channel couldn't be found"
+    }
+    ```
+
+### Update a Message based on its ID
+
+Edit a message specified by its ID.
+
+- Require Authentication: true
+- Require Authorization: Current User must be the creator of the message
+- Request
+  <!--!!START SILENT -->
+
+  - Method: POST
+  - URL: /api/channels/:channelId/messages
+    <!--!!END -->
+    <!--!!ADD -->
+    <!-- * Method: ? -->
+    <!-- * URL: ? -->
+    <!--!!END_ADD -->
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "content": "This is an even newer message on the channel :|"
+    }
+    ```
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "This is an even newer message on the channel :|"
+    }
+    ```
+
+- Error response: Couldn't find an Channel with the specified id
+
+  - Status Code: 404
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Channel couldn't be found"
+    }
+    ```
+
+- Error response: User id did not match the message's owner_id
+
+  - Status Code: 400
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "User must be message author"
+    }
+    ```
