@@ -30,6 +30,13 @@ def get_server_details(server_id):
         server_data['channels'] = [channel.to_dict() for channel in server.channels]
         return {'server': server_data}
 
+#Get Channels for Server based on Server ID
+@server_routes.route('/<int:server_id>/channels')
+def server_channels(server_id):
+    channels = Channel.query.filter(Channel.server_id == server_id).all()
+
+    return {'channels': [channel.to_dict() for channel in channels]}
+
 
 # Create server
 @server_routes.route('/', methods=['POST'])
