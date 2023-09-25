@@ -1,0 +1,22 @@
+.servers-container {
+  border: 3px solid black;
+  height: 100vh;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.server-pic {
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+  border-radius: 25px;
+  object-fit: cover;
+  cursor: pointer;
+}
+.server-pics {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  flex-direction: column;
+}
