@@ -7,7 +7,7 @@ import channels from "./channel";
 const rootReducer = combineReducers({
   session,
   servers,
-  // channels,
+  channels,
 });
 
 let enhancer;
