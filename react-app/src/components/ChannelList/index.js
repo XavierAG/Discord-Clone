@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store/session";
 
@@ -7,17 +7,19 @@ import * as channelActions from "../../store/channel";
 
 export default function ChannelBar() {
   const dispatch = useDispatch();
+  const { server_id } = useParams();
   const allChannels = useSelector((state) =>
     state.channels.allChannels ? state.channels.allChannels : {}
   );
   const channels = Object.values(allChannels);
+  console.log("CHANNELS", allChannels);
 
   //   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(channelActions.getChannelsThunk());
+    dispatch(authenticate());
+    dispatch(channelActions.getChannelsThunk(server_id));
   }, [dispatch]);
-  console.log("CHANNELS", channels);
   return (
     <div className="channels-container">
       <div className="server-name">

@@ -15,7 +15,7 @@ export default function PublicServers() {
 
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    // dispatch(authenticate());
+    dispatch(authenticate());
     dispatch(serverActions.getServersThunk()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
