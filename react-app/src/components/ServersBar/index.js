@@ -46,7 +46,7 @@ function ServersBar({ isLoaded }) {
         </a>
       </div>
       <div className="find-servers">
-        <a href="servers/create">
+        <a href="servers">
           <img
             className="under-server-pic"
             src="https://sb.blackink.ai/storage/v1/object/public/creations/db78e901-3522-49ee-9b3a-25f0fd470268/0aaf6ab5-056b-4c06-9bd3-7fb594d7dcf3_0.webp"

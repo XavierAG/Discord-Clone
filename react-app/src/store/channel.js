@@ -12,7 +12,7 @@ const getChannels = (serverId) => ({
 });
 export const postChannel = (channel) => ({
   type: POST_CHANNEL,
-  server,
+  channel,
 });
 export const editChannel = (channel) => ({
   type: EDIT_CHANNEL,
