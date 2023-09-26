@@ -6,17 +6,17 @@ def seed_messages():
     message1= Message(
         content= 'I am the best Comment you will ever see',
         channel_id = 1,
-        owner_id = 2
+        owner_id = 1
     )
     message2= Message(
         content= 'I am the best Person to write stuff in here',
         channel_id = 1,
-        owner_id = 2
+        owner_id = 1
     )
     message3= Message(
         content= 'Jimmy is a G',
         channel_id = 1,
-        owner_id = 2
+        owner_id = 1
     )
     message4= Message(
         content= 'Brad please send me your Barbers number!',
@@ -34,5 +34,9 @@ def seed_messages():
     db.session.commit()
 
 def undo_messages():
-    db.session.execute(text('DELETE FROM messages'))
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.messages RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM messages"))
+
     db.session.commit()
