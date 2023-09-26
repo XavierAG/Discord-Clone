@@ -10,7 +10,7 @@ class Server(db.Model):
     name = db.Column(db.String(255), nullable=False)
     image_url = db.Column(db.String(255), nullable=False)
     private = db.Column(db.Boolean, default=False)
-    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
 
     users = db.relationship('User', back_populates='servers')
     channels =  db.relationship('Channel', back_populates='servers', cascade="all, delete")
