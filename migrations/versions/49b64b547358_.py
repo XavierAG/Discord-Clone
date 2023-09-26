@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 4bc0b377ba10
+Revision ID: 49b64b547358
 Revises: 
-Create Date: 2023-09-22 22:26:37.970859
+Create Date: 2023-09-26 10:47:05.639202
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4bc0b377ba10'
+revision = '49b64b547358'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -41,6 +41,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=False),
     sa.Column('server_id', sa.Integer(), nullable=False),
+    sa.Column('private', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['server_id'], ['servers.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -48,7 +49,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('content', sa.String(), nullable=False),
     sa.Column('channel_id', sa.Integer(), nullable=False),
-    sa.Column('owner_id', sa.String(), nullable=False),
+    sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['channel_id'], ['channels.id'], ),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')

@@ -7,9 +7,9 @@ import * as serverActions from "../../store/servers";
 
 export default function PublicServers() {
   const dispatch = useDispatch();
-  const allServers = useSelector((state) => (
+  const allServers = useSelector((state) =>
     state.servers.allServers ? state.servers.allServers : {}
-  ));
+  );
   console.log("STATE:", allServers);
   const servers = Object.values(allServers);
 
@@ -27,7 +27,7 @@ export default function PublicServers() {
         {servers.map((server) => (
           <div key={server.id}>
             <h1>{server.name}</h1>
-            <p>{server.private ? 'Private' : 'Public'}</p>
+            <p>{server.private ? "Private" : "Public"}</p>
           </div>
         ))}
       </div>

@@ -10,16 +10,16 @@ class Channel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     server_id = db.Column(db.Integer, db.ForeignKey('servers.id'), nullable=False)
+    private = db.Column(db.Boolean, default=False)
 
     servers= db.relationship('Server', back_populates='channels')
     messages= db.relationship('Message', back_populates='channels', cascade='all, delete')
 
-
-def to_dict(self):
-    return {
-        'id': self.id,
-        'name':self.name,
-        # 'messages': {},
-        # 'servers': {},
-        'server_id': self.server_id
-    }
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name':self.name,
+            # 'messages': {},
+            # 'servers': {},
+            'server_id': self.server_id
+        }

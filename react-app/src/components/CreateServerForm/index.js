@@ -1,15 +1,17 @@
 // AddServerForm.js
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState} from "react";
+import { useDispatch, useSelector} from "react-redux";
 import { postServerThunk } from "../../store/servers";
+
 
 const CreateServerForm = () => {
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user)
   const [serverData, setServerData] = useState({
     name: "",
     image_url: "",
     private: false,
-    owner_id: 1,
+    owner_id: sessionUser.id,
   });
 
   const handleInputChange = (e) => {
@@ -24,7 +26,7 @@ const CreateServerForm = () => {
       name: "",
       image_url: "",
       private: false,
-      owner_id: 1,
+      owner_id: sessionUser.id,
     });
   };
 
