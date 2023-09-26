@@ -70,3 +70,29 @@ export const deleteChannelThunk = (channelId) => async (dispatch) => {
 };
 
 // Channels Reducer
+
+export default function reducer(state = {}, action) {
+  switch (action.type) {
+    case GET_CHANNELS: {
+      let allChannels = {};
+      const { channels } = action.channels;
+      channels.forEach((channel) => (allChannels[channel.id] = { ...channel }));
+      return { allChannels: { ...allChannels } };
+    }
+    case POST_CHANNEL: {
+      return { ...state, [action.channel.id]: action.channel };
+    }
+    case EDIT_CHANNEL: {
+      const newState = { ...state };
+      newState[action.channel.id] = action.channel;
+      return newState;
+    }
+    case DELETE_CHANNEL: {
+      const deleteChannel = { ...state };
+      delete deleteChannel[action.channelId];
+      return deleteChannel;
+    }
+    default:
+      return state;
+  }
+}

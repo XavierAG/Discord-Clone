@@ -91,6 +91,10 @@ export default function reducer(state = initialState, action) {
       newState[action.server.id] = action.server;
       return newState;
     }
+    case DELETE_SERVERS: {
+      const deleteState = { ...state };
+      delete deleteState[action.serverId];
+    }
     default:
       return state;
   }
