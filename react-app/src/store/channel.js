@@ -68,3 +68,5 @@ export const deleteChannelThunk = (channelId) => async (dispatch) => {
   dispatch(deleteChannel(channelId));
   return data;
 };
+
+// Channels Reducer
