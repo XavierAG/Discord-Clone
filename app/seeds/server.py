@@ -39,5 +39,9 @@ def seed_servers():
   db.session.commit()
 
 def undo_servers():
-  db.session.execute(text('DELETE FROM servers'))
-  db.session.commit()
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.servers RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM servers"))
+
+    db.session.commit()
