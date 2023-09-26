@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import PublicServers from "./components/PublicServers";
 import CreateServerForm from "./components/CreateServerForm";
 import EditServerForm from "./components/EditServerForm";
+import ChannelBar from "./components/ChannelList";
 import ServersBar from "./components/ServersBar";
 import { authenticate } from "./store/session";
 // import Navigation from "./components/Navigation";
@@ -55,6 +56,9 @@ function App() {
           </Route>
           <Route exact path="/servers">
             <PublicServers />
+          </Route>
+          <Route exact path="/servers/:server_id/channels">
+            <ChannelBar />
           </Route>
         </Switch>
       )}

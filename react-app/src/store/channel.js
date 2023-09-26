@@ -6,8 +6,9 @@ const EDIT_CHANNEL = "servers/EDIT_CHANNEL";
 const DELETE_CHANNEL = "servers/DELETE_CHANNEL";
 
 // Channel Actions
-const getChannels = (serverId) => ({
+const getChannels = (channels, serverId) => ({
   type: GET_CHANNELS,
+  channels,
   serverId,
 });
 export const postChannel = (channel) => ({
@@ -27,9 +28,10 @@ export const deleteChannel = (channel) => ({
 
 // Get all Channels
 export const getChannelsThunk = (serverId) => async (dispatch) => {
-  const res = await fetch(`/api/servers/${serverId}/channels/`);
+  const res = await fetch(`/api/servers/${serverId}/channels`);
   const data = await res.json();
-  dispatch(getChannels(data));
+  console.log("DATA", data);
+  dispatch(getChannels(data.channels));
   return data;
 };
 
