@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store/session";
 
 import * as messageStore from "../../store/messages";
-
+//Get messages
 export default function ChannelMessages() {
   const { channel_id } = useParams();
   const dispatch = useDispatch();
-  const sessionUser = useSelector(state => state.session.user)
-  const messagesState = useSelector(state => state.messages);
+  const sessionUser = useSelector((state) => state.session.user);
+  const messagesState = useSelector((state) => state.messages);
   // console.log("STATE:", messagesState);
   const messages = Object.values(messagesState);
 
@@ -17,8 +17,9 @@ export default function ChannelMessages() {
 
   useEffect(() => {
     dispatch(authenticate());
-    dispatch(messageStore.getchannelMessagesThunk(channel_id))
-      .then(() => setIsLoaded(true));
+    dispatch(messageStore.getchannelMessagesThunk(channel_id)).then(() =>
+      setIsLoaded(true)
+    );
   }, [dispatch]);
 
   if (!isLoaded) return null;
@@ -26,10 +27,7 @@ export default function ChannelMessages() {
   return (
     <div id="channel-messages-container">
       {messages.map((message) => (
-        <div
-          key={message.id}
-          id='message-container'
-        >
+        <div key={message.id} id="message-container">
           <p>{message.content}</p>
         </div>
       ))}
