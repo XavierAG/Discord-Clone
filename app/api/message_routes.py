@@ -37,3 +37,29 @@ def edit_message(message_id):
     return message.to_dict()
 
   return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
+
+# Delete a message by its id by an authorized user
+@message_routes.route('/<int:message_id>', methods=['DELETE'])
+@login_required
+def delete_message(message_id):
+  """
+  Updates a record of a message by its id by an authorized user
+  """
+  message = Message.query.get(message_id)
+
+  if not message:
+    return { "message": "Message does not exist" }, 400
+
+  channel = Channel.query.get(message.channel_id)
+
+  if message.owner_id == current_user.id:
+
+    # Socket
+    handle_delete_message(message.to_dict(), channel.id)
+
+    db.session.delete(message)
+    db.session.commit()
+    return { "message": "Message deleted" }
+  else:
+    return { "error": "Must be author to delete a message" }, 400
