@@ -1,4 +1,4 @@
-from app.models import db, Message
+from app.models import db, Message, SCHEMA, environment
 from sqlalchemy.sql import text
 
 #Seeder for Messages

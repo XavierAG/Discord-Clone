@@ -1,4 +1,4 @@
-from app.models import db, Server
+from app.models import db, Server, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_servers():
