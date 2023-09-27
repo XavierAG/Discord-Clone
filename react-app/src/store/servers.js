@@ -26,14 +26,12 @@ const deleteServer = (serverId) => ({
   serverId,
 });
 
-const setCurrentServer = serverId => ({
+const setCurrentServer = (serverId) => ({
   type: CURRENT_SERVER,
-  serverId
+  serverId,
 });
 
-
 // Server Thunks
-
 
 // Get all Public Servers
 export const getServersThunk = () => async (dispatch) => {
@@ -44,18 +42,19 @@ export const getServersThunk = () => async (dispatch) => {
   return data;
 };
 
-
 //Create a Server
 export const postServerThunk = (server) => async (dispatch) => {
   const res = await fetch("/api/servers/", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(server),
+    body: server,
   });
-  const data = await res.json();
-  console.log("response after creating:", data);
-  dispatch(postServer(data));
-  return data;
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(postServer(data));
+    return data;
+  } else {
+    console.log("There was an error");
+  }
 };
 
 // Edit a server based on its ID
@@ -80,12 +79,10 @@ export const deleteServerThunk = (serverId) => async (dispatch) => {
   return data;
 };
 
-
 // Set dashboard Server by its id
-export const setCurrentServerThunk = serverId => async dispatch => {
+export const setCurrentServerThunk = (serverId) => async (dispatch) => {
   dispatch(setCurrentServer(serverId));
 };
-
 
 // Intial State
 const initialState = { allServers: {} };
@@ -116,7 +113,7 @@ export default function reducer(state = initialState, action) {
     case CURRENT_SERVER:
       const currentServerState = {
         ...state,
-        currentServer: action.serverId
+        currentServer: action.serverId,
       };
       return currentServerState;
     default:

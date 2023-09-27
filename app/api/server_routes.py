@@ -4,6 +4,9 @@ from flask_login import login_required, current_user
 from app.socket import handle_add_channel, handle_edit_server, handle_delete_server, handle_add_server
 from app.models import Channel, Server, User, db
 from app.forms import ServerForm, ChannelForm
+from app.routes.aws_helpers import (
+    upload_file_to_s3, get_unique_filename)
+
 
 server_routes = Blueprint('servers', __name__)
 
@@ -79,9 +82,24 @@ def create_server():
     form = ServerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+
+        image_url=form.data["image_url"]
+        image_url.filename = get_unique_filename(image_url.filename)
+        upload = upload_file_to_s3(image_url)
+        print(upload)
+
+        if "url" not in upload:
+        # if the dictionary doesn't have a url key
+        # it means that there was an error when we tried to upload
+        # so we send back that error message (and we printed it above)
+            errors = [upload]
+            return {'errors': errors}, 400
+
+        url = upload["url"]
+
         new_server = Server(
             name=form.data["name"],
-            image_url=form.data["image_url"],
+            image_url=url,
             private=form.data["private"],
             owner_id=current_user.id,
         )
