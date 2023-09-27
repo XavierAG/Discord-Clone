@@ -29,7 +29,7 @@
   }
 
   .scrollable-column {
-    max-height: 80vh;
+    max-height: 100%;
     overflow-y: auto;
     overflow-x:hidden;
   }
