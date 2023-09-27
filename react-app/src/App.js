@@ -6,13 +6,13 @@ import LoginFormPage from "./components/LoginFormPage";
 import PublicServers from "./components/PublicServers";
 import CreateServerForm from "./components/CreateServerForm";
 import EditServerForm from "./components/EditServerForm";
-import ChannelBar from "./components/ChannelList";
-import ServersBar from "./components/ServersBar";
 import { authenticate } from "./store/session";
-// import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
 import Dashboard from "./components/Dashboard";
-import ChannelMessages from "./components/ChannelMessages";
+// import Navigation from "./components/Navigation";
+// import ChannelBar from "./components/ChannelList";
+// import ServersBar from "./components/ServersBar";
+// import ChannelMessages from "./components/ChannelMessages";
 // import WebSockets from "./components/WebSockets";
 
 function App() {
@@ -58,9 +58,9 @@ function App() {
           <Route exact path="/servers">
             <PublicServers />
           </Route>
-          <Route exact path="/channels/:channel_id/messages">
+          {/* <Route exact path="/channels/:channel_id/messages">
             <ChannelMessages />
-          </Route>
+          </Route> */}
         </Switch>
       )}
     </>
