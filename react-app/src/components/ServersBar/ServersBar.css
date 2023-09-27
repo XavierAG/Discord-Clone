@@ -1,5 +1,5 @@
 .servers-container {
-  height: 100vh;
+  height: max-content;
   width: 72px;
   display: flex;
   flex-direction: column;
