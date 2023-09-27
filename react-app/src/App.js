@@ -58,13 +58,8 @@ function App() {
           <Route exact path="/servers">
             <PublicServers />
           </Route>
-<<<<<<< HEAD
-          <Route exact path="/servers/:server_id/channels">
-            <ChannelBar />
-=======
           <Route exact path="/channels/:channel_id/messages">
             <ChannelMessages />
->>>>>>> messages-frontend
           </Route>
         </Switch>
       )}

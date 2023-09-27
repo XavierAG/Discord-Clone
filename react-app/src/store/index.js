@@ -7,12 +7,8 @@ import messages from './messages'
 const rootReducer = combineReducers({
   session,
   servers,
-<<<<<<< HEAD
   channels,
-=======
-  // channels,
   messages
->>>>>>> messages-frontend
 });
 
 let enhancer;
