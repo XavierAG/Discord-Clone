@@ -6,6 +6,7 @@
   align-items: center;
   background-color: #1e1f22;
   /* background-color: #101113; */
+  overflow-y: auto;
 }
 
 .server-pic {

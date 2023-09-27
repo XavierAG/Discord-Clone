@@ -49,7 +49,7 @@ export const postServerThunk = (server) => async (dispatch) => {
     body: server,
   });
   if (res.ok) {
-    const { data } = await res.json();
+    const data = await res.json();
     dispatch(postServer(data));
     return data;
   } else {
