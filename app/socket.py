@@ -3,13 +3,7 @@ import  os
 
 
 # configure cors_allowed_origins
-if os.environ.get('FLASK_ENV') == 'production':
-    origins = [
-        'http://biscord.onrender.com/',
-        'https://biscord.onrender.com/'
-    ]
-else:
-    origins = "*"
+origins = "*"
 
 # initialize your socket instance
 socketio = SocketIO(cors_allowed_origins=origins)
