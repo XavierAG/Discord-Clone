@@ -3,7 +3,6 @@ const GET_SERVERS = "servers/GET_SERVERS";
 const POST_SERVERS = "servers/POST_SERVERS";
 const EDIT_SERVERS = "servers/EDIT_SERVERS";
 const DELETE_SERVERS = "servers/DELETE_SERVERS";
-const CURRENT_SERVER = "servers/CURRENT_SERVER";
 
 // Server Actions
 const getServers = (servers) => ({
@@ -11,30 +10,22 @@ const getServers = (servers) => ({
   servers,
 });
 
-const postServer = (server) => ({
+export const postServer = (server) => ({
   type: POST_SERVERS,
   server,
 });
 
-const editServer = (server) => ({
+export const editServer = (server) => ({
   type: EDIT_SERVERS,
   server,
 });
 
-const deleteServer = (serverId) => ({
+export const deleteServer = (serverId) => ({
   type: DELETE_SERVERS,
   serverId,
 });
 
-const setCurrentServer = serverId => ({
-  type: CURRENT_SERVER,
-  serverId
-});
-
-
 // Server Thunks
-
-
 // Get all Public Servers
 export const getServersThunk = () => async (dispatch) => {
   const res = await fetch("/api/servers/");
@@ -44,17 +35,18 @@ export const getServersThunk = () => async (dispatch) => {
   return data;
 };
 
-
 //Create a Server
 export const postServerThunk = (server) => async (dispatch) => {
   const res = await fetch("/api/servers/", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(server),
+    body: server,
   });
-  const data = await res.json();
-  console.log("response after creating:", data);
-  dispatch(postServer(data));
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(postServer(data));
+  } else {
+    console.log("response after creating:", data);
+  }
   return data;
 };
 
@@ -79,13 +71,6 @@ export const deleteServerThunk = (serverId) => async (dispatch) => {
   dispatch(deleteServer(serverId));
   return data;
 };
-
-
-// Set dashboard Server by its id
-export const setCurrentServerThunk = serverId => async dispatch => {
-  dispatch(setCurrentServer(serverId));
-};
-
 
 // Intial State
 const initialState = { allServers: {} };
@@ -113,12 +98,6 @@ export default function reducer(state = initialState, action) {
       delete deleteState[action.serverId];
       return deleteState;
     }
-    case CURRENT_SERVER:
-      const currentServerState = {
-        ...state,
-        currentServer: action.serverId
-      };
-      return currentServerState;
     default:
       return state;
   }
