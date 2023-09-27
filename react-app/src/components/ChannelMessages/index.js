@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as messageStore from "../../store/messages";
-
+import './index.css'
 
 export default function ChannelMessages() {
   const currentChannel = useSelector(state => state.channels.currentChannel);

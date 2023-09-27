@@ -5,6 +5,7 @@ import ChannelBar from "../ChannelList";
 import ServersBar from "../ServersBar";
 import ChannelMessages from '../ChannelMessages'
 import "./index.css";
+import MessageForm from "../MessageForm";
 
 
 export default function Dashboard() {
@@ -54,8 +55,16 @@ export default function Dashboard() {
 
         {/* Right column (messages, public servers list) */}
         <div id="column-2-background">
-          <div id="placeholder-column-2">
-            <ChannelMessages channel_id={currentChannel} />
+          <div id="column-2-wrapper">
+            <div id="placeholder-column-2" className="scrollable-column">
+              <ChannelMessages channel_id={currentChannel} />
+            </div>
+            <MessageForm />
+          </div>
+        </div>
+        <div id="column-3-background">
+          <div id="placeholder-column-3">
+            <p>users</p>
           </div>
         </div>
       </div>
