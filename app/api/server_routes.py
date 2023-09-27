@@ -86,7 +86,7 @@ def create_server():
         image_url=form.data["image_url"]
         image_url.filename = get_unique_filename(image_url.filename)
         upload = upload_file_to_s3(image_url)
-        print(upload)
+        print("image upload", upload)
 
         if "url" not in upload:
         # if the dictionary doesn't have a url key
