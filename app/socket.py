@@ -1,6 +1,17 @@
 from flask_socketio import SocketIO
 
-socketio = SocketIO(cors_allowed_origins="*")
+
+# configure cors_allowed_origins
+if os.environ.get('FLASK_ENV') == 'production':
+    origins = [
+        'http://actual-app-url.herokuapp.com',
+        'https://actual-app-url.herokuapp.com'
+    ]
+else:
+    origins = "*"
+
+# initialize your socket instance
+socketio = SocketIO(cors_allowed_origins=origins)
 
 def handle_add_server(data):
     socketio.emit("add_server", data)

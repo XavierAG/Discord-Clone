@@ -97,3 +97,7 @@ def react_root(path):
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
+
+# at the bottom of the file, use this to run the app
+if __name__ == '__main__':
+    socketio.run(app)
