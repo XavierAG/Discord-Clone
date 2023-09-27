@@ -44,8 +44,9 @@ export const getchannelMessagesThunk = channelId => async dispatch => {
 
 // Send a Message based on Channel id
 export const sendMessageThunk = (channelId, data) => async dispatch => {
+      console.log('SEND MESSAGE FETCH RESPONSE:', channelId, data);
   try {
-    const res = await fetch(`/api/${channelId}/messages`, {
+    const res = await fetch(`/api/channels/${channelId}/messages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
