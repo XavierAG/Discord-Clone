@@ -1,6 +1,5 @@
 from gevent import monkey
 monkey.patch_all()
-socketio.init_app(app, async_mode='gevent')  # Initiating Sockets
 import os
 from flask import Flask, render_template, request, session, redirect
 from flask_cors import CORS
@@ -42,6 +41,7 @@ app.register_blueprint(channel_routes, url_prefix='/api/channels')
 app.register_blueprint(message_routes, url_prefix='/api/messages')
 db.init_app(app)
 Migrate(app, db)
+socketio.init_app(app, async_mode='gevent')  # Initiating Sockets
 
 # Application Security
 CORS(app)
