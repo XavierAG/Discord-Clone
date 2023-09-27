@@ -5,18 +5,17 @@ import { authenticate } from "../../store/session";
 
 import * as messageStore from "../../store/messages";
 //Get messages
-export default function ChannelMessages() {
-  const { channel_id } = useParams();
+export default function ChannelMessages({ channel_id }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const messagesState = useSelector((state) => state.messages);
-  // console.log("STATE:", messagesState);
+  console.log("STATE:", messagesState);
   const messages = Object.values(messagesState);
 
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(authenticate());
+    // dispatch(authenticate());
     dispatch(messageStore.getchannelMessagesThunk(channel_id)).then(() =>
       setIsLoaded(true)
     );

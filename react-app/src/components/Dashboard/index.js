@@ -4,6 +4,9 @@ import { authenticate, logout } from "../../store/session";
 import ChannelBar from "../ChannelList";
 import ServersBar from "../ServersBar";
 import "./index.css";
+import ChannelMessages from '../ChannelMessages'
+
+
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -32,7 +35,7 @@ export default function Dashboard() {
         </div>
         <div id="column-2-background">
           <div id="placeholder-column-2">
-            <h1>Column Two PlaceHolder</h1>
+            <ChannelMessages channel_id={1}/>
           </div>
         </div>
       </div>
