@@ -10,24 +10,19 @@ const CreateServerForm = () => {
   const [name, setName] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
-  const [serverData, setServerData] = useState({
-    name: "lighning fan club",
-    image_url: "",
-    private: false,
-    owner_id: sessionUser.id,
-  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("image_url", imageUrl);
     formData.append("name", name);
+    formData.append("image_url", imageUrl);
     formData.append("private", isPrivate);
     formData.append("owner_id", sessionUser.id);
     // aws uploads can be a bit slow—displaying
     // some sort of loading message is a good idea
+    console.log("FORM DATA", formData);
     setImageLoading(true);
-    dispatch(postServerThunk(serverData));
+    dispatch(postServerThunk(formData));
   };
 
   return (
@@ -40,7 +35,7 @@ const CreateServerForm = () => {
             type="text"
             id="name"
             name="name"
-            value={serverData.name}
+            value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
@@ -51,7 +46,6 @@ const CreateServerForm = () => {
             accept="image/*"
             id="image_url"
             name="image_url"
-            value={serverData.image_url}
             onChange={(e) => setImageUrl(e.target.files[0])}
           />
         </div>
@@ -61,8 +55,8 @@ const CreateServerForm = () => {
             type="checkbox"
             id="private"
             name="private"
-            checked={serverData.private}
-            onChange={(e) => setIsPrivate(e.target.value)}
+            checked={isPrivate}
+            onChange={(e) => setIsPrivate(e.target.checked)}
           />
         </div>
         <button type="submit">Create Server</button>

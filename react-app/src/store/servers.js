@@ -46,13 +46,15 @@ export const getServersThunk = () => async (dispatch) => {
 export const postServerThunk = (server) => async (dispatch) => {
   const res = await fetch("/api/servers/", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(server),
+    body: server,
   });
-  const data = await res.json();
-  console.log("response after creating:", data);
-  dispatch(postServer(data));
-  return data;
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(postServer(data));
+    return data;
+  } else {
+    console.log("There was an error");
+  }
 };
 
 // Edit a server based on its ID
