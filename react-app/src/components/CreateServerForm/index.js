@@ -11,7 +11,7 @@ const CreateServerForm = () => {
   const [isPrivate, setIsPrivate] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [serverData, setServerData] = useState({
-    name: "",
+    name: "lighning fan club",
     image_url: "",
     private: false,
     owner_id: sessionUser.id,
@@ -66,7 +66,7 @@ const CreateServerForm = () => {
           />
         </div>
         <button type="submit">Create Server</button>
-        (imageLoading)&& <p>Loading...</p>
+        {imageLoading && <p>Loading...</p>}
       </form>
     </div>
   );
