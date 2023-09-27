@@ -53,7 +53,8 @@ export const postServerThunk = (server) => async (dispatch) => {
     dispatch(postServer(data));
     return data;
   } else {
-    console.log("There was an error");
+    const data = await res.json();
+    console.log("ERROR", data);
   }
 };
 
