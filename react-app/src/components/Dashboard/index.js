@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate, logout } from "../../store/session";
 import ServersBar from "../ServersBar";
+import ChannelMessages from '../ChannelMessages'
 import './index.css'
 
 
@@ -36,7 +37,7 @@ export default function Dashboard() {
         </div>
         <div id="column-2-background">
           <div id="placeholder-column-2">
-            <h1>Column Two PlaceHolder</h1>
+            <ChannelMessages channel_id={1}/>
           </div>
         </div>
       </div>

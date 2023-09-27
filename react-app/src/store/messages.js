@@ -34,9 +34,9 @@ const deleteMessage = messageId => ({
 
 // Get all Messages for a Channel
 export const getchannelMessagesThunk = channelId => async dispatch => {
-  const res = await fetch(`/api/${channelId}/messages`);
+  const res = await fetch(`/api/channels/${channelId}/messages`);
   const data = await res.json();
-  // console.log('CHANNEL MESSAGES FETCH RESPONSE:', data);
+  console.log('CHANNEL MESSAGES FETCH RESPONSE:', data);
   dispatch(getChannelMessages(data));
   return data;
 };
@@ -87,7 +87,7 @@ export const deleteMessageThunk = messageId => async dispatch => {
   });
   const data = await res.json();
   // console.log('DELETE MESSAGE FETCH RESPONSE:', message);
-  dispatch(deleteMessage(serverId));
+  dispatch(deleteMessage(messageId));
   return data;
 };
 

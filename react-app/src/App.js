@@ -11,6 +11,7 @@ import { authenticate } from "./store/session";
 // import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
 import Dashboard from "./components/Dashboard";
+import ChannelMessages from "./components/ChannelMessages";
 // import WebSockets from "./components/WebSockets";
 
 function App() {
@@ -55,6 +56,9 @@ function App() {
           </Route>
           <Route exact path="/servers">
             <PublicServers />
+          </Route>
+          <Route exact path="/channels/:channel_id/messages">
+            <ChannelMessages />
           </Route>
         </Switch>
       )}
