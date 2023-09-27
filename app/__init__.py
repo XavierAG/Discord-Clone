@@ -1,3 +1,5 @@
+from gevent import monkey
+monkey.patch_all()
 import os
 from flask import Flask, render_template, request, session, redirect
 from flask_cors import CORS
@@ -14,6 +16,8 @@ from .api.message_routes import message_routes
 from .seeds import seed_commands
 from .config import Config
 #app
+
+
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 
 # Setup login manager
@@ -37,7 +41,7 @@ app.register_blueprint(channel_routes, url_prefix='/api/channels')
 app.register_blueprint(message_routes, url_prefix='/api/messages')
 db.init_app(app)
 Migrate(app, db)
-socketio.init_app(app) # Initiating Sockets
+socketio.init_app(app, async_mode='gevent')  # Initiating Sockets
 
 # Application Security
 CORS(app)
