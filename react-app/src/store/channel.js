@@ -4,6 +4,8 @@ const GET_CHANNELS = "servers/GET_CHANNELS";
 const POST_CHANNEL = "servers/POST_CHANNEL";
 const EDIT_CHANNEL = "servers/EDIT_CHANNEL";
 const DELETE_CHANNEL = "servers/DELETE_CHANNEL";
+const CURRENT_CHANNEL = "servers/CURRENT_CHANNEL";
+
 
 // Channel Actions
 const getChannels = (channels) => ({
@@ -21,6 +23,11 @@ export const editChannel = (channel) => ({
 export const deleteChannel = (channel) => ({
   type: DELETE_CHANNEL,
   channel,
+});
+
+const setCurrentChannel = channelId => ({
+  type: CURRENT_CHANNEL,
+  channelId
 });
 
 //Channel Thunks
@@ -69,6 +76,13 @@ export const deleteChannelThunk = (channelId) => async (dispatch) => {
   return data;
 };
 
+
+// Set dashboard Channel by its id
+export const setCurrentChannelThunk = channelId => async dispatch => {
+  dispatch(setCurrentChannel(channelId));
+};
+
+
 // Channels Reducer
 
 export default function reducer(state = {}, action) {
@@ -92,6 +106,12 @@ export default function reducer(state = {}, action) {
       delete deleteChannel[action.channelId];
       return deleteChannel;
     }
+    case CURRENT_CHANNEL:
+      const currentChannelState = {
+        ...state,
+        currentChannel: action.channelId
+      };
+      return currentChannelState;
     default:
       return state;
   }

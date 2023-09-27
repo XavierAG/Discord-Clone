@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authenticate } from "../../store/session";
-
 import * as messageStore from "../../store/messages";
-//Get messages
-export default function ChannelMessages({ channel_id }) {
+import './index.css'
+
+export default function ChannelMessages() {
+  const currentChannel = useSelector(state => state.channels.currentChannel);
+  const messagesState = useSelector(state => state.messages);
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
-  const messagesState = useSelector((state) => state.messages);
-  console.log("STATE:", messagesState);
   const messages = Object.values(messagesState);
 
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [empty, setEmpty] = useState(true);
 
   useEffect(() => {
-    // dispatch(authenticate());
-    dispatch(messageStore.getchannelMessagesThunk(channel_id)).then(() =>
-      setIsLoaded(true)
-    );
-  }, [dispatch]);
+    dispatch(messageStore.getchannelMessagesThunk(currentChannel))
+  }, [dispatch, currentChannel]);
 
-  if (!isLoaded) return null;
+  useEffect(() => {
+    if (currentChannel && messages.length) {
+      setEmpty(false)
+    } else {
+      setEmpty(true)
+    };
+  }, [currentChannel, messages])
 
-  return (
+  const channelData = (
     <div id="channel-messages-container">
       {messages.map((message) => (
         <div key={message.id} id="message-container">
@@ -31,5 +31,9 @@ export default function ChannelMessages({ channel_id }) {
         </div>
       ))}
     </div>
-  );
+  )
+
+  const placeholder = (<h1>Message your friends here!</h1>)
+
+  return (empty ? placeholder : channelData);
 }
