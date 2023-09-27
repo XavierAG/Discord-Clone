@@ -6,9 +6,9 @@ const EDIT_CHANNEL = "servers/EDIT_CHANNEL";
 const DELETE_CHANNEL = "servers/DELETE_CHANNEL";
 
 // Channel Actions
-const getChannels = (serverId) => ({
+const getChannels = (channels) => ({
   type: GET_CHANNELS,
-  serverId,
+  channels,
 });
 export const postChannel = (channel) => ({
   type: POST_CHANNEL,
@@ -27,7 +27,7 @@ export const deleteChannel = (channel) => ({
 
 // Get all Channels
 export const getChannelsThunk = (serverId) => async (dispatch) => {
-  const res = await fetch(`/api/servers/${serverId}/channels/`);
+  const res = await fetch(`/api/servers/${serverId}/channels`);
   const data = await res.json();
   dispatch(getChannels(data));
   return data;
@@ -70,3 +70,29 @@ export const deleteChannelThunk = (channelId) => async (dispatch) => {
 };
 
 // Channels Reducer
+
+export default function reducer(state = {}, action) {
+  switch (action.type) {
+    case GET_CHANNELS: {
+      let allChannels = {};
+      const { channels } = action.channels;
+      channels.forEach((channel) => (allChannels[channel.id] = { ...channel }));
+      return { allChannels: { ...allChannels } };
+    }
+    case POST_CHANNEL: {
+      return { ...state, [action.channel.id]: action.channel };
+    }
+    case EDIT_CHANNEL: {
+      const newState = { ...state };
+      newState[action.channel.id] = action.channel;
+      return newState;
+    }
+    case DELETE_CHANNEL: {
+      const deleteChannel = { ...state };
+      delete deleteChannel[action.channelId];
+      return deleteChannel;
+    }
+    default:
+      return state;
+  }
+}
