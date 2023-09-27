@@ -34,7 +34,7 @@
     overflow-x:hidden;
   }
   .scrollable-column::-webkit-scrollbar {
-    width: 0.1em;
+    width: 0em;
   }
 
   .scrollable-column::-webkit-scrollbar-thumb {
