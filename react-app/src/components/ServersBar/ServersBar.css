@@ -6,6 +6,7 @@
   align-items: center;
   background-color: #1e1f22;
   /* background-color: #101113; */
+  overflow-y: auto;
 }
 
 .server-pic {
@@ -67,4 +68,19 @@
 
 .under-server-pic:hover {
   border-radius: 16px;
+}
+
+.server-scrollable-column {
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x:hidden;
+  border: 1px solid orange;
+}
+/*server scrollbar*/
+.server-scrollable-column::-webkit-scrollbar {
+  width: 0.1em;
+}
+
+.server-scrollable-column::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }

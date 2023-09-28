@@ -1,15 +1,30 @@
 import React, { useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import * as text from '../../assets/helpers/block-text.js'
 import './LoginForm.css';
 
 function LoginFormPage() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  // console.log('ERRORS:', errors);
+
+  const errSpans = [
+    <span
+      className="err-str"
+    >EMAIL OR PHONE NUMBER</span>,
+    <span
+      className="err-str"
+    >PASSWORD</span>,
+    <span
+      className="err-sub-str"
+    >- Login or password is invalid</span>
+  ];
 
   if (sessionUser) return <Redirect to="/" />;
 
@@ -17,40 +32,64 @@ function LoginFormPage() {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
+      console.log('DATA:', data)
       setErrors(data);
-    }
+    } else {
+      history.push('/app');
+    };
   };
 
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Log In</button>
-      </form>
-    </>
+    <div id='login-background'>
+      <div id='login-container'>
+        <h1 id="login-heading"
+        >{text.loginHeading}</h1>
+        <p id="login-subheading"
+        >{text.loginSubheading}</p>
+        <form
+          id="login-form"
+          onSubmit={handleSubmit}
+        >
+          <section className="login-form-section">
+            {errors.find(err => (
+              err === 'email : Email provided not found.'
+            )) ?
+              <p className="error-text"
+              >{errSpans[0]}{errSpans[2]}</p> :
+              <p className="login-form-item"
+              >EMAIL<span className="asterisk">*</span></p>}
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="login-input"
+            />
+          </section>
+          <section className="login-form-section">
+            {errors.length > 1 ||
+              errors.find(err => (
+                err === 'password : Password was incorrect.'
+              )) ?
+              <p className="error-text"
+              >{errSpans[1]}{errSpans[2]}</p> :
+              <p className="login-form-item"
+              >PASSWORD<span className="asterisk">*</span></p>}
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="login-input"
+            />
+          </section>
+          <button
+            id="login-submit"
+            type="submit"
+          >Log In</button>
+        </form>
+      </div>
+    </div>
   );
 }
 

@@ -1,56 +1,113 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as messageStore from "../../store/messages";
 import { authenticate } from "../../store/session";
-import './index.css'
+import { io } from "socket.io-client";
+import "./index.css";
+
+let socket;
 
 export default function MessageForm() {
-    const [message, setMessage] = useState('')
-    const dispatch = useDispatch()
-    const sessionUser = useSelector((state) => state.session.user);
-    const allChannels = useSelector(state => (
-        state.channels.allChannels ? state.channels.allChannels : {}
-    ));
-    const currentChannel = useSelector(state => (
-        state.channels.currentChannel ? state.channels.currentChannel : null
-    ));
-    console.log('this is all channels', allChannels);
+  const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
+  const messagesState = useSelector((state) => state.messages);
+  const sessionUser = useSelector((state) => state.session.user);
+  const messagesArray = Object.values(messagesState);
+  const [messages, setMessages] = useState([]);
+  const [chatInput, setChatInput] = useState("");
 
-    let name
+  const allChannels = useSelector((state) =>
+    state.channels.allChannels ? state.channels.allChannels : {}
+  );
+  const currentChannel = useSelector((state) =>
+    state.channels.currentChannel ? state.channels.currentChannel : null
+  );
 
-    let entries = Object.entries(allChannels)
+  useEffect(() => {
+    //Open Socket Connection
+    socket = io();
 
-    console.log('this is all the entries', entries);
+    socket.on("chat", (chat) => {
+      setMessages((messages) => [...messages, chat]);
+    });
 
-    console.log('THIS IS THE CURRENT CHANNEL', currentChannel);
-    for (const [key, value] of entries) {
-        if (currentChannel === value['id']) {
-            name = value['name']
-            console.log('this is the name', name);
-        }
+    //disconnect on unmount
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  let name;
+
+  let entries = Object.entries(allChannels);
+  for (const [key, value] of entries) {
+    if (currentChannel === value["id"]) {
+      name = value["name"];
     }
+  }
+  //   const handleSubmit = async (e) => {
+  //     e.preventDefault();
+  //     const data = {
+  //       content: message,
+  //       owner_id: sessionUser.id,
+  //     };
+
+  const updateChatInput = (e) => {
+    setChatInput(e.target.value);
+  };
+
+  // const sendChat = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     dispatch(authenticate());
+  //     dispatch(
+  //       messageStore.sendMessageThunk(currentChannel, {
+  //         content: message,
+  //         owner_id: sessionUser.id,
+  //       })
+  //     );
+  //     // Send the message
+  //     socket.emit("chat", {
+  //       content: chatInput,
+  //       channel_id: currentChannel,
+  //     });
+  //     setChatInput("");
+
+  //     // Fetch the updated messages after sending the message
+  //     dispatch(messageStore.getchannelMessagesThunk(currentChannel));
+  //   } catch (error) {
+  //     // Handle any errors that occur during message sending or fetching
+  //     console.error("Error sending message:", error);
+  //   }
+  // };
+
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setMessage('')
         const data = {
             content: message,
             owner_id: sessionUser.id
         }
-     
+
         try {
             // Send the message
             await dispatch(authenticate());
             await dispatch(messageStore.sendMessageThunk(currentChannel, data));
-    
+
             // Fetch the updated messages after sending the message
             await dispatch(messageStore.getchannelMessagesThunk(currentChannel));
+
+
         } catch (error) {
             // Handle any errors that occur during message sending or fetching
             console.error("Error sending message:", error);
         }
     }
     return (
-        <div>
+        <div className="form">
             <form onSubmit={handleSubmit}>
+                <button type="button">+</button>
                 <input type="text" value={message}
                     onChange={e => setMessage(e.target.value)} placeholder={`Message #${name}`}></input>
             </form>

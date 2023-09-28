@@ -17,7 +17,7 @@ class User(db.Model, UserMixin):
 
     servers = db.relationship('Server', back_populates='users', cascade="all, delete")
     messages = db.relationship("Message", back_populates='users', cascade="all, delete")
-
+    members = db.relationship('Server', secondary="members", back_populates="users", cascade= "all, delete")
     @property
     def password(self):
         return self.hashed_password
