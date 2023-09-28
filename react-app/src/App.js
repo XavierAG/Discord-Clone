@@ -52,7 +52,10 @@ function App() {
           <Route exact path="/app">
             <Dashboard />
           </Route>
-          <Route exact path="/app/:server_id/:channels">
+          <Route exact path="/app/:server_id">
+            <Dashboard />
+          </Route>
+          <Route exact path="/app/:server_id/:channel_id">
             <Dashboard />
           </Route>
           <Route exact path="/servers/create">
@@ -64,7 +67,7 @@ function App() {
           <Route exact path="/servers">
             <PublicServers />
           </Route>
-          <Route exact path="/channels/:channel_id">
+          <Route exact path="/:channel_id">
             <UpdateChannel />
           </Route>
         </Switch>

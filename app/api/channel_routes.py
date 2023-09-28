@@ -84,7 +84,7 @@ def send_message(channel_id):
     else:
         errors = validation_errors_to_error_messages(form.errors)
         return {"errors": errors}, 400
-    
+
 
 @channel_routes.route('/<int:channel_id>', methods=['GET'])
 @login_required
