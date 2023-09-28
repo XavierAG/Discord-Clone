@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store/session";
+import OpenModalButton from "../OpenModalButton";
+import CreateServerForm from "../CreateServerForm";
 import * as serverActions from "../../store/servers";
 import * as channelActions from "../../store/channel";
 import "./ServersBar.css";
@@ -56,14 +58,11 @@ export default function ServersBar() {
 
       {/* Eventual open create-server modal link */}
 
-      <div className="create-server">
-        <NavLink to="servers/create">
-          <img
-            className="under-server-pic"
-            src="https://images-na.ssl-images-amazon.com/images/S/influencer-profile-image-prod/logo/thebetterhave_1623197557096_original._CR0,0,4167,4167_._FMjpg_.png"
-          />
-        </NavLink>
-      </div>
+      <OpenModalButton
+        // id="server-modal"
+        buttonText="+"
+        modalComponent={<CreateServerForm />}
+      ></OpenModalButton>
 
       {/* Eventual link to mount public servers list */}
 
