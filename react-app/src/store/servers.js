@@ -44,17 +44,22 @@ export const getServersThunk = () => async (dispatch) => {
 
 //Create a Server
 export const postServerThunk = (server) => async (dispatch) => {
-  const res = await fetch("/api/servers/", {
-    method: "POST",
-    body: server,
-  });
-  if (res.ok) {
-    const data = await res.json();
-    dispatch(postServer(data));
-    return data;
-  } else {
-    const data = await res.json();
-    console.log("ERROR", data);
+  try {
+    const res = await fetch("/api/servers/", {
+      method: "POST",
+      body: server,
+    });
+    if (res.ok) {
+      const data = await res.json();
+      dispatch(postServer(data));
+      console.log('RES:', data);
+      return data;
+    } else {
+      const errors = await res.json();
+      throw errors;
+    }
+  } catch (error) {
+    throw error
   }
 };
 
