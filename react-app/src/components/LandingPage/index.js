@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store/session";
 import Navigation from "../Navigation";
+import LoginFormPage from "../LoginFormPage";
 import { landingIntro } from "../../assets/helpers/block-text";
 import { Link } from "react-router-dom";
 import './index.css'
@@ -34,7 +35,7 @@ const LandingPage = () => {
         <p id="landing-intro">{landingIntro}</p>
         {!sessionUser &&
           <Link
-            to='/signup'
+            exact to='/register'
             className="login-logout"
             id='signup-link'
           >
