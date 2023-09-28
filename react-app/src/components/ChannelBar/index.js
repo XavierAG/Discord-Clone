@@ -5,31 +5,23 @@ import { authenticate } from "../../store/session";
 import { NavLink } from "react-router-dom";
 import * as channelStore from "../../store/channel";
 import * as messageStore from "../../store/messages";
+import OpenModalButton from "../OpenModalButton";
+import CreateChannelModal from "../CreateChannelModal";
+import "./ChannelBar.css";
+import UpdateChannel from "../UpdateChannel";
 
-
-export default function ChannelBar() {
+export default function ChannelBar({ serverId }) {
   const dispatch = useDispatch();
 
-  // Select current user id from the store (dispatched by the navlink)
-  const serverId = useSelector(state => (
-    state.servers.currentServer ?
-      state.servers.currentServer :
-      null
-  ));
-
   // Key into flattened server data for server properties
-  const currentServer = useSelector(state => (
-    state.servers.allServers[serverId] ?
-      state.servers.allServers[serverId] :
-      {}
-  ));
+  const currentServer = useSelector((state) =>
+    state.servers.allServers[serverId] ? state.servers.allServers[serverId] : {}
+  );
 
   // Get all channels of the server from the store
-  const allChannels = useSelector(state => (
-    state.channels.allChannels ?
-      state.channels.allChannels :
-      {}
-  ));
+  const allChannels = useSelector((state) =>
+    state.channels.allChannels ? state.channels.allChannels : {}
+  );
   const channels = Object.values(allChannels);
 
   // Dispatch get server channels fetch to the store
@@ -42,7 +34,7 @@ export default function ChannelBar() {
   // then dispatch load messages by that channel's id
   const [channelId, setChannelId] = useState(null);
 
-  const handleChannelClick = async channelId => {
+  const handleChannelClick = async (channelId) => {
     dispatch(channelStore.setCurrentChannelThunk(channelId))
       .then(dispatch(messageStore.getchannelMessagesThunk(channelId)))
       .then(() => setChannelId(channelId));
@@ -53,16 +45,29 @@ export default function ChannelBar() {
       <div className="server-name">
         <h1>{currentServer.name}</h1>
       </div>
-      <div className='channels-list-container'>
+      <div className="channel">
+        <p>CHANNELS</p>
+        <OpenModalButton
+          className="create-channel"
+          buttonText="+"
+          modalComponent={<CreateChannelModal />}
+        />
+      </div>
+      <div className="channels-list-container">
         {channels.map((channel) => (
           <NavLink
             key={channel.id}
-            to='#'
-            className='channel-navlinks'
+            to={`/app/${serverId}/${channel.id}`}
+            className="channel-navlinks"
             onClick={() => handleChannelClick(channel.id)}
           >
             <div key={channel.id}>
-              <p>{channel.name}</p>
+              <div>
+                <p>{channel.name}</p>
+                <NavLink exact to={`/${channel.id}`}>
+                  gear
+                </NavLink>
+              </div>
             </div>
           </NavLink>
         ))}

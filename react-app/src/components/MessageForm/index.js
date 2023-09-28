@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as messageStore from "../../store/messages";
 import { authenticate } from "../../store/session";
 import { io } from "socket.io-client";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import "./index.css";
 
 let socket;
 
 export default function MessageForm() {
+  const { channel_id } = useParams();
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const messagesState = useSelector((state) => state.messages);
@@ -18,9 +20,6 @@ export default function MessageForm() {
 
   const allChannels = useSelector((state) =>
     state.channels.allChannels ? state.channels.allChannels : {}
-  );
-  const currentChannel = useSelector((state) =>
-    state.channels.currentChannel ? state.channels.currentChannel : null
   );
 
   useEffect(() => {
@@ -41,7 +40,7 @@ export default function MessageForm() {
 
   let entries = Object.entries(allChannels);
   for (const [key, value] of entries) {
-    if (currentChannel === value["id"]) {
+    if (channel_id === value["id"]) {
       name = value["name"];
     }
   }
@@ -56,40 +55,56 @@ export default function MessageForm() {
     setChatInput(e.target.value);
   };
 
-  const sendChat = async (e) => {
+  // const sendChat = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     dispatch(authenticate());
+  //     dispatch(
+  //       messageStore.sendMessageThunk(currentChannel, {
+  //         content: message,
+  //         owner_id: sessionUser.id,
+  //       })
+  //     );
+  //     // Send the message
+  //     socket.emit("chat", {
+  //       content: chatInput,
+  //       channel_id: currentChannel,
+  //     });
+  //     setChatInput("");
+
+  //     // Fetch the updated messages after sending the message
+  //     dispatch(messageStore.getchannelMessagesThunk(currentChannel));
+  //   } catch (error) {
+  //     // Handle any errors that occur during message sending or fetching
+  //     console.error("Error sending message:", error);
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
+    const data = {
+      content: message,
+      owner_id: sessionUser.id,
+    };
 
     try {
-      dispatch(authenticate());
-      dispatch(
-        messageStore.sendMessageThunk(currentChannel, {
-          content: message,
-          owner_id: sessionUser.id,
-        })
-      );
       // Send the message
-      socket.emit("chat", {
-        content: chatInput,
-        channel_id: currentChannel,
-      });
-      setChatInput("");
+      await dispatch(authenticate());
+      await dispatch(messageStore.sendMessageThunk(channel_id, data));
 
       // Fetch the updated messages after sending the message
-      dispatch(messageStore.getchannelMessagesThunk(currentChannel));
+      await dispatch(messageStore.getchannelMessagesThunk(channel_id));
     } catch (error) {
       // Handle any errors that occur during message sending or fetching
       console.error("Error sending message:", error);
     }
   };
-
   return (
-    <div>
-      <div>
-        {messagesArray.map((message) => (
-          <div key={message.id}>{`${message.content}`}</div>
-        ))}
-      </div>
-      <form onSubmit={sendChat}>
+    <div className="form">
+      <form onSubmit={handleSubmit}>
+        <button type="button">+</button>
         <input
           type="text"
           value={message}
@@ -100,3 +115,4 @@ export default function MessageForm() {
     </div>
   );
 }
+

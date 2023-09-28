@@ -58,6 +58,7 @@ def create_channel(server_id):
     if form.validate_on_submit() and server.owner_id == current_user.id:
         new_channel = Channel(
             name=form.data['name'],
+            private=form.data['private'],
             server_id=server_id
         )
         db.session.add(new_channel)
@@ -167,3 +168,16 @@ def delete_server(server_id):
     else:
         errors = validation_errors_to_error_messages(form.errors)
         return {'errors': errors}, 400
+
+
+
+# Search route for Servers (GET)
+
+@server_routes.route('/search', methods=['GET'])
+def search_servers():
+
+    query = request.args.get('query')
+
+    servers = Server.query.filter(Server.name.ilike(f"%{query}%")).all()
+
+    return {'servers': [server.to_dict() for server in servers]}

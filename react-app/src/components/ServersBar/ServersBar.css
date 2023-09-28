@@ -1,6 +1,5 @@
 .servers-container {
   height: 100vh;
-  width: 72px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,4 +67,26 @@
 
 .under-server-pic:hover {
   border-radius: 16px;
+}
+
+.server-scrollable-column {
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x:hidden;
+  border: 1px solid orange;
+}
+/*server scrollbar*/
+.server-scrollable-column::-webkit-scrollbar {
+  width: 0.1em;
+}
+
+.server-scrollable-column::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+#server-modal {
+  border-radius: 100%;
+  height: 48px;
+  width: 48px;
+  background-color: red;
 }

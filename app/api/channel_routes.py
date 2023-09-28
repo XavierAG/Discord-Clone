@@ -84,3 +84,12 @@ def send_message(channel_id):
     else:
         errors = validation_errors_to_error_messages(form.errors)
         return {"errors": errors}, 400
+
+
+@channel_routes.route('/<int:channel_id>', methods=['GET'])
+@login_required
+def get_channel_details(channel_id):
+    channel = Channel.query.get(channel_id)
+    if channel:
+        channel_data = channel.to_dict()
+        return{'channel':channel_data}

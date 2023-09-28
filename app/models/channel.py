@@ -21,5 +21,6 @@ class Channel(db.Model):
             'name':self.name,
             # 'messages': {},
             # 'servers': {},
+            'private':self.private,
             'server_id': self.server_id
         }

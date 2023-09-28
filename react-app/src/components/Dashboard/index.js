@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate, logout } from "../../store/session";
-import ChannelBar from "../ChannelList";
+import ChannelBar from "../ChannelBar";
 import ServersBar from "../ServersBar";
 import ChannelMessages from "../ChannelMessages";
 import "./index.css";
 import MessageForm from "../MessageForm";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
+  const { server_id } = useParams();
+  const { channel_id } = useParams();
 
-  // Get current- server and channel properties from the store
-  const currentServer = useSelector((state) => state.servers.currentServer);
-  const currentChannel = useSelector((state) => state.channels.currentChannel);
+  const dataContainerRef = useRef(null);
 
   // Authenticate the user
   const [isLoaded, setIsLoaded] = useState(false);
@@ -20,6 +21,13 @@ export default function Dashboard() {
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (dataContainerRef.current) {
+      dataContainerRef.current.scrollTop =
+        dataContainerRef.current.scrollHeight;
+    }
+  }, []);
 
   // Logout button
   const handleLogout = (e) => {
@@ -30,14 +38,16 @@ export default function Dashboard() {
   return (
     <div id="dashboard-container">
       {/* Side navbar */}
-      <ServersBar />
+      <div className="dashboard-serverbar">
+        <ServersBar />
+      </div>
 
       <div id="dashboard-columns-container">
         {/* Left column (channel lists, server list buttons) */}
         <div id="column-1-background">
-          <div id="placeholder-column-1" className="scrollable-column">
-            {currentServer ? (
-              <ChannelBar serverId={currentServer} />
+          <div id="placeholder-column-1" className="column-1">
+            {server_id ? (
+              <ChannelBar serverId={server_id} />
             ) : (
               <h1>Server Name Placeholder</h1>
             )}
@@ -51,7 +61,9 @@ export default function Dashboard() {
         <div id="column-2-background">
           <div id="column-2-wrapper">
             <div id="placeholder-column-2" className="scrollable-column">
-              {/* <ChannelMessages channel_id={currentChannel} /> */}
+              <ChannelMessages channel_id={channel_id} ref={dataContainerRef} />
+            </div>
+            <div className="message-form">
               <MessageForm />
             </div>
           </div>
