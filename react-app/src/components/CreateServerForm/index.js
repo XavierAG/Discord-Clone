@@ -1,17 +1,30 @@
 // AddServerForm.js
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postServerThunk } from "../../store/servers";
+import { useModal } from "../../context/Modal";
 
 const CreateServerForm = () => {
+  const history = useHistory();
+  const { closeModal } = useModal()
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [imageLoading, setImageLoading] = useState(false);
   const [name, setName] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+  const [errors, setErrors] = useState('');
+  console.log('ERRORS:', errors)
+  let errorsObj = {};
+  if (errors.length) {
+    errors.forEach(err => {
+      const [key, val] = err.split(' : ');
+      errorsObj[key] = val;
+    })
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("name", name);
@@ -20,9 +33,16 @@ const CreateServerForm = () => {
     formData.append("owner_id", sessionUser.id);
     // aws uploads can be a bit slow—displaying
     // some sort of loading message is a good idea
-    console.log("FORM DATA", formData);
-    setImageLoading(true);
-    dispatch(postServerThunk(formData));
+    // console.log("FORM DATA", formData);
+    let createdServer;
+    try {
+      setImageLoading(true);
+      createdServer = await dispatch(postServerThunk(formData));
+      closeModal();
+    } catch (errors) {
+      setImageLoading(false);
+      setErrors(errors);
+    };
   };
 
   return (
@@ -30,7 +50,9 @@ const CreateServerForm = () => {
       <h2>Add a New Server</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
-          <label htmlFor="name">Server Name:</label>
+          {errorsObj.name ?
+            <label htmlFor="name">{errorsObj.name}</label> :
+            <label htmlFor="name">Server Name:</label>}
           <input
             type="text"
             id="name"

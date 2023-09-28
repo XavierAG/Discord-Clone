@@ -7,5 +7,5 @@ from app.routes.aws_helpers import ALLOWED_EXTENSIONS
 
 class ServerForm(FlaskForm):
   name = StringField('Name', validators=[DataRequired(), Length(max=100)])
-  image_url = FileField("Image File", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
+  image_url = FileField("Image File", validators=[DataRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
   private = BooleanField('Private')
