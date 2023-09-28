@@ -6,7 +6,7 @@
   align-items: center;
 }
 
-#login-container {
+.login-container {
   background-color: #313338;
   width: fit-content;
   display: flex;
@@ -18,17 +18,17 @@
   gap: .5rem;
 }
 
-#login-heading {
+.login-heading {
   color: white;
   font-size: 21px;
 }
 
-#login-subheading {
+.login-subheading {
   color: #A1A5AC;
   font-size: 14px;
 }
 
-#login-form {
+.login-form {
   display: flex;
   flex-direction: column;
   gap: .75rem;
@@ -39,7 +39,6 @@
 .login-form-section {
   display: flex;
   flex-direction: column;
-  gap: .25rem;
 }
 
 .login-form-item {
@@ -62,6 +61,7 @@
   letter-spacing: .75px;
   display: flex;
   gap: .25rem;
+  margin: .5rem 0;
 }
 
 .err-str {
@@ -73,7 +73,7 @@
 }
 
 .login-input {
-  width: 25rem;
+  width: 30rem;
   background: #1E1F22;
   color: white;
   border: none;
@@ -86,7 +86,7 @@
   outline: none;
 }
 
-#login-submit {
+.login-submit {
   margin-top: 1rem;
   cursor: pointer;
   height: 3.5rem;
