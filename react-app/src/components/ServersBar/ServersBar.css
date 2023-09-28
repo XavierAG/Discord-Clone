@@ -1,6 +1,5 @@
 .servers-container {
   height: 100vh;
-  width: 72px;
   display: flex;
   flex-direction: column;
   align-items: center;
