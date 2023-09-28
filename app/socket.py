@@ -1,4 +1,4 @@
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, emit
 import  os
 
 
@@ -30,10 +30,10 @@ def handle_edit_channel(data):
 def handle_delete_channel(data):
     socketio.emit("delete_channel", data)
 
-
+@socketio.on("chat")
 def handle_add_message(data, channel_id):
     print(channel_id)
-    socketio.emit("add_message", {"data": data, "channel_id": channel_id})
+    emit("chat", data, channel_id, broadcast=True)
 
 
 def handle_edit_message(data, channel_id):

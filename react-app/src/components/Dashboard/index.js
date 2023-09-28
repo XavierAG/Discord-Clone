@@ -51,9 +51,9 @@ export default function Dashboard() {
         <div id="column-2-background">
           <div id="column-2-wrapper">
             <div id="placeholder-column-2" className="scrollable-column">
-              <ChannelMessages channel_id={currentChannel} />
+              {/* <ChannelMessages channel_id={currentChannel} /> */}
+              <MessageForm />
             </div>
-            <MessageForm />
           </div>
         </div>
         <div id="column-3-background">
