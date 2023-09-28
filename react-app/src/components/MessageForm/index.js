@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as messageStore from "../../store/messages";
 import { authenticate } from "../../store/session";
@@ -44,6 +44,7 @@ export default function MessageForm() {
     if (currentChannel === value["id"]) {
       name = value["name"];
     }
+<<<<<<< HEAD
   }
   //   const handleSubmit = async (e) => {
   //     e.preventDefault();
@@ -99,4 +100,39 @@ export default function MessageForm() {
       </form>
     </div>
   );
+=======
+    const messageBoardRef = useRef(null);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setMessage('')
+        const data = {
+            content: message,
+            owner_id: sessionUser.id
+        }
+
+        try {
+            // Send the message
+            await dispatch(authenticate());
+            await dispatch(messageStore.sendMessageThunk(currentChannel, data));
+
+            // Fetch the updated messages after sending the message
+            await dispatch(messageStore.getchannelMessagesThunk(currentChannel));
+
+
+        } catch (error) {
+            // Handle any errors that occur during message sending or fetching
+            console.error("Error sending message:", error);
+        }
+    }
+    return (
+        <div className="form">
+            <form onSubmit={handleSubmit}>
+                <button type="button">+</button>
+                <input type="text" value={message}
+                    onChange={e => setMessage(e.target.value)} placeholder={`Message #${name}`}></input>
+            </form>
+        </div>
+    )
+>>>>>>> jimmy-messages
 }

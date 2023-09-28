@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate, logout } from "../../store/session";
 import ChannelBar from "../ChannelList";
@@ -14,12 +14,22 @@ export default function Dashboard() {
   const currentServer = useSelector((state) => state.servers.currentServer);
   const currentChannel = useSelector((state) => state.channels.currentChannel);
 
+  const dataContainerRef = useRef(null);
+
   // Authenticate the user
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
+
+  useEffect(() => {
+    
+      if (dataContainerRef.current) {
+        dataContainerRef.current.scrollTop = dataContainerRef.current.scrollHeight;
+      }
+
+  }, []);
 
   // Logout button
   const handleLogout = (e) => {
@@ -35,7 +45,7 @@ export default function Dashboard() {
       <div id="dashboard-columns-container">
         {/* Left column (channel lists, server list buttons) */}
         <div id="column-1-background">
-          <div id="placeholder-column-1" className="scrollable-column">
+          <div id="placeholder-column-1" className="column-1">
             {currentServer ? (
               <ChannelBar serverId={currentServer} />
             ) : (
@@ -51,9 +61,17 @@ export default function Dashboard() {
         <div id="column-2-background">
           <div id="column-2-wrapper">
             <div id="placeholder-column-2" className="scrollable-column">
+<<<<<<< HEAD
               {/* <ChannelMessages channel_id={currentChannel} /> */}
               <MessageForm />
             </div>
+=======
+              <ChannelMessages channel_id={currentChannel}  ref={dataContainerRef} />
+            </div>
+            <div className="message-form">
+            <MessageForm />
+            </div>
+>>>>>>> jimmy-messages
           </div>
         </div>
         <div id="column-3-background">

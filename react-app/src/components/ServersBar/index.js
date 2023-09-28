@@ -29,7 +29,7 @@ export default function ServersBar() {
   };
 
   return (
-    <nav className="servers-container scrollable-column">
+    <nav className="servers-container servers-scrollable-column">
       {/* Home or eventual direct messages link */}
 
       <div className="logo-container">
