@@ -44,7 +44,6 @@ export default function MessageForm() {
     if (currentChannel === value["id"]) {
       name = value["name"];
     }
-<<<<<<< HEAD
   }
   //   const handleSubmit = async (e) => {
   //     e.preventDefault();
@@ -57,51 +56,31 @@ export default function MessageForm() {
     setChatInput(e.target.value);
   };
 
-  const sendChat = async (e) => {
-    e.preventDefault();
+  // const sendChat = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      dispatch(authenticate());
-      dispatch(
-        messageStore.sendMessageThunk(currentChannel, {
-          content: message,
-          owner_id: sessionUser.id,
-        })
-      );
-      // Send the message
-      socket.emit("chat", {
-        content: chatInput,
-        channel_id: currentChannel,
-      });
-      setChatInput("");
+  //   try {
+  //     dispatch(authenticate());
+  //     dispatch(
+  //       messageStore.sendMessageThunk(currentChannel, {
+  //         content: message,
+  //         owner_id: sessionUser.id,
+  //       })
+  //     );
+  //     // Send the message
+  //     socket.emit("chat", {
+  //       content: chatInput,
+  //       channel_id: currentChannel,
+  //     });
+  //     setChatInput("");
 
-      // Fetch the updated messages after sending the message
-      dispatch(messageStore.getchannelMessagesThunk(currentChannel));
-    } catch (error) {
-      // Handle any errors that occur during message sending or fetching
-      console.error("Error sending message:", error);
-    }
-  };
-
-  return (
-    <div>
-      <div>
-        {messagesArray.map((message) => (
-          <div key={message.id}>{`${message.content}`}</div>
-        ))}
-      </div>
-      <form onSubmit={sendChat}>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder={`Message #${name}`}
-        ></input>
-      </form>
-    </div>
-  );
-=======
-    const messageBoardRef = useRef(null);
+  //     // Fetch the updated messages after sending the message
+  //     dispatch(messageStore.getchannelMessagesThunk(currentChannel));
+  //   } catch (error) {
+  //     // Handle any errors that occur during message sending or fetching
+  //     console.error("Error sending message:", error);
+  //   }
+  // };
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -134,5 +113,4 @@ export default function MessageForm() {
             </form>
         </div>
     )
->>>>>>> jimmy-messages
 }
