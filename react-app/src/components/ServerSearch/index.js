@@ -3,14 +3,17 @@ import { useState } from "react";
 
 export default function ServerSearch() {
   const [query, setQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  let [searchResults, setSearchResults] = useState([]);
+  searchResults = Object.values(searchResults);
 
   const handleSearch = async () => {
     try {
       const res = await fetch(`api/servers/search?query=${query}`);
+      console.log("ressss", res);
       const data = await res.json();
+      console.log("DATA =>>>", data);
       setSearchResults(data);
-    } catch {
+    } catch (error) {
       console.log("Error server not found", error);
     }
   };
@@ -24,7 +27,6 @@ export default function ServerSearch() {
         onChange={(e) => setQuery(e.target.value)}
       />
       <button onClick={handleSearch}>Search</button>
-
       <ul>
         {searchResults.map((server) => (
           <li key={server.id}>{server.name}</li>
