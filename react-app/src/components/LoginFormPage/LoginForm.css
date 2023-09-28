@@ -98,3 +98,13 @@
   font-size: 14px;
   letter-spacing: .75px;
 }
+
+.text-link {
+  display: flex;
+  justify-self: flex-start;
+  text-decoration: none;
+  margin-top: .25rem;
+  width: 100%;
+  color: #0992D7;
+  font-size: 12px;
+}

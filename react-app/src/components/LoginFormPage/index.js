@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import SignupFormPage from '../SignupFormPage'
 import * as text from '../../assets/helpers/block-text.js'
 import './LoginForm.css';
 
@@ -9,6 +10,8 @@ function LoginFormPage() {
   const history = useHistory();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
+  const [toggle, setToggle] = useState(false);
+  console.log('TOGGLE:', toggle);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -41,54 +44,70 @@ function LoginFormPage() {
 
   return (
     <div id='login-background'>
-      <div id='login-container'>
-        <h1 id="login-heading"
-        >{text.loginHeading}</h1>
-        <p id="login-subheading"
-        >{text.loginSubheading}</p>
-        <form
-          id="login-form"
-          onSubmit={handleSubmit}
-        >
-          <section className="login-form-section">
-            {errors.find(err => (
-              err === 'email : Email provided not found.'
-            )) ?
-              <p className="error-text"
-              >{errSpans[0]}{errSpans[2]}</p> :
-              <p className="login-form-item"
-              >EMAIL<span className="asterisk">*</span></p>}
-            <input
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="login-input"
-            />
-          </section>
-          <section className="login-form-section">
-            {errors.length > 1 ||
-              errors.find(err => (
-                err === 'password : Password was incorrect.'
+      {!toggle &&
+        <div id='login-container'>
+          <h1 id="login-heading"
+          >{text.loginHeading}</h1>
+          <p id="login-subheading"
+          >{text.loginSubheading}</p>
+          <form
+            id="login-form"
+            onSubmit={handleSubmit}
+          >
+            <section className="login-form-section">
+              {errors.find(err => (
+                err === 'email : Email provided not found.'
               )) ?
-              <p className="error-text"
-              >{errSpans[1]}{errSpans[2]}</p> :
-              <p className="login-form-item"
-              >PASSWORD<span className="asterisk">*</span></p>}
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="login-input"
-            />
-          </section>
-          <button
-            id="login-submit"
-            type="submit"
-          >Log In</button>
-        </form>
-      </div>
+                <p className="error-text"
+                >{errSpans[0]}{errSpans[2]}</p> :
+                <p className="login-form-item"
+                >EMAIL<span className="asterisk">*</span></p>}
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="login-input"
+              />
+            </section>
+            <section className="login-form-section">
+              {errors.length > 1 ||
+                errors.find(err => (
+                  err === 'password : Password was incorrect.'
+                )) ?
+                <p className="error-text"
+                >{errSpans[1]}{errSpans[2]}</p> :
+                <p className="login-form-item"
+                >PASSWORD<span className="asterisk">*</span></p>}
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="login-input"
+              />
+            </section>
+            <button
+              id="login-submit"
+              type="submit"
+            >Log In</button>
+          </form>
+          <Link
+            className='text-link'
+            to='#'
+            onClick={e => setToggle(!toggle)}
+          >Register</Link>
+        </div>}
+      {toggle &&
+        <div id="signup-container">
+          <SignupFormPage />
+          <Link
+            className='text-link'
+            to='#'
+            onClick={e => setToggle(!toggle)}
+          >Already have an account?</Link>
+        </div>
+      }
     </div>
   );
 }
