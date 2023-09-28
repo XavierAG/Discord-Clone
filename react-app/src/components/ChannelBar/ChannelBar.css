@@ -1,0 +1,13 @@
+.channel-navlinks{
+    text-decoration: none;
+    color: #949ba4;
+    /* margin: 5px 0px 5px 10px; */
+    margin-left: 10px;
+    
+}
+.channel-list-container{
+    padding-left: 10px;
+}
+.create-channel .channel{
+    width: 100%;
+}

@@ -10,6 +10,7 @@ import { authenticate } from "./store/session";
 import LandingPage from "./components/LandingPage";
 import Dashboard from "./components/Dashboard";
 import ServerSearch from "./components/ServerSearch";
+import UpdateChannel from "./components/UpdateChannel";
 // import Navigation from "./components/Navigation";
 // import ChannelBar from "./components/ChannelList";
 // import ServersBar from "./components/ServersBar";
@@ -51,6 +52,9 @@ function App() {
           <Route exact path="/app">
             <Dashboard />
           </Route>
+          <Route exact path="/app/:server_id/:channels">
+            <Dashboard />
+          </Route>
           <Route exact path="/servers/create">
             <CreateServerForm />
           </Route>
@@ -60,9 +64,9 @@ function App() {
           <Route exact path="/servers">
             <PublicServers />
           </Route>
-          {/* <Route exact path="/channels/:channel_id/messages">
-            <ChannelMessages />
-          </Route> */}
+          <Route exact path="/channels/:channel_id">
+            <UpdateChannel />
+          </Route>
         </Switch>
       )}
     </>

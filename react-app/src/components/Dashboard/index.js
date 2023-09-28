@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate, logout } from "../../store/session";
-import ChannelBar from "../ChannelList";
+import ChannelBar from "../ChannelBar";
 import ServersBar from "../ServersBar";
 import ChannelMessages from "../ChannelMessages";
 import "./index.css";
 import MessageForm from "../MessageForm";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
-
+  const {server_id} = useParams()
+  const {channel_id} = useParams()
   // Get current- server and channel properties from the store
   const currentServer = useSelector((state) => state.servers.currentServer);
   const currentChannel = useSelector((state) => state.channels.currentChannel);
@@ -40,7 +42,9 @@ export default function Dashboard() {
   return (
     <div id="dashboard-container">
       {/* Side navbar */}
+      <div className="dashboard-serverbar">
       <ServersBar />
+      </div>
 
       <div id="dashboard-columns-container">
         {/* Left column (channel lists, server list buttons) */}
