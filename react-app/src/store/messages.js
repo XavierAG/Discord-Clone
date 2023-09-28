@@ -1,90 +1,80 @@
 // Constants
-const GET_MESSAGES = 'messages/GET_MESSAGES';
-const SEND_MESSAGE = 'messages/SEND_MESSAGE';
-const EDIT_MESSAGE = 'messages/EDIT_MESSAGE';
-const DELETE_MESSAGE = 'messages/DELETE_MESSAGE';
+const GET_MESSAGES = "messages/GET_MESSAGES";
+const SEND_MESSAGE = "messages/SEND_MESSAGE";
+const EDIT_MESSAGE = "messages/EDIT_MESSAGE";
+const DELETE_MESSAGE = "messages/DELETE_MESSAGE";
 
 // Action creators
-const getChannelMessages = messages => ({
+const getChannelMessages = (messages) => ({
   type: GET_MESSAGES,
-  messages
+  messages,
 });
 
-
-const sendMessage = message => ({
+const sendMessage = (message) => ({
   type: SEND_MESSAGE,
-  message
+  message,
 });
 
-
-const editMessage = message => ({
+const editMessage = (message) => ({
   type: EDIT_MESSAGE,
-  message
+  message,
 });
 
-
-const deleteMessage = messageId => ({
+const deleteMessage = (messageId) => ({
   type: DELETE_MESSAGE,
-  messageId
+  messageId,
 });
-
 
 // Thunks
 
-
 // Get all Messages for a Channel
-export const getchannelMessagesThunk = channelId => async dispatch => {
+export const getchannelMessagesThunk = (channelId) => async (dispatch) => {
   const res = await fetch(`/api/channels/${channelId}/messages`);
   const data = await res.json();
-  console.log('CHANNEL MESSAGES FETCH RESPONSE:', data);
+  console.log("CHANNEL MESSAGES FETCH RESPONSE:", data);
   dispatch(getChannelMessages(data));
   return data;
 };
 
-
 // Send a Message based on Channel id
-export const sendMessageThunk = (channelId, data) => async dispatch => {
-      console.log('SEND MESSAGE FETCH RESPONSE:', channelId, data);
+export const sendMessageThunk = (channelId, data) => async (dispatch) => {
+  console.log("SEND MESSAGE FETCH RESPONSE:", channelId, data);
   try {
     const res = await fetch(`/api/channels/${channelId}/messages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
     const message = res.json();
     // console.log('SEND MESSAGE FETCH RESPONSE:', message);
     dispatch(sendMessage(message));
     return message;
-  }
-  catch (error) {
+  } catch (error) {
     throw error;
   }
 };
 
-
 // Edit a Message based on its id
-export const editMessageThunk = (messageId, data) => async dispatch => {
+export const editMessageThunk = (messageId, data) => async (dispatch) => {
   try {
     const res = await fetch(`/api/messages/${messageId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
     const message = await res.json();
     // console.log('EDIT MESSAGE FETCH RESPONSE:', message);
     dispatch(editMessage(message));
     return message;
-  }
-  catch (error) {
+  } catch (error) {
     throw error;
-  };
+  }
 };
 
-
 // Delete a Message based on its id
-export const deleteMessageThunk = messageId => async dispatch => {
+export const deleteMessageThunk = (messageId) => async (dispatch) => {
   const res = await fetch(`/api/messages/${messageId}`, {
-    method: "DELETE"
+    method: "DELETE",
   });
   const data = await res.json();
   // console.log('DELETE MESSAGE FETCH RESPONSE:', message);
@@ -92,22 +82,19 @@ export const deleteMessageThunk = messageId => async dispatch => {
   return data;
 };
 
-
 // Message Reducer
-
 
 // Initial State
 const initialState = {};
-
 
 export default function messagesReducer(state = initialState, action) {
   switch (action.type) {
     case GET_MESSAGES:
       const channelMessagesState = {};
       const { messages } = action.messages;
-      messages.forEach(message => (
-        channelMessagesState[message.id] = { ...message }
-      ));
+      messages.forEach(
+        (message) => (channelMessagesState[message.id] = { ...message })
+      );
       return channelMessagesState;
     case SEND_MESSAGE:
       const sendState = { ...state, [action.message.id]: action.message };
@@ -118,8 +105,8 @@ export default function messagesReducer(state = initialState, action) {
     case DELETE_MESSAGE:
       const deleteState = { ...state };
       delete deleteState[action.messageId];
-      return deleteState
+      return deleteState;
     default:
       return state;
-  };
-};
+  }
+}
