@@ -6,10 +6,12 @@ import ServersBar from "../ServersBar";
 import ChannelMessages from "../ChannelMessages";
 import "./index.css";
 import MessageForm from "../MessageForm";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
-
+  const {server_id} = useParams()
+  const {channel_id} = useParams()
   // Get current- server and channel properties from the store
   const currentServer = useSelector((state) => state.servers.currentServer);
   const currentChannel = useSelector((state) => state.channels.currentChannel);

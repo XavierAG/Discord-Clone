@@ -62,13 +62,16 @@ export const postChannelThunk = (channel) => async (dispatch) => {
 
 //Edit a Channel based on its Id
 export const editChannelThunk = (channel) => async (dispatch) => {
-  const { name, isPrivate } = channel;
+  const { name, channel_id, isPrivate } = channel;
   console.log("name:", name);
-  console.log("id:", id);
-  const res = await fetch(`/api/channels/${id}`, {
+  const res = await fetch(`/api/channels/${channel_id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(name),
+    body: JSON.stringify({
+      name,
+      channel_id,
+      private:isPrivate
+    }),
   });
 
   const data = await res.json();

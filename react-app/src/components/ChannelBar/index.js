@@ -8,6 +8,7 @@ import * as messageStore from "../../store/messages";
 import OpenModalButton from "../OpenModalButton";
 import CreateChannelModal from "../CreateChannelModal";
 import './ChannelBar.css'
+import UpdateChannel from "../UpdateChannel";
 
 export default function ChannelBar() {
   const dispatch = useDispatch();
@@ -69,8 +70,15 @@ export default function ChannelBar() {
             onClick={() => handleChannelClick(channel.id)}
             
           >
+
             <div key={channel.id}>
+              <div>
               <p>{channel.name}</p>
+              <NavLink exact to={`channels/${channel.id}`} >
+                gear
+              </NavLink>
+              </div>
+
             </div>
           </NavLink>
         ))}
