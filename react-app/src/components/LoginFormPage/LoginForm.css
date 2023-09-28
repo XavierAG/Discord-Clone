@@ -1,0 +1,94 @@
+#login-background {
+  background-color: #5865F2;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#login-container {
+  background-color: #313338;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 2rem;
+  border-radius: .3rem;
+  gap: .5rem;
+}
+
+#login-heading {
+  color: white;
+  font-size: 21px;
+}
+
+#login-subheading {
+  color: #A1A5AC;
+  font-size: 14px;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  padding: 0;
+  margin: 0;
+}
+
+.login-form-item {
+  display: flex;
+  align-items: center;
+  height: 2rem;
+  font-size: 11px;
+  color: #A1A5AC;
+  letter-spacing: .75px;
+  gap: .2rem;
+}
+
+.asterisk {
+  color: #FA777C;
+}
+
+.error-text {
+  font-size: 11px;
+  color: #FA777C;
+  letter-spacing: .75px;
+  display: flex;
+  gap: .25rem;
+}
+
+.err-str {
+  font-weight: 600;
+}
+
+.err-sub-str {
+  font-style: italic;
+}
+
+.login-input {
+  width: 25rem;
+  background: #1E1F22;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: .25rem;
+  font-size: 14px;
+}
+
+.login-input:focus {
+  outline: none;
+}
+
+#login-submit {
+  margin-top: 1rem;
+  cursor: pointer;
+  height: 3.5rem;
+  background: #4752C4;
+  color: white;
+  border: none;
+  border-radius: .25rem;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .75px;
+}
