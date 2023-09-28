@@ -58,6 +58,7 @@ def create_channel(server_id):
     if form.validate_on_submit() and server.owner_id == current_user.id:
         new_channel = Channel(
             name=form.data['name'],
+            private=form.data['private'],
             server_id=server_id
         )
         db.session.add(new_channel)

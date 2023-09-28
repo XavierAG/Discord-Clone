@@ -42,17 +42,27 @@ export const getChannelsThunk = (serverId) => async (dispatch) => {
 
 // Adding a new Channel based on serverId
 export const postChannelThunk = (channel) => async (dispatch) => {
-  const { name, serverId } = channel;
+  const { name, serverId, isPrivate } = channel;
+  // const chan = [name, serverId, isPrivate]
+  // console.log('this is the channel', chan);
   const res = await fetch(`/api/servers/${serverId}/channels`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(name),
+    body: JSON.stringify({
+      name,
+      server_id: serverId,
+      private: isPrivate
+    }),
   });
+  const data = await res.json();
+  dispatch(postChannel(data))
+  console.log("CHANNEL RESPONSE:",res);
+  return data
 };
 
 //Edit a Channel based on its Id
 export const editChannelThunk = (channel) => async (dispatch) => {
-  const { name, id } = channel;
+  const { name, isPrivate } = channel;
   console.log("name:", name);
   console.log("id:", id);
   const res = await fetch(`/api/channels/${id}`, {

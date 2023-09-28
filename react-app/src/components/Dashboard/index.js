@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate, logout } from "../../store/session";
-import ChannelBar from "../ChannelList";
+import ChannelBar from "../ChannelBar";
 import ServersBar from "../ServersBar";
 import ChannelMessages from "../ChannelMessages";
 import "./index.css";
@@ -40,7 +40,9 @@ export default function Dashboard() {
   return (
     <div id="dashboard-container">
       {/* Side navbar */}
+      <div className="dashboard-serverbar">
       <ServersBar />
+      </div>
 
       <div id="dashboard-columns-container">
         {/* Left column (channel lists, server list buttons) */}

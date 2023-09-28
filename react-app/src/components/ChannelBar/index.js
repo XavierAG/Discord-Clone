@@ -5,7 +5,9 @@ import { authenticate } from "../../store/session";
 import { NavLink } from "react-router-dom";
 import * as channelStore from "../../store/channel";
 import * as messageStore from "../../store/messages";
-
+import OpenModalButton from "../OpenModalButton";
+import CreateChannelModal from "../CreateChannelModal";
+import './ChannelBar.css'
 
 export default function ChannelBar() {
   const dispatch = useDispatch();
@@ -53,6 +55,11 @@ export default function ChannelBar() {
       <div className="server-name">
         <h1>{currentServer.name}</h1>
       </div>
+      <div className="channel">
+        <p>CHANNELS</p>
+        <OpenModalButton className="create-channel" buttonText='+'
+         modalComponent={<CreateChannelModal/>}/>
+      </div>
       <div className='channels-list-container'>
         {channels.map((channel) => (
           <NavLink
@@ -60,6 +67,7 @@ export default function ChannelBar() {
             to='#'
             className='channel-navlinks'
             onClick={() => handleChannelClick(channel.id)}
+            
           >
             <div key={channel.id}>
               <p>{channel.name}</p>
