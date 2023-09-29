@@ -22,5 +22,5 @@ class Server(db.Model):
             'image_url': self.image_url,
             'private': self.private,
             'owner_id': self.owner_id,
-            'members': [user.to_dict() for user in self.members]
+            # 'members': [user.to_dict() for user in self.members]
         }
