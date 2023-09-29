@@ -6,22 +6,21 @@ import { postServerThunk } from "../../store/servers";
 import { useModal } from "../../context/Modal";
 
 const CreateServerForm = () => {
-  const history = useHistory();
-  const { closeModal } = useModal()
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
+  const history = useHistory();
+  const sessionUser = useSelector(state => state.session.user);
+  const { closeModal } = useModal()
   const [imageLoading, setImageLoading] = useState(false);
   const [name, setName] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [errors, setErrors] = useState('');
-  console.log('ERRORS:', errors)
   let errorsObj = {};
   if (errors.length) {
     errors.forEach(err => {
       const [key, val] = err.split(' : ');
       errorsObj[key] = val;
-    })
+    });
   };
 
   const handleSubmit = async e => {
@@ -38,8 +37,9 @@ const CreateServerForm = () => {
     try {
       setImageLoading(true);
       createdServer = await dispatch(postServerThunk(formData));
+      history.push(`/app/${createdServer.id}`);
       closeModal();
-    } catch (errors) {
+    } catch ({ errors }) {
       setImageLoading(false);
       setErrors(errors);
     };
@@ -51,7 +51,10 @@ const CreateServerForm = () => {
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
           {errorsObj.name ?
-            <label htmlFor="name">{errorsObj.name}</label> :
+            <label
+              className="error-text"
+              htmlFor="name"
+            >Server name is required</label> :
             <label htmlFor="name">Server Name:</label>}
           <input
             type="text"
@@ -62,7 +65,12 @@ const CreateServerForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="image_url">Image URL:</label>
+          {errorsObj.image_url ?
+            <label
+              className="error-text"
+              htmlFor="name"
+            >Server image is required</label> :
+            <label htmlFor="name">Server image</label>}
           <input
             type="file"
             accept="image/*"

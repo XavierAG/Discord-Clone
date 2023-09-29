@@ -1,62 +1,84 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { editServerThunk } from "../../store/servers";
-import { useHistory } from "react-router-dom";
+import { getServersThunk, editServerThunk } from "../../store/servers";
+import OpenModalButton from "../OpenModalButton";
+import DeleteServerModal from '../DeleteServerModal';
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-export const EditServerForm = () => {
-  const sessionUser = useSelector((state) => state.session.user);
+export default function EditServerForm() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const { server_id } = useParams();
+  const server = useSelector(state => (
+    state.servers.allServers[server_id] ?
+      state.servers.allServers[server_id] :
+      null
+  ));
+  const [imageLoading, setImageLoading] = useState(false);
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
-  const dispatch = useDispatch();
+  const [errors, setErrors] = useState('');
+  let errorsObj = {};
+  if (errors.length) {
+    errors.forEach(err => {
+      const [key, val] = err.split(' : ');
+      errorsObj[key] = val;
+    })
+  };
 
   useEffect(() => {
-    const fetchServer = async () => {
-      try {
-        const response = await fetch(`/api/servers/${server_id}`);
-        if (response.ok) {
-          const data = await response.json();
-          console.log("this is the old server data: ", data.server);
-          if (data && data.server) {
-            const oldServer = data.server;
-            setName(oldServer.name);
-            setImageUrl(oldServer.image_url);
-            setIsPrivate(oldServer.private);
-          }
-        } else {
-          console.log(server_id);
-          throw new Error("failed to fetch server data");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchServer();
-  }, [server_id]);
+    dispatch(getServersThunk());
+  }, []);
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    if (server) {
+      setName(server.name);
+      setImageUrl(server.image_url);
+      setIsPrivate(server.private)
+    }
+  }, [server]);
+
+  const handleSubmit = async e => {
     e.preventDefault();
 
-    const serverData = { name, image_url: imageUrl, private: isPrivate };
-
-    const response = await dispatch(editServerThunk(server_id, serverData));
-
-    if (response) {
-      history.push(`/servers/${server_id}`);
-    } else {
-      console.error("Server update failed");
-    }
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('image_url', imageUrl);
+    formData.append('private', isPrivate);
+    // aws uploads can be a bit slow—displaying
+    // some sort of loading message is a good idea
+    let editedServer;
+    try {
+      setImageLoading(true);
+      editedServer = await dispatch(editServerThunk(server_id, formData));
+      history.push(`/app/${server_id}`);
+    } catch ({ errors }) {
+      setImageLoading(false);
+      setErrors(errors);
+    };
   };
 
   return (
     <div>
       <h2>Edit your Server</h2>
-      <form onSubmit={handleSubmit}>
+      <OpenModalButton
+        className="login-logout"
+        buttonText="Delete Server"
+        modalComponent={<DeleteServerModal server_id={server_id} />}
+      ></OpenModalButton>
+      <form
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+      >
         <div>
-          <label htmlFor="name">Server Name:</label>
+          {errorsObj.name ?
+            <label
+              className="error-text"
+              htmlFor="name"
+            >Server name is required</label> :
+            <label htmlFor="name">SERVER NAME</label>}
           <input
             type="text"
             id="name"
@@ -66,17 +88,22 @@ export const EditServerForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="image_url">Image URL:</label>
+          {errorsObj.image_url ?
+            <label
+              className="error-text"
+              htmlFor="name"
+            >Server image is required</label> :
+            <label htmlFor="name">SERVER IMAGE</label>}
           <input
-            type="text"
+            type="file"
+            accept="image/*"
             id="image_url"
             name="image_url"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
+            onChange={(e) => setImageUrl(e.target.files[0])}
           />
         </div>
         <div>
-          <label htmlFor="private">Private:</label>
+          <label htmlFor="private">PRIVATE</label>
           <input
             type="checkbox"
             id="private"
@@ -87,8 +114,9 @@ export const EditServerForm = () => {
         </div>
         <button type="submit">Update Server</button>
       </form>
+      <Link
+        exact to={`/app/${server_id}`}
+      >Cancel</Link>
     </div>
   );
 };
-
-export default EditServerForm;

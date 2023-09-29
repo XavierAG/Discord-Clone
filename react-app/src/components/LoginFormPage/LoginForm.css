@@ -103,8 +103,20 @@
   display: flex;
   justify-self: flex-start;
   text-decoration: none;
-  margin-top: .25rem;
-  width: 100%;
+  /* margin-top: .25rem; */
+  /* width: 100%; */
   color: #0992D7;
   font-size: 12px;
+}
+
+.register-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  gap: .2rem;
+}
+
+#register-label {
+  width: auto;
 }
