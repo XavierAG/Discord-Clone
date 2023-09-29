@@ -18,12 +18,15 @@ const Chat = () => {
   const { channel_id } = useParams();
 
   //Fetching Channel
-  const currentChannel = useSelector((state) => state.channels.currentChannel);
+  //   const currentChannel = useSelector((state) => state.channels.currentChannel);
   const dispatch = useDispatch();
 
   //Fetching state for Message
   const messageState = useSelector((state) => state.messages);
+  console.log("messagestate", messageState);
   const messagesArray = Object.values(messageState);
+  console.log("messageArray", messagesArray);
+  const newArray = [];
 
   // Manually tracking scroll on the Message-DOM
   const [empty, setEmpty] = useState(true);
@@ -51,12 +54,14 @@ const Chat = () => {
 
   //Fetching all messages with the Message thunk
   useEffect(() => {
-    dispatch(messageStore.getchannelMessagesThunk(currentChannel));
-  }, [dispatch, currentChannel]);
+    dispatch(messageStore.getchannelMessagesThunk(channel_id));
+    newArray.push(messagesArray);
+    console.log("newArray", newArray);
+  }, [dispatch, channel_id]);
 
   //Keeping Track of new Messages, pushing to the user to user(Scroll-Down)
   useEffect(() => {
-    if (currentChannel && messagesArray.length) {
+    if (channel_id && messagesArray.length) {
       setEmpty(false);
       // Scroll to the bottom of the messages container
       if (messagesContainerRef.current) {
@@ -66,7 +71,7 @@ const Chat = () => {
     } else {
       setEmpty(true);
     }
-  }, [currentChannel, messagesArray]);
+  }, [channel_id, messagesArray]);
 
   // Adding Channnel Name to message Input Field
   let name;
@@ -88,6 +93,7 @@ const Chat = () => {
     e.preventDefault();
     const messageContent = chatInput; // Create a copy of chatInput
     socket.emit("chat", { user: sessionUser.id, content: messageContent });
+    setChatInput(""); // Reset chatInput
 
     const data = {
       content: messageContent, // Use the copied messageContent
@@ -101,8 +107,7 @@ const Chat = () => {
 
       // Fetch the updated messages after sending the message
       await dispatch(messageStore.getchannelMessagesThunk(channel_id));
-      socket.emit("chat", { user: sessionUser.id, content: message });
-      setChatInput(""); // Reset chatInput
+      //   socket.emit("chat", { user: sessionUser.id, content: message });
     } catch (error) {
       // Handle any errors that occur during message sending or fetching
       console.error("Error sending message:", error);
@@ -113,7 +118,7 @@ const Chat = () => {
     sessionUser && (
       <div>
         <div id="channel-messages-container" ref={messagesContainerRef}>
-          {messagesArray.map((messages, ind) => (
+          {newArray.map((messages, ind) => (
             <div
               key={ind}
             >{`${sessionUser.username}: ${messages.content}`}</div>
