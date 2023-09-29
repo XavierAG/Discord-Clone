@@ -16,8 +16,8 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     image_url = db.Column(db.String(255))
 
-    # servers = db.relationship('Server', back_populates='users', cascade="all, delete")
-    # messages = db.relationship("Message", back_populates='users', cascade="all, delete")
+    servers = db.relationship('Server', back_populates='users', cascade="all, delete")
+    messages = db.relationship("Message", back_populates='users', cascade="all, delete")
     # add = db.relationship(
     #     "User",
     #     secondary=friends,
