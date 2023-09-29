@@ -50,7 +50,10 @@ export default function ServersBar() {
 
       {servers.map((server) => (
         <div className="server-pics" key={server.id}>
-          <NavLink to="#" onClick={() => handleServerClick(server.id)}>
+          <NavLink
+            to={`/app/${server.id}`}
+            onClick={() => handleServerClick(server.id)}
+          >
             <img className="server-pic" src={server.image_url} />
           </NavLink>
         </div>

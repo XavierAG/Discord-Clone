@@ -12,9 +12,6 @@ export default function Dashboard() {
   const dispatch = useDispatch();
   const { server_id } = useParams();
   const { channel_id } = useParams();
-  // Get current- server and channel properties from the store
-  const currentServer = useSelector((state) => state.servers.currentServer);
-  const currentChannel = useSelector((state) => state.channels.currentChannel);
 
   const dataContainerRef = useRef(null);
 
@@ -49,8 +46,8 @@ export default function Dashboard() {
         {/* Left column (channel lists, server list buttons) */}
         <div id="column-1-background">
           <div id="placeholder-column-1" className="column-1">
-            {currentServer ? (
-              <ChannelBar serverId={currentServer} />
+            {server_id ? (
+              <ChannelBar serverId={server_id} />
             ) : (
               <h1>Server Name Placeholder</h1>
             )}
