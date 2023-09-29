@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .member import Member
+from .member import members
 
 class Server(db.Model):
     __tablename__ = "servers"
@@ -15,7 +15,10 @@ class Server(db.Model):
 
     users = db.relationship('User', back_populates='servers')
     channels =  db.relationship('Channel', back_populates='servers', cascade="all, delete")
-    members = db.relationship('User', secondary="members", back_populates="servers")
+
+    members = db.relationship("Server", secondary=members, back_populates="servers")
+
+    # members = db.relationship('User', secondary="members", back_populates="servers")
 
     def to_dict(self):
         return {
