@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { authenticate, logout } from "../../store/session";
 import ChannelBar from "../ChannelBar";
 import ServersBar from "../ServersBar";
 import ChannelMessages from "../ChannelMessages";
-import "./index.css";
 import MessageForm from "../MessageForm";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import "./index.css";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { server_id } = useParams();
   const { channel_id } = useParams();
 
@@ -32,7 +33,8 @@ export default function Dashboard() {
   // Logout button
   const handleLogout = (e) => {
     e.preventDefault();
-    dispatch(logout());
+    dispatch(logout())
+      .then(() => history.push('/'));
   };
 
   return (
@@ -51,6 +53,9 @@ export default function Dashboard() {
             ) : (
               <h1>Server Name Placeholder</h1>
             )}
+            <Link exact to={`/servers/${server_id}/update`} className="login-logout">
+              Edit Server
+            </Link>
             <button onClick={handleLogout} className="login-logout">
               Log Out
             </button>

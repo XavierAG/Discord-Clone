@@ -131,10 +131,12 @@ function SignupFormPage() {
             }
           >Sign Up</button>
         </form >
-        <Link
-          className='text-link'
-          exact to='/login'
-        >Already have an account?</Link>
+        <div className="register-container">
+          <Link
+            className='text-link'
+            exact to='/login'
+          >Already have an account?</Link>
+        </div>
       </div>
     </div>
   );

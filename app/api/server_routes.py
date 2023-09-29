@@ -132,13 +132,29 @@ def edit_server(server_id):
         return {'errors': 'Server not found'}, 404
 
     if form.validate_on_submit() and server.owner_id == current_user.id:
+
+        image_url=form.data["image_url"]
+        image_url.filename = get_unique_filename(image_url.filename)
+        upload = upload_file_to_s3(image_url)
+        print("image upload", upload)
+
+        if "url" not in upload:
+        # if the dictionary doesn't have a url key
+        # it means that there was an error when we tried to upload
+        # so we send back that error message (and we printed it above)
+            errors = [upload]
+            return {'errors': errors}, 400
+
+        url = upload["url"]
+
         server.name = form.data['name']
-        server.image_url = form.data['image_url']
         server.private = form.data['private']
+        server.image_url = url
+
         db.session.commit()
 
-        # Emit a Socket Event to notify clients about the server edit
-        handle_edit_server(server.to_dict())
+        # Emit a Socket Event to notify clients about the new server
+        handle_add_server(server.to_dict())
 
         return server.to_dict()
     elif server.owner_id != current_user.id:
