@@ -31,5 +31,5 @@ def friends(id):
     Query for a user by id and returns that user in a dictionary
     """
     user = User.query.get(id)
-    friends = user.added.all()
+    friends = user.add.all()
     return {'friends': [friend.to_dict() for friend in friends]}
