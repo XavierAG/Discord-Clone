@@ -51,6 +51,9 @@ function App() {
           <Route exact path="/servers/:serverId">
             <EditServerForm />
           </Route>
+          <Route exact path="/chat/message">
+            <Chat />
+          </Route>
           <Route exact path="/app">
             <Dashboard />
           </Route>
@@ -74,9 +77,6 @@ function App() {
           </Route>
           <Route exact path="/:id/friends">
             <Friends />
-          </Route>
-          <Route exact path="/chat">
-            <Chat />
           </Route>
         </Switch>
       )}

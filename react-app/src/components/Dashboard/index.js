@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { authenticate, logout } from "../../store/session";
 import ChannelBar from "../ChannelBar";
 import ServersBar from "../ServersBar";
+import Chat from "../chat";
 import ChannelMessages from "../ChannelMessages";
 import MessageForm from "../MessageForm";
 import "./index.css";
@@ -69,14 +70,9 @@ export default function Dashboard() {
         <div id="column-2-background">
           <div id="column-2-wrapper">
             <div id="placeholder-column-2" className="scrollable-column">
-              <ChannelMessages
-                channel_id={currentChannel}
-                ref={dataContainerRef}
-              />
+              <Chat channel_id={currentChannel} ref={dataContainerRef} />
             </div>
-            <div className="message-form">
-              <MessageForm />
-            </div>
+            <div className="message-form"></div>
           </div>
         </div>
         <div id="column-3-background">
