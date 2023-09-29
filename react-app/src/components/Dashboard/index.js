@@ -10,8 +10,8 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
-  const {server_id} = useParams()
-  const {channel_id} = useParams()
+  const { server_id } = useParams();
+  const { channel_id } = useParams();
   // Get current- server and channel properties from the store
   const currentServer = useSelector((state) => state.servers.currentServer);
   const currentChannel = useSelector((state) => state.channels.currentChannel);
@@ -26,11 +26,10 @@ export default function Dashboard() {
   }, [dispatch]);
 
   useEffect(() => {
-    
-      if (dataContainerRef.current) {
-        dataContainerRef.current.scrollTop = dataContainerRef.current.scrollHeight;
-      }
-
+    if (dataContainerRef.current) {
+      dataContainerRef.current.scrollTop =
+        dataContainerRef.current.scrollHeight;
+    }
   }, []);
 
   // Logout button
@@ -43,7 +42,7 @@ export default function Dashboard() {
     <div id="dashboard-container">
       {/* Side navbar */}
       <div className="dashboard-serverbar">
-      <ServersBar />
+        <ServersBar />
       </div>
 
       <div id="dashboard-columns-container">
@@ -65,10 +64,13 @@ export default function Dashboard() {
         <div id="column-2-background">
           <div id="column-2-wrapper">
             <div id="placeholder-column-2" className="scrollable-column">
-              <ChannelMessages channel_id={currentChannel}  ref={dataContainerRef} />
+              <ChannelMessages
+                channel_id={currentChannel}
+                ref={dataContainerRef}
+              />
             </div>
             <div className="message-form">
-            <MessageForm />
+              <MessageForm />
             </div>
           </div>
         </div>
