@@ -112,3 +112,35 @@ if environment == "production":
         op.execute(f"ALTER TABLE servers SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE channels SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE messages SET SCHEMA {SCHEMA};")
+
+
+
+# _________________________________________________
+"""empty message
+
+Revision ID: 43e4db6518a9
+Revises:
+Create Date: 2023-09-29 10:57:59.404718
+
+"""
+from alembic import op
+import sqlalchemy as sa
+
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
+
+
+# revision identifiers, used by Alembic.
+revision = '43e4db6518a9'
+down_revision = None
+branch_labels = None
+depends_on = None
+
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE servers SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE channels SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE members SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE messages SET SCHEMA {SCHEMA};")
