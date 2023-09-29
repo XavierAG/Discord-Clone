@@ -102,17 +102,29 @@ export default function MessageForm() {
     }
   };
   return (
-    <div className="form">
-      <form onSubmit={handleSubmit}>
-        <button type="button">+</button>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder={`Message #${name}`}
-        ></input>
-      </form>
-    </div>
+    <>
+      <div
+        id="channel-messages-container"
+        // ref={messagesContainerRef}
+      >
+        {messages.map((message) => (
+          <div key={message.id} id="message-container">
+            <p>{message.content}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="form">
+        <form onSubmit={handleSubmit}>
+          <button type="button">+</button>
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder={`Message #${name}`}
+          ></input>
+        </form>
+      </div>
+    </>
   );
 }
-
