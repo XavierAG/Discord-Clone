@@ -55,17 +55,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['server_id'], ['servers.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-<<<<<<< HEAD
-=======
-    op.create_table('members',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('server_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['server_id'], ['servers.id'], ),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
->>>>>>> dev
     op.create_table('messages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('content', sa.String(), nullable=False),
