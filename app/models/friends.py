@@ -4,9 +4,10 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 friends = db.Table(
     'friends',
 
-    if environment == "production":
-        __table_args__ = {'schema': SCHEMA}
 
     db.Column('friend_id', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'))),
     db.Column('the_friend_id', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 )
+
+if environment == "production":
+    __table_args__ = {'schema': SCHEMA}
