@@ -12,7 +12,7 @@ export default function Dashboard() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { server_id } = useParams();
-  const { channel_id } = useParams();
+  const { currentChannel } = useParams();
 
   const dataContainerRef = useRef(null);
 
@@ -33,8 +33,7 @@ export default function Dashboard() {
   // Logout button
   const handleLogout = (e) => {
     e.preventDefault();
-    dispatch(logout())
-      .then(() => history.push('/'));
+    dispatch(logout()).then(() => history.push("/"));
   };
 
   return (
@@ -53,7 +52,11 @@ export default function Dashboard() {
             ) : (
               <h1>Server Name Placeholder</h1>
             )}
-            <Link exact to={`/servers/${server_id}/update`} className="login-logout">
+            <Link
+              exact
+              to={`/servers/${server_id}/update`}
+              className="login-logout"
+            >
               Edit Server
             </Link>
             <button onClick={handleLogout} className="login-logout">
@@ -66,7 +69,10 @@ export default function Dashboard() {
         <div id="column-2-background">
           <div id="column-2-wrapper">
             <div id="placeholder-column-2" className="scrollable-column">
-              <ChannelMessages channel_id={channel_id} ref={dataContainerRef} />
+              <ChannelMessages
+                channel_id={currentChannel}
+                ref={dataContainerRef}
+              />
             </div>
             <div className="message-form">
               <MessageForm />

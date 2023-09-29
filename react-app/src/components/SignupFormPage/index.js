@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { signUp } from "../../store/session";
-import './SignupForm.css';
+import "./SignupForm.css";
 
 function SignupFormPage() {
   const dispatch = useDispatch();
@@ -15,20 +15,16 @@ function SignupFormPage() {
   const [errors, setErrors] = useState([]);
   let errorsObj = {};
   if (errors.length) {
-    errors.forEach(err => {
-      const [key, val] = err.split(' : ');
+    errors.forEach((err) => {
+      const [key, val] = err.split(" : ");
       errorsObj[key] = val;
-    })
-  };
+    });
+  }
 
-  const loginStyle = (
-    !email ||
-    !username ||
-    !password ||
-    !confirmPassword
-  ) ?
-    { background: '#444B95', color: '#98999A' } :
-    { background: '#4752C4', color: 'white' }
+  const loginStyle =
+    !email || !username || !password || !confirmPassword
+      ? { background: "#444B95", color: "#98999A" }
+      : { background: "#4752C4", color: "white" };
 
   if (sessionUser) return <Redirect to="/" />;
 
@@ -37,32 +33,30 @@ function SignupFormPage() {
     if (password === confirmPassword) {
       const data = await dispatch(signUp(username, email, password));
       if (data) {
-        console.log('DATA:', data)
-        setErrors(data)
+        console.log("DATA:", data);
+        setErrors(data);
       }
-      history.push('/app')
+      history.push("/app");
     } else {
-      setErrors(['password : Confirm Password field must be the same as the Password field']);
+      setErrors([
+        "password : Confirm Password field must be the same as the Password field",
+      ]);
     }
   };
 
   return (
-    <div id='login-background'>
-      <div className='login-container'>
+    <div id="login-background">
+      <div className="login-container">
         <h1 className="login-heading">Create an account</h1>
-        <form
-          className="login-form"
-          onSubmit={handleSubmit}
-        >
+        <form className="login-form" onSubmit={handleSubmit}>
           <section className="login-form-section">
-            {errorsObj.email
-              ?
-              <p className="error-text"
-              >EMAIL - {errorsObj.email}</p>
-              :
-              <p className="login-form-item"
-              >EMAIL<span className="asterisk">*</span>
-              </p>}
+            {errorsObj.email ? (
+              <p className="error-text">EMAIL - {errorsObj.email}</p>
+            ) : (
+              <p className="login-form-item">
+                EMAIL<span className="asterisk">*</span>
+              </p>
+            )}
             <input
               className="login-input"
               type="email"
@@ -72,14 +66,13 @@ function SignupFormPage() {
             />
           </section>
           <section className="login-form-section">
-            {errorsObj.username
-              ?
-              <p className="error-text"
-              >USERNAME - {errorsObj.username}</p>
-              :
-              <p className="login-form-item"
-              >USERNAME<span className="asterisk">*</span>
-              </p>}
+            {errorsObj.username ? (
+              <p className="error-text">USERNAME - {errorsObj.username}</p>
+            ) : (
+              <p className="login-form-item">
+                USERNAME<span className="asterisk">*</span>
+              </p>
+            )}
             <input
               className="login-input"
               type="text"
@@ -89,8 +82,8 @@ function SignupFormPage() {
             />
           </section>
           <section className="login-form-section">
-            <p className="login-form-item"
-            >PASSWORD<span className="asterisk">*</span>
+            <p className="login-form-item">
+              PASSWORD<span className="asterisk">*</span>
             </p>
             <input
               className="login-input"
@@ -101,16 +94,16 @@ function SignupFormPage() {
             />
           </section>
           <section className="login-form-section">
-            {errorsObj.password
-              ?
-              <p
-                className="error-text"
-              >CONFIRM PASSWORD - <span className="err-sub-str"
-              >{errorsObj.password}</span></p>
-              :
-              <p className="login-form-item"
-              >CONFIRM PASSWORD<span className="asterisk">*</span>
-              </p>}
+            {errorsObj.password ? (
+              <p className="error-text">
+                CONFIRM PASSWORD -{" "}
+                <span className="err-sub-str">{errorsObj.password}</span>
+              </p>
+            ) : (
+              <p className="login-form-item">
+                CONFIRM PASSWORD<span className="asterisk">*</span>
+              </p>
+            )}
             <input
               className="login-input"
               type="password"
@@ -123,19 +116,15 @@ function SignupFormPage() {
             className="login-submit"
             type="submit"
             style={loginStyle}
-            disabled={
-              !email ||
-              !username ||
-              !password ||
-              !confirmPassword
-            }
-          >Sign Up</button>
-        </form >
+            disabled={!email || !username || !password || !confirmPassword}
+          >
+            Sign Up
+          </button>
+        </form>
         <div className="register-container">
-          <Link
-            className='text-link'
-            exact to='/login'
-          >Already have an account?</Link>
+          <Link className="text-link" exact to="/login">
+            Already have an account?
+          </Link>
         </div>
       </div>
     </div>
