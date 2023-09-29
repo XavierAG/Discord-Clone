@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import SignupFormPage from '../SignupFormPage'
 import * as text from '../../assets/helpers/block-text.js'
 import './LoginForm.css';
 
@@ -11,7 +10,6 @@ function LoginFormPage({ toggleProp }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [toggle, setToggle] = useState(toggleProp);
-  console.log('TOGGLE:', toggle);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -90,11 +88,19 @@ function LoginFormPage({ toggleProp }) {
             type="submit"
           >Log In</button>
         </form>
-        <Link
-          className='text-link'
-          exact to='/register'
-          onClick={e => setToggle(!toggle)}
-        >Register</Link>
+        <div className="register-container">
+          <label
+            htmlFor="register"
+            className="login-form-item"
+            id="register-label"
+          >Need an account?</label>
+          <Link
+            name='register'
+            className='text-link'
+            exact to='/register'
+            onClick={e => setToggle(!toggle)}
+          >Register</Link>
+        </div>
       </div>
     </div>
   );
