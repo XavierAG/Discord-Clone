@@ -1,6 +1,4 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .server import Server
-from .user import User
 
 
 class Member(db.Model):
