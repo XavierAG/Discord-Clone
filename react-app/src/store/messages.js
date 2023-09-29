@@ -49,9 +49,7 @@ export const sendMessageThunk = (channelId, data) => async (dispatch) => {
     // console.log('SEND MESSAGE FETCH RESPONSE:', message);
     dispatch(sendMessage(message));
     return message;
-  } catch (error) {
-    throw error;
-  }
+  } catch (error) {}
 };
 
 // Edit a Message based on its id
