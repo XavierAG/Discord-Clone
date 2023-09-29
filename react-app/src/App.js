@@ -11,6 +11,7 @@ import LandingPage from "./components/LandingPage";
 import Dashboard from "./components/Dashboard";
 import ServerSearch from "./components/ServerSearch";
 import UpdateChannel from "./components/UpdateChannel";
+import Friends from "./components/Friends";
 // import Navigation from "./components/Navigation";
 // import ChannelBar from "./components/ChannelList";
 // import ServersBar from "./components/ServersBar";
@@ -69,6 +70,9 @@ function App() {
           </Route>
           <Route exact path="/:channel_id">
             <UpdateChannel />
+          </Route>
+          <Route exact path="/:id/friends">
+            <Friends />
           </Route>
         </Switch>
       )}
