@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 43e4db6518a9
+Revision ID: b4fbf101c0e6
 Revises:
-Create Date: 2023-09-28 19:42:02.355938
+Create Date: 2023-09-29 10:57:59.404718
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = '43e4db6518a9'
+revision = 'b4fbf101c0e6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -57,6 +57,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        members.schema = SCHEMA
+
     op.create_table('messages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('content', sa.String(), nullable=False),
@@ -67,6 +70,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
+
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE servers SET SCHEMA {SCHEMA};")
