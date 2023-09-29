@@ -11,13 +11,9 @@ def seed_users():
     bobbie = User(
         username='bobbie', email='bobbie@aa.io', password='password')
 
-    # demo.add.append(marnie)
-    # demo.add.append(bobbie)
-    # marnie.add.append(demo)
-
-    # db.session.add(demo)
-    # db.session.add(marnie)
-    # db.session.add(bobbie)
+    db.session.add(demo)
+    db.session.add(marnie)
+    db.session.add(bobbie)
     db.session.commit()
 
 
@@ -30,10 +26,9 @@ def seed_users():
 def undo_users():
     if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
-        db.session.execute(f"TRUNCATE table {SCHEMA}.friends RESTART IDENTITY CASCADE;")
+
     else:
         db.session.execute(text("DELETE FROM users"))
-        db.session.execute(text("DELETE FROM friends"))
 
 
     db.session.commit()
