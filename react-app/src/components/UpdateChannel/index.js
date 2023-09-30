@@ -18,6 +18,7 @@ export default function UpdateChannel() {
   const [serverId, setServerId] = useState(null);
   const { server_id, channel_id } = useParams();
   const history = useHistory();
+
   useEffect(() => {
     const fetchChannel = async () => {
       try {
@@ -48,6 +49,17 @@ export default function UpdateChannel() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validationErrors = {};
+
+    if (!name.trim()) {
+      validationErrors.name = "Channel name is required";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     const res = await dispatch(
       channelStore.editChannelThunk({
         name,
@@ -65,14 +77,23 @@ export default function UpdateChannel() {
     setName(e.name);
     setisPrivate(e.private);
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <OpenModalButton
           className="login-logout"
-          buttonText="Delete Server"
+          buttonText="Delete Channel"
           modalComponent={<DeleteChannel channel_id={channel_id} />}
         ></OpenModalButton>
+
+        {/* Display validation error for channel name */}
+        {errors.name && (
+          <p className="error-message">
+            <span className="error-icon">⚠️</span>
+            {errors.name}
+          </p>
+        )}
         <input
           type="text"
           value={name}
