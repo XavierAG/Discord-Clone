@@ -63,7 +63,9 @@ export default function CreateChannelModal({ server_id }) {
             }}
             placeholder="# new-channel"
           ></input>
-          {errors.name && <p className="error-text">{errors.name}</p>}
+          <div className="error-container">
+            {errors.name && <p className="error-text">{errors.name}</p>}
+          </div>
         </div>
         <div className="private-channel">
           <h3>Private Channel</h3>
