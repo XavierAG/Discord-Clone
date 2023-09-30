@@ -10,6 +10,10 @@ import CreateChannelModal from "../CreateChannelModal";
 import "./ChannelBar.css";
 import UpdateChannel from "../UpdateChannel";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons'; // Import the specific icon you want to use
+
+// Rest of your code
 
 export default function ChannelBar() {
   const dispatch = useDispatch();
@@ -38,6 +42,14 @@ export default function ChannelBar() {
     <div className="channels-bar-container">
       <div className="server-name">
         <h1>{currentServer.name}</h1>
+        <FontAwesomeIcon icon={faPlus} />
+        <Link
+          exact
+          to={`/servers/${server_id}/update`}
+          className="login-logout"
+        >
+          Edit Server
+        </Link>
       </div>
       <div className="channel">
         <p>CHANNELS</p>
@@ -46,13 +58,6 @@ export default function ChannelBar() {
           buttonText="+"
           modalComponent={<CreateChannelModal server_id={server_id} />}
         />
-        <Link
-          exact
-          to={`/servers/${server_id}/update`}
-          className="login-logout"
-        >
-          Edit Server
-        </Link>
       </div>
       <div className="channels-list-container">
         {channels.map((channel) => (
