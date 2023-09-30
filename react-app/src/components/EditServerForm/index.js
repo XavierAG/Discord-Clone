@@ -54,7 +54,14 @@ export default function EditServerForm() {
       setImageLoading(true);
       editedServer = await dispatch(editServerThunk(server_id, formData));
       history.push(`/app/${server_id}`);
-    } catch ({ errors }) {
+    } catch (error) {
+      const { errorArr } = error;
+      if (Array.isArray(errorArr)) {
+        setErrors(errorArr)
+      } else {
+        console.error(error);
+        throw error;
+      }
       setImageLoading(false);
       setErrors(errors);
     };

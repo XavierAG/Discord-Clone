@@ -14,18 +14,14 @@ const CreateServerForm = () => {
   const [name, setName] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
-  const [errors, setErrors] = useState('');
-  let errorsObj = {};
-  if (errors.length) {
-    errors.forEach(err => {
-      const [key, val] = err.split(' : ');
-      errorsObj[key] = val;
-    });
-  };
+  const [errors, setErrors] = useState({})
 
   const handleSubmit = async e => {
     e.preventDefault();
+    // const defaultImgUrl = 'https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg'
+    // const imgUrlToUse = imageUrl || defaultImgUrl;
     const formData = new FormData();
+    // if (!imageUrl) setImageUrl('https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg');
     formData.append("name", name);
     formData.append("image_url", imageUrl);
     formData.append("private", isPrivate);
@@ -39,9 +35,15 @@ const CreateServerForm = () => {
       createdServer = await dispatch(postServerThunk(formData));
       history.push(`/app/${createdServer.id}`);
       closeModal();
-    } catch ({ errors }) {
-      setImageLoading(false);
-      setErrors(errors);
+    } catch (errors) {
+      console.log('ERRORS:', errors);
+      // setImageLoading(false);
+      // let errorsObj = {}
+      // errors.forEach(err => {
+      //   const [key, val] = err.split(' : ');
+      //   errorsObj[key] = val;
+      // });
+      // setErrors(errorsObj);
     };
   };
 
@@ -50,7 +52,7 @@ const CreateServerForm = () => {
       <h2>Add a New Server</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
-          {errorsObj.name ?
+          {errors.name ?
             <label
               className="error-text"
               htmlFor="name"
@@ -65,7 +67,7 @@ const CreateServerForm = () => {
           />
         </div>
         <div>
-          {errorsObj.image_url ?
+          {errors.image_url ?
             <label
               className="error-text"
               htmlFor="name"
