@@ -10,8 +10,6 @@ const Chat = () => {
   // setting Chat Input UseState
   const [chatInput, setChatInput] = useState("");
   const [message, setMessage] = useState([]);
-  const [editMode, setEditMode] = useState(false);
-  const [editedMessage, setEditedMessage] = useState("");
 
   //USER Fetch
   const sessionUser = useSelector((state) => state.session.user);
@@ -46,8 +44,6 @@ const Chat = () => {
     });
     // when component unmounts, disconnect
     return () => {
-      setMessage([]);
-      console.log("UNMOUNTING");
       socket.disconnect();
     };
   }, []);
@@ -89,6 +85,7 @@ const Chat = () => {
   //Handling submit
   const sendChat = async (e) => {
     e.preventDefault();
+    const setMessage = chatInput; // Create a copy of chatInput
     const messageContent = chatInput;
     console.log("THIS IS MESSAGE SOCKET", messageContent);
     socket.emit("chat", { user: sessionUser.id, content: messageContent });
@@ -103,50 +100,23 @@ const Chat = () => {
       messageStore.sendMessageThunk({ channel_id, messageContent, sessionUser })
     );
   };
-  const editMessage = (messageContent) => {
-    setEditedMessage(messageContent);
-    setEditMode(false);
-  };
 
   return (
     sessionUser && (
       <div>
         <div id="channel-messages-container" ref={messagesContainerRef}>
           {messagesArray
-            .filter((messages) => messages.content)
+            .filter((messages) => messages.content) // Filter messages with content
             .map((messages, ind) => (
-              <div key={ind}>
-                <div>
-                  {`${sessionUser.username}:`}
-                  {editMode ? (
-                    <input
-                      key={ind}
-                      type="text"
-                      value={editedMessage}
-                      onChange={(e) => setEditedMessage(e.target.value)}
-                    ></input>
-                  ) : (
-                    `${messages.content}`
-                  )}
-                </div>
-                <div>
-                  {editMode ? (
-                    <button onClick={() => editMessage(messages.content)}>
-                      submit
-                    </button>
-                  ) : (
-                    <button onClick={() => setEditMode(true)}>EDIT</button>
-                  )}
-                </div>
-              </div>
+              <div
+                key={ind}
+              >{`${sessionUser.username}: ${messages.content}`}</div>
             ))}
-          {message
-            .filter((messages) => messages.content)
-            .map((messages, ind) => (
-              <div key={ind}>
-                {`${sessionUser.username}: ${messages.content}`}
-              </div>
-            ))}
+          {message.map((messages, ind) => (
+            <div key={ind}>
+              {`${sessionUser.username}: ${messages.content}`}
+            </div>
+          ))}
         </div>
         <div className="form">
           <form onSubmit={sendChat}>
