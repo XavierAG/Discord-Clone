@@ -21,7 +21,8 @@ export default function ChannelMessages() {
       setEmpty(false);
       // Scroll to the bottom of the messages container
       if (messagesContainerRef.current) {
-        messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        messagesContainerRef.current.scrollTop =
+          messagesContainerRef.current.scrollHeight;
       }
     } else {
       setEmpty(true);
@@ -29,18 +30,15 @@ export default function ChannelMessages() {
   }, [currentChannel, messages]);
 
   const channelData = (
-    <div
-      id="channel-messages-container"
-      ref={messagesContainerRef}
-    >
-      {messages.map((message) => (
+    <div id="channel-messages-container" ref={messagesContainerRef}>
+      {messages.map((message, ind) => (
         <div key={message.id} id="message-container">
           <p>{message.content}</p>
         </div>
       ))}
     </div>
   );
-
+  // come back later// JIMMY JASHAN
   const placeholder = <h1>Message your friends here!</h1>;
 
   return empty ? placeholder : channelData;
