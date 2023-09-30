@@ -40,11 +40,9 @@ export default function Dashboard() {
 
   const handleDeleteUser = (e) => {
     e.preventDefault();
-    // Ensure that user_id is defined and valid before dispatching the action
     if (user_id) {
       dispatch(deleteUserThunk(user_id)).then(() => history.push("/"));
     } else {
-      // Handle the case where user_id is undefined or invalid
       console.error("Invalid user_id");
     }
   };
@@ -65,7 +63,7 @@ export default function Dashboard() {
               Log Out
             </button>
             <button onClick={handleDeleteUser} className="login-logout">
-              Delete
+              Delete User
             </button>
           </div>
         </div>
