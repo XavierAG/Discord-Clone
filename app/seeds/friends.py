@@ -3,7 +3,7 @@ from sqlalchemy.sql import text
 
 
 def seed_friends():
-    # Assuming you have already seeded users using seed_users
+
     demo = User.query.filter_by(username='Demo').first()
     marnie = User.query.filter_by(username='marnie').first()
     bobbie = User.query.filter_by(username='bobbie').first()

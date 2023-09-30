@@ -72,7 +72,7 @@ function App() {
           <Route exact path="/servers">
             <PublicServers />
           </Route>
-          <Route exact path="/:channel_id">
+          <Route exact path="/:server_id/:channel_id">
             <UpdateChannel />
           </Route>
           <Route exact path="/:id/friends">

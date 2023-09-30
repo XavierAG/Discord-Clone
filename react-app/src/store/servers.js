@@ -134,9 +134,10 @@ export default function reducer(state = initialState, action) {
       );
       postState[action.server.id] = {
         ...action.server,
-        // members: action.server.members.map(
-        //   (member) => (member = { ...member }
-        //     )),
+        // members: action.server.members
+        //   .map
+        // // (member) => (member = { ...member })
+        // (),
       };
       return {
         allServers: postState,

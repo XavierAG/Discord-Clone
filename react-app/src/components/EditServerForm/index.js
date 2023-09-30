@@ -3,30 +3,24 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getServersThunk, editServerThunk } from "../../store/servers";
 import OpenModalButton from "../OpenModalButton";
-import DeleteServerModal from '../DeleteServerModal';
+import DeleteServerModal from "../DeleteServerModal";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function EditServerForm() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { server_id } = useParams();
-  const server = useSelector(state => (
-    state.servers.allServers[server_id] ?
-      state.servers.allServers[server_id] :
-      null
-  ));
+  const server = useSelector((state) =>
+    state.servers.allServers[server_id]
+      ? state.servers.allServers[server_id]
+      : null
+  );
   const [imageLoading, setImageLoading] = useState(false);
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
-  const [errors, setErrors] = useState('');
+  const [errors, setErrors] = useState("");
   let errorsObj = {};
-  if (errors.length) {
-    errors.forEach(err => {
-      const [key, val] = err.split(' : ');
-      errorsObj[key] = val;
-    })
-  };
 
   useEffect(() => {
     dispatch(getServersThunk());
@@ -36,56 +30,55 @@ export default function EditServerForm() {
     if (server) {
       setName(server.name);
       setImageUrl(server.image_url);
-      setIsPrivate(server.private)
+      setIsPrivate(server.private);
     }
   }, [server]);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('image_url', imageUrl);
-    formData.append('private', isPrivate);
+    formData.append("name", name);
+    formData.append("image_url", imageUrl);
+    formData.append("private", isPrivate);
     // aws uploads can be a bit slow—displaying
     // some sort of loading message is a good idea
-    let editedServer;
     try {
       setImageLoading(true);
-      editedServer = await dispatch(editServerThunk(server_id, formData));
-      history.push(`/app/${server_id}`);
-    } catch (error) {
-      const { errorArr } = error;
-      if (Array.isArray(errorArr)) {
-        setErrors(errorArr)
-      } else {
-        console.error(error);
-        throw error;
+      const response = await dispatch(editServerThunk(server_id, formData));
+      const editedServer = response;
+      if (editedServer.errors) {
+        setErrors(editedServer.errors);
+        setImageLoading(false);
+        return;
       }
+      if (editedServer) {
+        history.push(`/app/${server_id}`);
+      }
+    } catch ({ errors }) {
       setImageLoading(false);
       setErrors(errors);
-    };
+    }
   };
 
   return (
     <div>
       <h2>Edit your Server</h2>
+      <h1>{errors}</h1>
       <OpenModalButton
         className="login-logout"
         buttonText="Delete Server"
         modalComponent={<DeleteServerModal server_id={server_id} />}
       ></OpenModalButton>
-      <form
-        onSubmit={handleSubmit}
-        encType="multipart/form-data"
-      >
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
-          {errorsObj.name ?
-            <label
-              className="error-text"
-              htmlFor="name"
-            >Server name is required</label> :
-            <label htmlFor="name">SERVER NAME</label>}
+          {errorsObj.name ? (
+            <label className="error-text" htmlFor="name">
+              Server name is required
+            </label>
+          ) : (
+            <label htmlFor="name">SERVER NAME</label>
+          )}
           <input
             type="text"
             id="name"
@@ -95,12 +88,13 @@ export default function EditServerForm() {
           />
         </div>
         <div>
-          {errorsObj.image_url ?
-            <label
-              className="error-text"
-              htmlFor="name"
-            >Server image is required</label> :
-            <label htmlFor="name">SERVER IMAGE</label>}
+          {errorsObj.image_url ? (
+            <label className="error-text" htmlFor="name">
+              Server image is required
+            </label>
+          ) : (
+            <label htmlFor="name">SERVER IMAGE</label>
+          )}
           <input
             type="file"
             accept="image/*"
@@ -121,9 +115,9 @@ export default function EditServerForm() {
         </div>
         <button type="submit">Update Server</button>
       </form>
-      <Link
-        exact to={`/app/${server_id}`}
-      >Cancel</Link>
+      <Link exact to={`/app/${server_id}`}>
+        Cancel
+      </Link>
     </div>
   );
-};
+}

@@ -13,7 +13,7 @@ export default function Dashboard() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { server_id } = useParams();
-  const { currentChannel } = useParams();
+  const { channel_id } = useParams();
 
   const dataContainerRef = useRef(null);
 
@@ -48,18 +48,7 @@ export default function Dashboard() {
         {/* Left column (channel lists, server list buttons) */}
         <div id="column-1-background">
           <div id="placeholder-column-1" className="column-1">
-            {server_id ? (
-              <ChannelBar serverId={server_id} />
-            ) : (
-              <h1>Server Name Placeholder</h1>
-            )}
-            <Link
-              exact
-              to={`/servers/${server_id}/update`}
-              className="login-logout"
-            >
-              Edit Server
-            </Link>
+            {server_id ? <ChannelBar /> : <h1>Welcome to Biscord</h1>}
             <button onClick={handleLogout} className="login-logout">
               Log Out
             </button>
@@ -70,16 +59,16 @@ export default function Dashboard() {
         <div id="column-2-background">
           <div id="column-2-wrapper">
             <div id="placeholder-column-2" className="scrollable-column">
-              <Chat channel_id={currentChannel} ref={dataContainerRef} />
+              {channel_id ? <Chat ref={dataContainerRef} /> : <h1>Friends</h1>}
             </div>
             <div className="message-form"></div>
           </div>
         </div>
-        <div id="column-3-background">
+        {/* <div id="column-3-background">
           <div id="placeholder-column-3">
             <p>users</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ const POST_CHANNEL = "servers/POST_CHANNEL";
 const EDIT_CHANNEL = "servers/EDIT_CHANNEL";
 const DELETE_CHANNEL = "servers/DELETE_CHANNEL";
 const CURRENT_CHANNEL = "servers/CURRENT_CHANNEL";
-
+const ADD_CHANNEL_TO_STORE = "ADD_CHANNEL_TO_STORE";
 
 // Channel Actions
 const getChannels = (channels) => ({
@@ -25,16 +25,21 @@ export const deleteChannel = (channel) => ({
   channel,
 });
 
-const setCurrentChannel = channelId => ({
+const setCurrentChannel = (channelId) => ({
   type: CURRENT_CHANNEL,
-  channelId
+  channelId,
+});
+
+export const addChannelToStore = (channel) => ({
+  type: ADD_CHANNEL_TO_STORE,
+  channel,
 });
 
 //Channel Thunks
 
 // Get all Channels
-export const getChannelsThunk = (serverId) => async (dispatch) => {
-  const res = await fetch(`/api/servers/${serverId}/channels`);
+export const getChannelsThunk = (server_id) => async (dispatch) => {
+  const res = await fetch(`/api/servers/${server_id}/channels`);
   const data = await res.json();
   dispatch(getChannels(data));
   return data;
@@ -42,22 +47,19 @@ export const getChannelsThunk = (serverId) => async (dispatch) => {
 
 // Adding a new Channel based on serverId
 export const postChannelThunk = (channel) => async (dispatch) => {
-  const { name, serverId, isPrivate } = channel;
-  // const chan = [name, serverId, isPrivate]
-  // console.log('this is the channel', chan);
-  const res = await fetch(`/api/servers/${serverId}/channels`, {
+  const { name, server_id, isPrivate } = channel;
+  const res = await fetch(`/api/servers/${server_id}/channels`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       name,
-      server_id: serverId,
-      private: isPrivate
+      server_id,
+      private: isPrivate,
     }),
   });
   const data = await res.json();
-  dispatch(postChannel(data))
-  console.log("CHANNEL RESPONSE:",res);
-  return data
+  dispatch(postChannel(data));
+  return data;
 };
 
 //Edit a Channel based on its Id
@@ -70,7 +72,7 @@ export const editChannelThunk = (channel) => async (dispatch) => {
     body: JSON.stringify({
       name,
       channel_id,
-      private:isPrivate
+      private: isPrivate,
     }),
   });
 
@@ -89,12 +91,10 @@ export const deleteChannelThunk = (channelId) => async (dispatch) => {
   return data;
 };
 
-
 // Set dashboard Channel by its id
-export const setCurrentChannelThunk = channelId => async dispatch => {
+export const setCurrentChannelThunk = (channelId) => async (dispatch) => {
   dispatch(setCurrentChannel(channelId));
 };
-
 
 // Channels Reducer
 
@@ -122,9 +122,18 @@ export default function reducer(state = {}, action) {
     case CURRENT_CHANNEL:
       const currentChannelState = {
         ...state,
-        currentChannel: action.channelId
+        currentChannel: action.channelId,
       };
       return currentChannelState;
+    case ADD_CHANNEL_TO_STORE:
+      const newChannel = action.channel;
+      return {
+        ...state,
+        allChannels: {
+          ...state.allChannels,
+          [newChannel.id]: newChannel,
+        },
+      };
     default:
       return state;
   }
