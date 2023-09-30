@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getServersThunk, editServerThunk } from "../../store/servers";
 import OpenModalButton from "../OpenModalButton";
 import DeleteServerModal from "../DeleteServerModal";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function EditServerForm() {
   const dispatch = useDispatch();
@@ -18,13 +17,16 @@ export default function EditServerForm() {
   const [imageLoading, setImageLoading] = useState(false);
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  // console.log('IMG URL:', imageUrl);
+  const [imageInput, setImageInput] = useState('');
+  console.log('IMG INPUT:', imageInput);
   const [isPrivate, setIsPrivate] = useState(false);
   const [errors, setErrors] = useState("");
-  console.log('ERRORS:', errors);
-  console.log('ERRORS NAME:', errors.name);
+  // console.log('ERRORS:', errors);
+  // console.log('ERRORS NAME:', errors.name);
 
   useEffect(() => {
-    dispatch(getServersThunk());
+    const servers = dispatch(getServersThunk())
   }, []);
 
   useEffect(() => {
@@ -32,32 +34,38 @@ export default function EditServerForm() {
       setName(server.name);
       setImageUrl(server.image_url);
       setIsPrivate(server.private);
-    }
+    };
   }, [server]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("image_url", imageUrl);
-    formData.append("private", isPrivate);
-    // aws uploads can be a bit slow—displaying
-    // some sort of loading message is a good idea
+    let data;
+    let newImage;
+    if (imageInput) {
+      data = new FormData();
+      data.append("name", name);
+      data.append("image_url", imageInput);
+      data.append("private", isPrivate);
+      newImage = true;
+    } else {
+      data = {
+        name: name,
+        private: isPrivate,
+      };
+      newImage = false;
+    };
+
     try {
       setImageLoading(true);
-      const editedServer = await dispatch(editServerThunk(server_id, formData));
+      const editedServer = await dispatch(
+        editServerThunk(server_id, data, newImage)
+      );
       if (editedServer) {
         history.push(`/app/${server_id}`);
       };
-      // const editedServer = response;
-      // if (editedServer.errors) {
-      //   setErrors(editedServer.errors);
-      //   setImageLoading(false);
-      //   return;
-      // }
     } catch (resErr) {
-      console.log('CAUGHT ERRORS:', resErr);
+      console.error(resErr);
       setImageLoading(false);
       if (Array.isArray(resErr.errors)) {
         setErrors({ name: 'Server name is required' })
@@ -106,7 +114,17 @@ export default function EditServerForm() {
             accept="image/*"
             id="image_url"
             name="image_url"
-            onChange={(e) => setImageUrl(e.target.files[0])}
+            style={{
+              border: 'none',
+              // display: 'none',
+              // width: '1rem',
+              // height: '1rem',
+              // background: 'blue'
+            }}
+            onChange={(e) => {
+              console.log('FILE INPUT:', e.target.files[0]);
+              setImageInput(e.target.files[0]);
+            }}
           />
         </div>
         <div>

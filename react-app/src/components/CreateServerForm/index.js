@@ -14,25 +14,34 @@ const CreateServerForm = () => {
   const [name, setName] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+  const [imageInput, setImageInput] = useState('');
   const [errors, setErrors] = useState({})
 
   const handleSubmit = async e => {
     e.preventDefault();
-    // const defaultImgUrl = 'https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg'
-    // const imgUrlToUse = imageUrl || defaultImgUrl;
-    const formData = new FormData();
-    // if (!imageUrl) setImageUrl('https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg');
-    formData.append("name", name);
-    formData.append("image_url", imageUrl);
-    formData.append("private", isPrivate);
-    formData.append("owner_id", sessionUser.id);
-    // aws uploads can be a bit slow—displaying
-    // some sort of loading message is a good idea
-    // console.log("FORM DATA", formData);
+
+    let data;
+    let newImage;
+    if (imageInput) {
+      data = new FormData();
+      data.append("name", name);
+      data.append("image_url", imageInput);
+      data.append("private", isPrivate);
+      data.append("owner_id", sessionUser.id);
+      newImage = true;
+    } else {
+      data = {
+        name: name,
+        private: isPrivate,
+        owner_id: sessionUser.id
+      };
+      newImage = false;
+    };
+
     let createdServer;
     try {
       setImageLoading(true);
-      createdServer = await dispatch(postServerThunk(formData));
+      createdServer = await dispatch(postServerThunk(data, newImage));
       history.push(`/app/${createdServer.id}`);
       closeModal();
     } catch (errRes) {
@@ -46,7 +55,7 @@ const CreateServerForm = () => {
         });
         setErrors(errorsObj);
       } else {
-        setErrors({ image: 'Server image is required' });
+        setErrors({ image: 'There was an error uploading the image' });
       };
     };
   };
@@ -86,7 +95,7 @@ const CreateServerForm = () => {
             accept="image/*"
             id="image_url"
             name="image_url"
-            onChange={(e) => setImageUrl(e.target.files[0])}
+            onChange={(e) => setImageInput(e.target.files[0])}
           />
         </div>
         <div>

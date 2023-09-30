@@ -82,21 +82,24 @@ def create_server():
     """
     form = ServerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    print('YOU HAVE MADE IT TO THE CREATE SERVER ROUTE')
     if form.validate_on_submit():
 
+        url = None
         image_url=form.data["image_url"]
-        image_url.filename = get_unique_filename(image_url.filename)
-        upload = upload_file_to_s3(image_url)
-        print("image upload", upload)
+        if image_url:
+            image_url.filename = get_unique_filename(image_url.filename)
+            upload = upload_file_to_s3(image_url)
+            print("image upload", upload)
 
-        if "url" not in upload:
-        # if the dictionary doesn't have a url key
-        # it means that there was an error when we tried to upload
-        # so we send back that error message (and we printed it above)
-            errors = [upload]
-            return {'errors': errors}, 400
+            if "url" not in upload:
+            # if the dictionary doesn't have a url key
+            # it means that there was an error when we tried to upload
+            # so we send back that error message (and we printed it above)
+                errors = [upload]
+                return {'errors': errors}, 400
 
-        url = upload["url"]
+            url = upload["url"]
 
         new_server = Server(
             name=form.data["name"],
@@ -123,7 +126,7 @@ def edit_server(server_id):
     """
     Update a server by its ID by an authorized user
     """
-    print('SERVER ID:', server_id)
+    print('YOU HAVE MADE IT TO THE EDIT SERVER ROUTE')
     form = ServerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     server = Server.query.get(server_id)
@@ -134,22 +137,24 @@ def edit_server(server_id):
     if form.validate_on_submit() and server.owner_id == current_user.id:
 
         image_url=form.data["image_url"]
-        image_url.filename = get_unique_filename(image_url.filename)
-        upload = upload_file_to_s3(image_url)
-        print("image upload", upload)
+        if image_url:
+            image_url.filename = get_unique_filename(image_url.filename)
+            upload = upload_file_to_s3(image_url)
+            print("image upload", upload)
 
-        if "url" not in upload:
-        # if the dictionary doesn't have a url key
-        # it means that there was an error when we tried to upload
-        # so we send back that error message (and we printed it above)
-            errors = [upload]
-            return {'errors': errors}, 400
+            if "url" not in upload:
+            # if the dictionary doesn't have a url key
+            # it means that there was an error when we tried to upload
+            # so we send back that error message (and we printed it above)
+                errors = [upload]
+                return {'errors': errors}, 400
 
-        url = upload["url"]
+            url = upload["url"]
+
+            server.image_url = url
 
         server.name = form.data['name']
         server.private = form.data['private']
-        server.image_url = url
 
         db.session.commit()
 
