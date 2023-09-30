@@ -44,47 +44,59 @@ export const getServersThunk = () => async (dispatch) => {
 
 //Create a Server
 export const postServerThunk = (server) => async (dispatch) => {
-  try {
-    const res = await fetch("/api/servers/", {
-      method: "POST",
-      body: server,
-    });
-    if (res.ok) {
-      const data = await res.json();
-      dispatch(postServer(data));
-      // console.log('RES:', data);
-      return data;
-    } else {
-      const errors = await res.json();
-      throw errors;
-    }
-  } catch (error) {
-    throw error;
-  }
+  const res = await fetch("/api/servers/", {
+    method: "POST",
+    body: server,
+  });
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(postServer(data));
+    // console.log('RES:', data);
+    return data;
+  } else {
+    const errors = await res.json();
+    throw errors;
+  };
 };
 
 // Edit a server based on its ID
 export const editServerThunk = (serverId, server) => async (dispatch) => {
   // console.log('SERVER ID:', serverId);
   // console.log('SERVER:', server);
-  try {
-    const res = await fetch(`/api/servers/${serverId}`, {
-      method: "PUT",
-      body: server,
-    });
-    if (res.ok) {
-      const data = await res.json();
-      // console.log('EDIT RESPONSE:', data);
-      dispatch(postServer(data));
-      return data;
-    } else {
-      const errors = await res.json();
-      // console.log('EDIT ERRORS:', errors);
-      throw errors;
-    }
-  } catch (error) {
-    throw error;
-  }
+  const res = await fetch(`/api/servers/${serverId}`, {
+    method: "PUT",
+    body: server,
+  });
+  if (res.ok) {
+    const data = await res.json();
+    console.log('EDIT RESPONSE:', data);
+    dispatch(postServer(data));
+    return data;
+  } else {
+    const errors = await res.json();
+    console.log('EDIT ERRORS:', errors);
+    throw errors;
+  };
+
+  // try {
+  //   const res = await fetch(`/api/servers/${serverId}`, {
+  //     method: "PUT",
+  //     body: server,
+  //   });
+  //   if (res.ok) {
+  //     const data = await res.json();
+  //     console.log('EDIT RESPONSE:', data);
+  //     dispatch(postServer(data));
+  //     return data;
+  //   } else {
+  //     const errors = await res.json();
+  //     console.log('EDIT ERRORS:', errors);
+  //     throw errors;
+  //   }
+  // } catch (error) {
+  //   console.log('CATCH ERRORS:', error);
+  //   throw error;
+  // }
 };
 
 // Delete a Server based on its ID

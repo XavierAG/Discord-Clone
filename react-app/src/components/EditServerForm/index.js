@@ -20,7 +20,8 @@ export default function EditServerForm() {
   const [imageUrl, setImageUrl] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [errors, setErrors] = useState("");
-  let errorsObj = {};
+  console.log('ERRORS:', errors);
+  console.log('ERRORS NAME:', errors.name);
 
   useEffect(() => {
     dispatch(getServersThunk());
@@ -45,26 +46,31 @@ export default function EditServerForm() {
     // some sort of loading message is a good idea
     try {
       setImageLoading(true);
-      const response = await dispatch(editServerThunk(server_id, formData));
-      const editedServer = response;
-      if (editedServer.errors) {
-        setErrors(editedServer.errors);
-        setImageLoading(false);
-        return;
-      }
+      const editedServer = await dispatch(editServerThunk(server_id, formData));
       if (editedServer) {
         history.push(`/app/${server_id}`);
-      }
-    } catch ({ errors }) {
+      };
+      // const editedServer = response;
+      // if (editedServer.errors) {
+      //   setErrors(editedServer.errors);
+      //   setImageLoading(false);
+      //   return;
+      // }
+    } catch (resErr) {
+      console.log('CAUGHT ERRORS:', resErr);
       setImageLoading(false);
-      setErrors(errors);
-    }
+      if (Array.isArray(resErr.errors)) {
+        setErrors({ name: 'Server name is required' })
+      } else {
+        setErrors({ image: 'There was an error loading the image' });
+      };
+    };
   };
 
   return (
     <div>
       <h2>Edit your Server</h2>
-      <h1>{errors}</h1>
+      {/* <h1>{errors}</h1> */}
       <OpenModalButton
         className="login-logout"
         buttonText="Delete Server"
@@ -72,9 +78,9 @@ export default function EditServerForm() {
       ></OpenModalButton>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
-          {errorsObj.name ? (
+          {errors.name ? (
             <label className="error-text" htmlFor="name">
-              Server name is required
+              {errors.name}
             </label>
           ) : (
             <label htmlFor="name">SERVER NAME</label>
@@ -88,9 +94,9 @@ export default function EditServerForm() {
           />
         </div>
         <div>
-          {errorsObj.image_url ? (
+          {errors.image ? (
             <label className="error-text" htmlFor="name">
-              Server image is required
+              {errors.image}
             </label>
           ) : (
             <label htmlFor="name">SERVER IMAGE</label>

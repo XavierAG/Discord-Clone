@@ -35,15 +35,20 @@ const CreateServerForm = () => {
       createdServer = await dispatch(postServerThunk(formData));
       history.push(`/app/${createdServer.id}`);
       closeModal();
-    } catch (errors) {
-      console.log('ERRORS:', errors);
-      // setImageLoading(false);
-      // let errorsObj = {}
-      // errors.forEach(err => {
-      //   const [key, val] = err.split(' : ');
-      //   errorsObj[key] = val;
-      // });
-      // setErrors(errorsObj);
+    } catch (errRes) {
+      console.log('CAUGHT ERRORS:', errRes);
+      setImageLoading(false);
+      if (Array.isArray(errRes.errors)) {
+        // setErrors({ name: 'Server name is required' })
+        let errorsObj = {}
+        errRes.errors.forEach(err => {
+          const [key, val] = err.split(' : ');
+          errorsObj[key] = val;
+        });
+        setErrors(errorsObj);
+      } else {
+        setErrors({ image: 'There was an error loading the image' });
+      };
     };
   };
 
@@ -56,7 +61,7 @@ const CreateServerForm = () => {
             <label
               className="error-text"
               htmlFor="name"
-            >Server name is required</label> :
+            >{errors.name}</label> :
             <label htmlFor="name">Server Name:</label>}
           <input
             type="text"
@@ -67,11 +72,11 @@ const CreateServerForm = () => {
           />
         </div>
         <div>
-          {errors.image_url ?
+          {errors.image ?
             <label
               className="error-text"
               htmlFor="name"
-            >Server image is required</label> :
+            >{errors.image}</label> :
             <label htmlFor="name">Server image</label>}
           <input
             type="file"
