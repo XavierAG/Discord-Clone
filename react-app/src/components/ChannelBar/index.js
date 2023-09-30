@@ -33,6 +33,7 @@ export default function ChannelBar() {
     dispatch(authenticate());
     dispatch(channelStore.getChannelsThunk(server_id));
   }, [dispatch, server_id]);
+
   return (
     <div className="channels-bar-container">
       <div className="server-name">
@@ -55,21 +56,20 @@ export default function ChannelBar() {
       </div>
       <div className="channels-list-container">
         {channels.map((channel) => (
-          <NavLink
+          <a
             key={channel.id}
-            exact
-            to={`/app/${server_id}/${channel.id}`}
+            href={`/app/${server_id}/${channel.id}`}
             className="channel-navlinks"
           >
             <div key={channel.id}>
               <div>
                 <p>{channel.name}</p>
-                <NavLink exact to={`/${server_id}/${channel.id}`}>
+                <a exact to={`/${server_id}/${channel.id}`}>
                   gear
-                </NavLink>
+                </a>
               </div>
             </div>
-          </NavLink>
+          </a>
         ))}
       </div>
     </div>

@@ -4,24 +4,39 @@ import { useModal } from "../../context/Modal";
 import * as channelStore from "../../store/channel";
 import "./CreateChannelModal.css";
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function CreateChannelModal({ server_id }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [name, setName] = useState("");
+  const history = useHistory();
 
   const [isPrivate, setisPrivate] = useState(false);
   const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    return dispatch(
+    const response = await dispatch(
       channelStore.postChannelThunk({
         name,
         server_id,
         isPrivate,
       })
-    ).then(closeModal);
+    );
+    if (response) {
+      const createdChannel = response;
+      if (createdChannel.errors) {
+        setErrors(createdChannel.errors);
+        return;
+      }
+      if (createdChannel) {
+        dispatch(channelStore.addChannelToStore(createdChannel));
+        closeModal();
+        history.push(`/app/${server_id}/${createdChannel.id}`);
+        return;
+      }
+    }
     // .catch(async (res) => {
     //     const data = await res.json()
     //     if (data && data.errors) setErrors(data.errors)

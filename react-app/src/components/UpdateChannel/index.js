@@ -53,10 +53,7 @@ export default function UpdateChannel() {
         isPrivate,
       })
     );
-    console.log("THIS IS NEW DATA", res);
     if (res) {
-      await dispatch(serverStore.setCurrentServerThunk(serverId));
-      await dispatch(channelStore.setCurrentChannelThunk(channel_id));
       history.push(`/app/${server_id}/${channel_id}`);
     } else {
       console.error("update failed");

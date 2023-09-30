@@ -5,6 +5,7 @@ const POST_CHANNEL = "servers/POST_CHANNEL";
 const EDIT_CHANNEL = "servers/EDIT_CHANNEL";
 const DELETE_CHANNEL = "servers/DELETE_CHANNEL";
 const CURRENT_CHANNEL = "servers/CURRENT_CHANNEL";
+const ADD_CHANNEL_TO_STORE = "ADD_CHANNEL_TO_STORE";
 
 // Channel Actions
 const getChannels = (channels) => ({
@@ -27,6 +28,11 @@ export const deleteChannel = (channel) => ({
 const setCurrentChannel = (channelId) => ({
   type: CURRENT_CHANNEL,
   channelId,
+});
+
+export const addChannelToStore = (channel) => ({
+  type: ADD_CHANNEL_TO_STORE,
+  channel,
 });
 
 //Channel Thunks
@@ -53,7 +59,6 @@ export const postChannelThunk = (channel) => async (dispatch) => {
   });
   const data = await res.json();
   dispatch(postChannel(data));
-  console.log("CHANNEL RESPONSE:", res);
   return data;
 };
 
@@ -120,6 +125,15 @@ export default function reducer(state = {}, action) {
         currentChannel: action.channelId,
       };
       return currentChannelState;
+    case ADD_CHANNEL_TO_STORE:
+      const newChannel = action.channel;
+      return {
+        ...state,
+        allChannels: {
+          ...state.allChannels,
+          [newChannel.id]: newChannel,
+        },
+      };
     default:
       return state;
   }
