@@ -19,11 +19,6 @@ class User(db.Model, UserMixin):
 
     servers = db.relationship('Server', back_populates='users', cascade="all, delete")
     messages = db.relationship("Message", back_populates='users', cascade="all, delete")
-<<<<<<< HEAD
-
-
-    members = db.relationship('Server', secondary="members", back_populates="users", cascade= "all, delete")
-=======
     add = db.relationship(
         "User",
         secondary=friends,
@@ -32,7 +27,6 @@ class User(db.Model, UserMixin):
         backref=db.backref("added", lazy="dynamic"),
         lazy="dynamic"
     )
->>>>>>> dev
     @property
     def password(self):
         return self.hashed_password

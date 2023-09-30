@@ -64,8 +64,12 @@ export default function ChannelBar() {
             <div key={channel.id}>
               <div>
                 <p>{channel.name}</p>
-                <NavLink exact to={`/${server_id}/${channel.id}`}>
-                  gear
+                <NavLink
+                  className="update-channel-link"
+                  exact
+                  to={`/${server_id}/${channel.id}`}
+                >
+                  Update Channel
                 </NavLink>
               </div>
             </div>

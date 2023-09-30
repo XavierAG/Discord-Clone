@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store/session";
 import * as channelStore from "../../store/channel";
+import OpenModalButton from "../OpenModalButton";
+import DeleteChannel from "../DeleteChannel";
 import * as serverStore from "../../store/servers";
 import "./UpdateChannel.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -66,6 +68,11 @@ export default function UpdateChannel() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        <OpenModalButton
+          className="login-logout"
+          buttonText="Delete Server"
+          modalComponent={<DeleteChannel channel_id={channel_id} />}
+        ></OpenModalButton>
         <input
           type="text"
           value={name}
