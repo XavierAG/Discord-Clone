@@ -32,4 +32,7 @@ def friends(id):
     """
     user = User.query.get(id)
     friends = user.add.all()
+    # user.add gets persons friends
+    # user.added gets people who have added that user
+    # if user.add = user.added = friends
     return {'friends': [friend.to_dict() for friend in friends]}
