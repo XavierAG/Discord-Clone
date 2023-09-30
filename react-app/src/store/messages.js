@@ -26,7 +26,7 @@ const deleteMessage = (messageId) => ({
 });
 
 // Thunks
-
+//
 // Get all Messages for a Channel
 export const getchannelMessagesThunk = (channelId) => async (dispatch) => {
   const res = await fetch(`/api/channels/${channelId}/messages`);
