@@ -11,7 +11,7 @@ import "./ChannelBar.css";
 import UpdateChannel from "../UpdateChannel";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons'; // Import the specific icon you want to use
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons'; // Import the specific icon you want to use
 
 // Rest of your code
 
@@ -19,6 +19,7 @@ export default function ChannelBar() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [message, setMessage] = useState([]);
+  const [nav, setNav] = useState(false);
   const { server_id } = useParams();
 
   // Key into flattened server data for server properties
@@ -42,15 +43,15 @@ export default function ChannelBar() {
     <div className="channels-bar-container">
       <div className="server-name">
         <h1>{currentServer.name}</h1>
-        <FontAwesomeIcon icon={faPlus} />
+        <FontAwesomeIcon className="drop-down" icon={faCaretDown} />
+      </div>
         <Link
           exact
           to={`/servers/${server_id}/update`}
-          className="login-logout"
+          className="edit-server"
         >
           Edit Server
         </Link>
-      </div>
       <div className="channel">
         <p>CHANNELS</p>
         <OpenModalButton

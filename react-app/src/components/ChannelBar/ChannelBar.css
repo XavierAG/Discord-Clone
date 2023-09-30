@@ -32,4 +32,14 @@ flex-direction: row
     flex-direction: row;
     color: white;
     border: 1px solid black;
+    font-size: 10px;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+.drop-down{
+    font-size: 12px;
+}
+.edit-server{
+    
 }
