@@ -64,13 +64,13 @@ export const postServerThunk = (server) => async (dispatch) => {
 };
 
 // Edit a server based on its ID
-export const editServerThunk = (serverId, server) => async dispatch => {
+export const editServerThunk = (serverId, server) => async (dispatch) => {
   // console.log('SERVER ID:', serverId);
   // console.log('SERVER:', server);
   try {
     const res = await fetch(`/api/servers/${serverId}`, {
       method: "PUT",
-      body: server
+      body: server,
     });
     if (res.ok) {
       const data = await res.json();
@@ -84,7 +84,7 @@ export const editServerThunk = (serverId, server) => async dispatch => {
     }
   } catch (error) {
     throw error;
-  };
+  }
 };
 
 // Delete a Server based on its ID
@@ -93,7 +93,7 @@ export const deleteServerThunk = (serverId) => async (dispatch) => {
     method: "DELETE",
   });
   const data = await res.json();
-  console.log('DELETE RES:', data);
+  console.log("DELETE RES:", data);
   dispatch(deleteServer(serverId));
   return data;
 };
@@ -113,32 +113,35 @@ export default function reducer(state = initialState, action) {
     case GET_SERVERS:
       const getAllState = {};
       const { servers } = action.servers;
-      servers.map(server => (
-        getAllState[server.id] = {
-          ...server,
-          members: server.members
-            .map(member => member = { ...member })
-        }
-      ));
+      servers.map(
+        (server) =>
+          (getAllState[server.id] = {
+            ...server,
+            // members: server.members
+            //   .map(member => member = { ...member })
+          })
+      );
       return { allServers: getAllState };
     case POST_SERVERS:
       const postState = {};
-      const postAllArr = Object.values(state.allServers)
-      postAllArr.map(server => (
-        postState[server.id] = {
-          ...server,
-          members: server.members
-            .map(member => member = { ...member })
-        }
-      ));
+      const postAllArr = Object.values(state.allServers);
+      postAllArr.map(
+        (server) =>
+          (postState[server.id] = {
+            ...server,
+            // members: server.members.map((member) => (member = { ...member })),
+          })
+      );
       postState[action.server.id] = {
         ...action.server,
-        members: action.server.members
-          .map(member => (member = { ...member }))
+        // members: action.server.members
+        //   .map
+        // // (member) => (member = { ...member })
+        // (),
       };
       return {
         allServers: postState,
-        currentServer: action.server.id
+        currentServer: action.server.id,
       };
     // case EDIT_SERVERS: {
     //   const newState = { ...state };
@@ -148,14 +151,14 @@ export default function reducer(state = initialState, action) {
     case DELETE_SERVERS:
       const deleteState = {};
       const delAllArr = Object.values(state.allServers);
-      console.log('ALL SERVERS ARRAY:', delAllArr)
-      delAllArr.map(server => (
-        deleteState[server.id] = {
-          ...server,
-          members: server.members
-            .map(member => member = { ...member })
-        }
-      ));
+      console.log("ALL SERVERS ARRAY:", delAllArr);
+      delAllArr.map(
+        (server) =>
+          (deleteState[server.id] = {
+            ...server,
+            // members: server.members.map((member) => (member = { ...member })),
+          })
+      );
       delete deleteState[action.serverId];
       return deleteState;
     case CURRENT_SERVER:

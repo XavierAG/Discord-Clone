@@ -31,9 +31,8 @@ def handle_delete_channel(data):
     socketio.emit("delete_channel", data)
 
 @socketio.on("chat")
-def handle_add_message(data, channel_id):
-    print(channel_id)
-    emit("chat", data, channel_id, broadcast=True)
+def handle_add_message(data):
+    emit("chat", data, broadcast=True)
 
 
 def handle_edit_message(data, channel_id):

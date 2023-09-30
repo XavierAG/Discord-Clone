@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as messageStore from "../../store/messages";
 import { authenticate } from "../../store/session";
-import { io } from "socket.io-client";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import "./index.css";
 
@@ -13,28 +12,44 @@ export default function MessageForm() {
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const messagesState = useSelector((state) => state.messages);
+  const currentChannel = useSelector((state) => state.channels.currentChannel);
   const sessionUser = useSelector((state) => state.session.user);
   const messagesArray = Object.values(messagesState);
   const [messages, setMessages] = useState([]);
   const [chatInput, setChatInput] = useState("");
+  const [empty, setEmpty] = useState(true);
+  const messagesContainerRef = useRef(null);
 
   const allChannels = useSelector((state) =>
     state.channels.allChannels ? state.channels.allChannels : {}
   );
 
-  useEffect(() => {
-    //Open Socket Connection
-    socket = io();
+  // useEffect(() => {
+  //   // open socket connection
+  //   // create websocket
+  //   socket = io();
 
-    socket.on("chat", (chat) => {
-      setMessages((messages) => [...messages, chat]);
-    });
+  //   socket.on("chat", (chat) => {
+  //     setMessages((messages) => [...messages, chat]);
+  //   });
+  //   // when component unmounts, disconnect
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
-    //disconnect on unmount
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  // useEffect(() => {
+  //   if (currentChannel && messagesArray.length) {
+  //     setEmpty(false);
+  //     // Scroll to the bottom of the messages container
+  //     if (messagesContainerRef.current) {
+  //       messagesContainerRef.current.scrollTop =
+  //         messagesContainerRef.current.scrollHeight;
+  //     }
+  //   } else {
+  //     setEmpty(true);
+  //   }
+  // }, [currentChannel, messages]);
 
   let name;
 
@@ -44,7 +59,7 @@ export default function MessageForm() {
       name = value["name"];
     }
   }
-  //   const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
   //     e.preventDefault();
   //     const data = {
   //       content: message,
@@ -56,9 +71,9 @@ export default function MessageForm() {
   };
 
   // const sendChat = async (e) => {
-  //   e.preventDefault();
+  // e.preventDefault();
 
-  //   try {
+  // try {
   //     dispatch(authenticate());
   //     dispatch(
   //       messageStore.sendMessageThunk(currentChannel, {
@@ -75,10 +90,10 @@ export default function MessageForm() {
 
   //     // Fetch the updated messages after sending the message
   //     dispatch(messageStore.getchannelMessagesThunk(currentChannel));
-  //   } catch (error) {
+  // } catch (error) {
   //     // Handle any errors that occur during message sending or fetching
   //     console.error("Error sending message:", error);
-  //   }
+  // }
   // };
 
   const handleSubmit = async (e) => {
@@ -96,23 +111,34 @@ export default function MessageForm() {
 
       // Fetch the updated messages after sending the message
       await dispatch(messageStore.getchannelMessagesThunk(channel_id));
+      socket.emit("chat", { user: sessionUser.id, content: chatInput });
+      setChatInput("");
     } catch (error) {
       // Handle any errors that occur during message sending or fetching
       console.error("Error sending message:", error);
     }
   };
   return (
-    <div className="form">
-      <form onSubmit={handleSubmit}>
-        <button type="button">+</button>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder={`Message #${name}`}
-        ></input>
-      </form>
-    </div>
+    <>
+      <div id="channel-messages-container" ref={messagesContainerRef}>
+        {messages.map((message, ind) => (
+          <div key={ind} id="message-container">
+            {`${message.user}: ${message.content}`}
+          </div>
+        ))}
+      </div>
+
+      <div className="form">
+        <form onSubmit={handleSubmit}>
+          <button type="button">+</button>
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder={`Message #${name}`}
+          ></input>
+        </form>
+      </div>
+    </>
   );
 }
-

@@ -23,3 +23,16 @@ def user(id):
     """
     user = User.query.get(id)
     return user.to_dict()
+
+@user_routes.route('/<int:id>/friends')
+@login_required
+def friends(id):
+    """
+    Query for a user by id and returns that user in a dictionary
+    """
+    user = User.query.get(id)
+    friends = user.add.all()
+    # user.add gets persons friends
+    # user.added gets people who have added that user
+    # if user.add = user.added = friends
+    return {'friends': [friend.to_dict() for friend in friends]}
