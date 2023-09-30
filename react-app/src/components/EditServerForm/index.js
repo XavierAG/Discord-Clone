@@ -62,7 +62,7 @@ export default function EditServerForm() {
       if (Array.isArray(resErr.errors)) {
         setErrors({ name: 'Server name is required' })
       } else {
-        setErrors({ image: 'There was an error loading the image' });
+        setErrors({ image: 'Server image is required' });
       };
     };
   };

@@ -39,7 +39,6 @@ const CreateServerForm = () => {
       console.log('CAUGHT ERRORS:', errRes);
       setImageLoading(false);
       if (Array.isArray(errRes.errors)) {
-        // setErrors({ name: 'Server name is required' })
         let errorsObj = {}
         errRes.errors.forEach(err => {
           const [key, val] = err.split(' : ');
@@ -47,7 +46,7 @@ const CreateServerForm = () => {
         });
         setErrors(errorsObj);
       } else {
-        setErrors({ image: 'There was an error loading the image' });
+        setErrors({ image: 'Server image is required' });
       };
     };
   };
@@ -57,11 +56,13 @@ const CreateServerForm = () => {
       <h2>Add a New Server</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
-          {errors.name ?
+          {errors.name
+            ?
             <label
               className="error-text"
               htmlFor="name"
-            >{errors.name}</label> :
+            >Server name is required</label>
+            :
             <label htmlFor="name">Server Name:</label>}
           <input
             type="text"
@@ -72,11 +73,13 @@ const CreateServerForm = () => {
           />
         </div>
         <div>
-          {errors.image ?
+          {errors.image
+            ?
             <label
               className="error-text"
               htmlFor="name"
-            >{errors.image}</label> :
+            >{errors.image}</label>
+            :
             <label htmlFor="name">Server image</label>}
           <input
             type="file"
