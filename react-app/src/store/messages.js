@@ -42,15 +42,15 @@ export const getchannelMessagesThunk = (channelId) => async (dispatch) => {
 
 // Send a Message based on Channel id
 export const sendMessageThunk = (data) => async (dispatch) => {
-  const { channel_id, content, owner_id } = data;
+  const { channel_id, messageContent, sessionUser } = data;
   try {
     const res = await fetch(`/api/channels/${channel_id}/messages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        content,
+        content: messageContent,
         channel_id,
-        owner_id,
+        owner_id: sessionUser.id,
       }),
     });
     const message = await res.json();
@@ -103,7 +103,7 @@ export default function messagesReducer(state = initialState, action) {
       messages.forEach(
         (message) => (channelMessagesState[message.id] = { ...message })
       );
-      return { channelMessagesState: { ...channelMessagesState } };
+      return channelMessagesState;
     case SEND_MESSAGE:
       const sendState = { ...state, [action.message.id]: action.message };
       return sendState;
