@@ -45,6 +45,7 @@ export default function ChannelBar() {
         <h1>{currentServer.name}</h1>
         <FontAwesomeIcon className="drop-down" icon={faCaretDown} />
       </div>
+      <div className="server-setting-nav">
         <Link
           exact
           to={`/servers/${server_id}/update`}
@@ -52,6 +53,8 @@ export default function ChannelBar() {
         >
           Edit Server
         </Link>
+
+      </div>
       <div className="channel">
         <p>CHANNELS</p>
         <OpenModalButton
