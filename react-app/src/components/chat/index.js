@@ -16,9 +16,6 @@ const Chat = () => {
 
   // Fetching channel_id from route
   const { channel_id } = useParams();
-
-  //Fetching Channel
-  //   const currentChannel = useSelector((state) => state.channels.currentChannel);
   const dispatch = useDispatch();
 
   //Fetching state for Message
@@ -26,7 +23,6 @@ const Chat = () => {
   console.log("messagestate", messageState);
   const messagesArray = Object.values(messageState);
   console.log("messageArray", messagesArray);
-  const newArray = [];
 
   // Manually tracking scroll on the Message-DOM
   const [empty, setEmpty] = useState(true);
@@ -55,8 +51,6 @@ const Chat = () => {
   //Fetching all messages with the Message thunk
   useEffect(() => {
     dispatch(messageStore.getchannelMessagesThunk(channel_id));
-    newArray.push(messagesArray);
-    console.log("newArray", newArray);
   }, [dispatch, channel_id]);
 
   //Keeping Track of new Messages, pushing to the user to user(Scroll-Down)
@@ -91,7 +85,9 @@ const Chat = () => {
   //Handling submit
   const sendChat = async (e) => {
     e.preventDefault();
-    const messageContent = chatInput; // Create a copy of chatInput
+    const setMessage = chatInput; // Create a copy of chatInput
+    const messageContent = chatInput;
+    console.log("THIS IS MESSAGE SOCKET", messageContent);
     socket.emit("chat", { user: sessionUser.id, content: messageContent });
     setChatInput(""); // Reset chatInput
 
@@ -100,28 +96,26 @@ const Chat = () => {
       owner_id: sessionUser.id,
     };
 
-    try {
-      // Send the message
-      // await dispatch(authenticate());
-      await dispatch(messageStore.sendMessageThunk(channel_id, data));
-
-      // Fetch the updated messages after sending the message
-      await dispatch(messageStore.getchannelMessagesThunk(channel_id));
-      //   socket.emit("chat", { user: sessionUser.id, content: message });
-    } catch (error) {
-      // Handle any errors that occur during message sending or fetching
-      console.error("Error sending message:", error);
-    }
+    dispatch(
+      messageStore.sendMessageThunk({ channel_id, messageContent, sessionUser })
+    );
   };
 
   return (
     sessionUser && (
       <div>
         <div id="channel-messages-container" ref={messagesContainerRef}>
-          {newArray.map((messages, ind) => (
-            <div
-              key={ind}
-            >{`${sessionUser.username}: ${messages.content}`}</div>
+          {messagesArray
+            .filter((messages) => messages.content) // Filter messages with content
+            .map((messages, ind) => (
+              <div
+                key={ind}
+              >{`${sessionUser.username}: ${messages.content}`}</div>
+            ))}
+          {message.map((messages, ind) => (
+            <div key={ind}>
+              {`${sessionUser.username}: ${messages.content}`}
+            </div>
           ))}
         </div>
         <div className="form">
