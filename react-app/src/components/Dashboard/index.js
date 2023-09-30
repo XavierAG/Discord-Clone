@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { authenticate, logout } from "../../store/session";
+import { authenticate, logout, deleteUserThunk } from "../../store/session";
 import ChannelBar from "../ChannelBar";
 import ServersBar from "../ServersBar";
 import Chat from "../chat";
@@ -14,6 +14,7 @@ export default function Dashboard() {
   const history = useHistory();
   const { server_id } = useParams();
   const { channel_id } = useParams();
+  const { user_id } = useParams();
 
   const dataContainerRef = useRef(null);
 
@@ -37,6 +38,17 @@ export default function Dashboard() {
     dispatch(logout()).then(() => history.push("/"));
   };
 
+  const handleDeleteUser = (e) => {
+    e.preventDefault();
+    // Ensure that user_id is defined and valid before dispatching the action
+    if (user_id) {
+      dispatch(deleteUserThunk(user_id)).then(() => history.push("/"));
+    } else {
+      // Handle the case where user_id is undefined or invalid
+      console.error("Invalid user_id");
+    }
+  };
+
   return (
     <div id="dashboard-container">
       {/* Side navbar */}
@@ -51,6 +63,9 @@ export default function Dashboard() {
             {server_id ? <ChannelBar /> : <h1>Welcome to Biscord</h1>}
             <button onClick={handleLogout} className="login-logout">
               Log Out
+            </button>
+            <button onClick={handleDeleteUser} className="login-logout">
+              Delete
             </button>
           </div>
         </div>
