@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import * as sessionActions from "../../store/session";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import * as text from "../../assets/helpers/block-text.js";
 import "./LoginForm.css";
@@ -34,25 +33,15 @@ function LoginFormPage({ toggleProp }) {
     }
   };
 
-  const demoUser = async () => {
-    try {
-      const data = await dispatch(
-        sessionActions.login({ email: "demo@aa.io", password: "password" })
+  const demoUser = async() => {
+    const email = 'demo@aa.io'
+    const  password = 'password'
+        const demoData = await dispatch(login(email, password)
       );
+      
+      console.log("Demo Data:", demoData); // Log the data returned from the login action
+      
 
-      console.log("Demo User Data:", data); // Log the data returned from the login action
-
-      if (!data) {
-        console.log("Login failed.");
-        setErrors(["Login failed."]); // Update errors state if login fails
-      } else {
-        console.log("Login successful.");
-        history.push("/app"); // Redirect to the desired page upon successful login
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
-      setErrors(["An error occurred during login."]); // Handle any login errors
-    }
   };
 
   // const handleDemoLogin = () => {

@@ -8,8 +8,11 @@
 .channel-list-container{
     padding-left: 10px;
 }
-.create-channel .channel{
-    width: 100%;
+
+.create-bar-container{
+    display: flex;
+    flex-direction: column;
+    color: white;
 }
 
 .update-channel-link {
@@ -17,4 +20,26 @@ text-decoration: none;
 color: rgb(210, 224, 12);
 display: flex;
 flex-direction: row
+}
+.channel{
+    display: flex;
+    flex-direction: row;
+    color: white;
+    width: 100%;
+}
+.server-name{
+    display: flex;
+    flex-direction: row;
+    color: white;
+    border: 1px solid black;
+    font-size: 10px;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+.drop-down{
+    font-size: 12px;
+}
+.edit-server{
+    
 }
