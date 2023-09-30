@@ -26,7 +26,7 @@ const deleteMessage = (messageId) => ({
 });
 
 // Thunks
-
+//
 // Get all Messages for a Channel
 export const getchannelMessagesThunk = (channelId) => async (dispatch) => {
   const res = await fetch(`/api/channels/${channelId}/messages`);
@@ -37,13 +37,17 @@ export const getchannelMessagesThunk = (channelId) => async (dispatch) => {
 };
 
 // Send a Message based on Channel id
-export const sendMessageThunk = (channelId, data) => async (dispatch) => {
-  console.log("SEND MESSAGE FETCH RESPONSE:", channelId, data);
+export const sendMessageThunk = (data) => async (dispatch) => {
+  const { channel_id, messageContent, sessionUser } = data;
   try {
-    const res = await fetch(`/api/channels/${channelId}/messages`, {
+    const res = await fetch(`/api/channels/${channel_id}/messages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        content: messageContent,
+        channel_id,
+        owner_id: sessionUser,
+      }),
     });
     const message = res.json();
     // console.log('SEND MESSAGE FETCH RESPONSE:', message);

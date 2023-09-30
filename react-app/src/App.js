@@ -12,6 +12,7 @@ import Dashboard from "./components/Dashboard";
 import ServerSearch from "./components/ServerSearch";
 import UpdateChannel from "./components/UpdateChannel";
 import Friends from "./components/Friends";
+import Chat from "./components/chat";
 // import Navigation from "./components/Navigation";
 // import ChannelBar from "./components/ChannelList";
 // import ServersBar from "./components/ServersBar";
@@ -49,6 +50,9 @@ function App() {
           </Route>
           <Route exact path="/servers/:serverId">
             <EditServerForm />
+          </Route>
+          <Route exact path="/chat/message">
+            <Chat />
           </Route>
           <Route exact path="/app">
             <Dashboard />
