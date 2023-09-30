@@ -79,7 +79,7 @@ def send_message(channel_id):
         db.session.add(new_message)
         db.session.commit()
 
-        handle_add_message(new_message.to_dict(), channel_id) #Passing in Channel_id as argument(socket event)
+        handle_add_message(new_message.to_dict()) #Passing in Channel_id as argument(socket event)
         return new_message.to_dict()
     else:
         errors = validation_errors_to_error_messages(form.errors)

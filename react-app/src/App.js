@@ -57,6 +57,9 @@ function App() {
           <Route exact path="/app">
             <Dashboard />
           </Route>
+          {/* <Route exact path="/app/:user_id">
+            <Dashboard />
+          </Route> */}
           <Route exact path="/app/:server_id">
             <Dashboard />
           </Route>

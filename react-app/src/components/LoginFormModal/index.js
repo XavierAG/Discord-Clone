@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { login } from "../../store/session";
 import { useDispatch } from "react-redux";
+import * as sessionActions from "../../store/session";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 
@@ -19,8 +20,18 @@ function LoginFormModal() {
     if (data) {
       setErrors(data);
     } else {
-      closeModal()
+      closeModal();
     }
+  };
+
+  const demoUser = (e) => {
+    e.preventDefault();
+    return dispatch(
+      sessionActions.login({ email: "demo@aa.io", password: "password" })
+    ).then(() => {
+      closeModal();
+      history.push("/app");
+    });
   };
 
   return (
@@ -51,10 +62,9 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit">Log In</button>
-        <Link
-          to='#'
-          onClick={e => setToggle(true)}
-        >Register</Link>
+        <Link to="#" onClick={(e) => setToggle(true)}>
+          Register
+        </Link>
       </form>
     </>
   );
