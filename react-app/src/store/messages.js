@@ -3,6 +3,7 @@ const GET_MESSAGES = "messages/GET_MESSAGES";
 const SEND_MESSAGE = "messages/SEND_MESSAGE";
 const EDIT_MESSAGE = "messages/EDIT_MESSAGE";
 const DELETE_MESSAGE = "messages/DELETE_MESSAGE";
+const ADD_MESSAGE_TO_STORE = "ADD_MESSAGE_TO_STORE";
 
 // Action creators
 const getChannelMessages = (messages) => ({
@@ -24,6 +25,10 @@ const deleteMessage = (messageId) => ({
   type: DELETE_MESSAGE,
   messageId,
 });
+export const addMessageToStore = (message) => ({
+  type: ADD_MESSAGE_TO_STORE,
+  message,
+});
 
 // Thunks
 //
@@ -31,7 +36,6 @@ const deleteMessage = (messageId) => ({
 export const getchannelMessagesThunk = (channelId) => async (dispatch) => {
   const res = await fetch(`/api/channels/${channelId}/messages`);
   const data = await res.json();
-  console.log("CHANNEL MESSAGES FETCH RESPONSE:", data);
   dispatch(getChannelMessages(data));
   return data;
 };
@@ -46,10 +50,10 @@ export const sendMessageThunk = (data) => async (dispatch) => {
       body: JSON.stringify({
         content: messageContent,
         channel_id,
-        owner_id: sessionUser,
+        owner_id: sessionUser.id,
       }),
     });
-    const message = res.json();
+    const message = await res.json();
     // console.log('SEND MESSAGE FETCH RESPONSE:', message);
     dispatch(sendMessage(message));
     return message;
@@ -94,7 +98,7 @@ const initialState = {};
 export default function messagesReducer(state = initialState, action) {
   switch (action.type) {
     case GET_MESSAGES:
-      const channelMessagesState = {};
+      let channelMessagesState = {};
       const { messages } = action.messages;
       messages.forEach(
         (message) => (channelMessagesState[message.id] = { ...message })
@@ -110,6 +114,16 @@ export default function messagesReducer(state = initialState, action) {
       const deleteState = { ...state };
       delete deleteState[action.messageId];
       return deleteState;
+    case ADD_MESSAGE_TO_STORE:
+      const newMessage = action.message;
+      console.log("GETTING SPREAD", newMessage);
+      return {
+        ...state,
+        channelMessagesState: {
+          ...state.channelMessagesState,
+          [newMessage.id]: newMessage,
+        },
+      };
     default:
       return state;
   }

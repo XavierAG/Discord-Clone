@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as messageStore from "../../store/messages";
 import { authenticate } from "../../store/session";
-import { io } from "socket.io-client";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import "./index.css";
 
