@@ -1,0 +1,12 @@
+.friend-pic {
+  height: 48px;
+  width: 48px;
+  border: 1px solid transparent;
+  border-radius: 24px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.friend-pic:hover {
+  border-radius: 16px;
+}
