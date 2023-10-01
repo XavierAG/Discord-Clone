@@ -7,8 +7,9 @@ const Friends = () => {
   const sessionUser = useSelector((state) => state.session.user);
   const [showFriends, setShowFriends] = useState(true);
 
-  const [friends, setFriends] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [friends, setFriends] = useState("");
+
+  const [users, setUsers] = useState("");
   const toggleTab = (showFriendsTab) => {
     setShowFriends(showFriendsTab);
   };
@@ -49,6 +50,8 @@ const Friends = () => {
     });
   };
 
+  if(!friends || !users) return null;
+
   return (
     <div>
       <div className="friends-buttons">
@@ -77,6 +80,7 @@ const Friends = () => {
         <ul className="listed-names">
           {friends.map((friend) => (
             <li className="li-friends" key={friend.id}>
+              <img className="server-pic"  src={friend.image_url} />
               <p className="listed-name">{friend.username}</p>
             </li>
           ))}
@@ -91,7 +95,7 @@ const Friends = () => {
                 {isFriend(user.id) ? (
                   <span className="checkmark">✔</span>
                 ) : (
-                  <button onClick={addFriend(user.id)}>add</button>
+                  <button onClick={() => addFriend(user.id)}>add</button>
                 )}
               </li>
             ))}
