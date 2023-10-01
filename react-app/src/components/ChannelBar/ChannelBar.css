@@ -83,7 +83,7 @@ color: rgb(201, 201, 201);
     text-decoration: none;
     color: white;
 }
-@media (max-width: 1165px) {
+@media (max-width: 1132px) {
     #inner-channel {
         width: 170px; /* Adjust styles for smaller screens if necessary */
     }
