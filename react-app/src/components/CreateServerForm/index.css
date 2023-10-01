@@ -19,7 +19,14 @@
   font-size: 18px;
   font-weight: bolder;
   color: #060607;
-  /* margin: 1rem .4rem 0; */
+  margin-bottom: .4rem;
+}
+
+#create-server-caption {
+  color: #4E5058;
+  font-size: 14px;
+  text-align: center;
+  width: 60%;
 }
 
 .create-server-item {
@@ -29,13 +36,6 @@
   letter-spacing: .75px;
   font-weight: 600;
   color: #4E5058;
-}
-
-#create-server-caption {
-  color: #4E5058;
-  font-size: 14px;
-  text-align: center;
-  width: 90%;
 }
 
 .create-server-input {
@@ -68,8 +68,15 @@
 }
 
 #image_url {
+  cursor: pointer;
   font-weight: bolder;
   color: #4E5058;
+}
+
+#server-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
 }
 
 #server-private-section {
@@ -82,6 +89,7 @@
   padding: 1rem;
   display: flex;
   justify-content: space-between;
+  border-radius: 0 0 .25rem .25rem;
 }
 
 #create-server-back {

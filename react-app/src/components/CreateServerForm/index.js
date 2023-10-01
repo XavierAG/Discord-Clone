@@ -68,7 +68,8 @@ const CreateServerForm = () => {
         <h2
           id="create-server-heading"
         >Customize your server</h2>
-        <p id="create-server-caption">{createServerCaption}</p>
+        <p id="create-server-caption"
+        >{createServerCaption.slice(0, 59)}</p>
         <form
           id="create-server-form"
           onSubmit={handleSubmit}
@@ -99,7 +100,7 @@ const CreateServerForm = () => {
                   htmlFor="name">SERVER IMAGE</label>}
             </div>
           </section>
-          <section>
+          <section id="server-form-section">
             {errors.name
               ?
               <label
