@@ -36,7 +36,7 @@ const Friends = () => {
             <img
               alt="friend"
               className="friend-pic"
-              src={friend.img_url}
+              src={friend.image_url}
             />
             <p>{friend.username}</p>
           </li>
