@@ -7,8 +7,10 @@ import ServersBar from "../ServersBar";
 import Chat from "../chat";
 import ChannelMessages from "../ChannelMessages";
 import MessageForm from "../MessageForm";
+import ServerDetailPage from "../ServerDetailPage";
 import "./index.css";
 import Friends from "../Friends";
+import WelcomeChannel from "../WelcomeChannel";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -47,6 +49,10 @@ export default function Dashboard() {
       console.error("Invalid user_id");
     }
   };
+  if (!sessionUser) {
+    history.push("/");
+    return null;
+  }
 
   return (
     <div id="dashboard-container">
@@ -59,8 +65,8 @@ export default function Dashboard() {
         {/* Left column (channel lists, server list buttons) */}
         <div id="column-1-background">
           <div id="placeholder-column-1" className="column-1">
-            {server_id ? <ChannelBar /> : <h1>Welcome to Biscord</h1>}
-            <button onClick={handleLogout} className="login-logout">
+            {server_id ? <ChannelBar /> : <WelcomeChannel />}
+            <button onClick={handleLogout} className="logout">
               Log Out
             </button>
           </div>
@@ -72,7 +78,7 @@ export default function Dashboard() {
             {channel_id ? (
               <Chat ref={dataContainerRef} />
             ) : server_id ? (
-              <h1>SERVER DETAILS</h1>
+              <ServerDetailPage />
             ) : (
               <h1>
                 <Friends />

@@ -28,6 +28,7 @@ export default function ChannelBar() {
   const [nav, setNav] = useState(false);
   const [divColor, setDivColor] = useState({});
   const { server_id } = useParams();
+  const sessionUser = useSelector((state) => state.session.user);
 
   // Key into flattened server data for server properties
   const currentServer = useSelector((state) =>
@@ -81,16 +82,21 @@ export default function ChannelBar() {
     dispatch(authenticate());
     dispatch(channelStore.getChannelsThunk(server_id));
   }, [dispatch, server_id]);
+  if (!sessionUser) {
+    return null;
+  }
 
   return (
     <div className="channels-bar-container">
       <div className="server-name">
         <h1>{currentServer.name}</h1>
-        <FontAwesomeIcon
-          className="drop-down"
-          onClick={handleCarrotClick}
-          icon={faCaretDown}
-        />
+        {sessionUser.id === currentServer.owner_id && (
+          <FontAwesomeIcon
+            className="drop-down"
+            onClick={handleCarrotClick}
+            icon={faCaretDown}
+          />
+        )}
       </div>
       {/* if carrot is clicked it opens the nav */}
       {nav && (

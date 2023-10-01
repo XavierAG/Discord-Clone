@@ -59,3 +59,10 @@
     overflow-x: hidden;
     overflow-y: hidden;
   }
+
+  .logout {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 20px;
+    left: 125px;
+  }

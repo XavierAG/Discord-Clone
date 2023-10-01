@@ -50,7 +50,7 @@ const Friends = () => {
     });
   };
 
-  if(!friends || !users) return null;
+  if (!friends || !users) return null;
 
   return (
     <div>
@@ -80,7 +80,7 @@ const Friends = () => {
         <ul className="listed-names">
           {friends.map((friend) => (
             <li className="li-friends" key={friend.id}>
-              <img className="server-pic"  src={friend.image_url} />
+              <img className="server-pic" src={friend.image_url} />
               <p className="listed-name">{friend.username}</p>
             </li>
           ))}
@@ -95,7 +95,14 @@ const Friends = () => {
                 {isFriend(user.id) ? (
                   <span className="checkmark">✔</span>
                 ) : (
-                  <button onClick={() => addFriend(user.id)}>add</button>
+                  <button
+                    onClick={() => {
+                      addFriend(user.id);
+                      window.location.reload();
+                    }}
+                  >
+                    add
+                  </button>
                 )}
               </li>
             ))}
