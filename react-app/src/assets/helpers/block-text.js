@@ -15,3 +15,7 @@ export const techUsed = ['Flask', 'SQLAlchemy', 'React', 'React-Redux'];
 // LOGIN
 export const loginHeading = 'Welcome back!'
 export const loginSubheading = "We're so excited to see you again!"
+
+
+// CREATE SERVER
+export const createServerCaption = 'Give your new server a personality with a name and an icon. You can always change it later.'

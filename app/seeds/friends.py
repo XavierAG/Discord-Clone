@@ -4,15 +4,21 @@ from sqlalchemy.sql import text
 
 def seed_friends():
 
-    demo = User.query.filter_by(username='Demo').first()
-    marnie = User.query.filter_by(username='marnie').first()
+    demo1 = User.query.filter_by(username='demo1').first()
+    demo2 = User.query.filter_by(username='demo2').first()
     bobbie = User.query.filter_by(username='bobbie').first()
+    jack =   User.query.filter_by(username='jack').first()
+    chris =   User.query.filter_by(username='chris').first()
+    jimmy =   User.query.filter_by(username='jimmy').first()
+    xavier =   User.query.filter_by(username='xavier').first()
 
     # Establish friendships
-    demo.add.append(marnie)
-    demo.add.append(bobbie)
-    marnie.add.append(demo)
-    bobbie.add.append(demo)
+    demo1.add.append(demo2)
+    demo1.add.append(bobbie)
+    demo1.add.append(jack)
+    demo1.add.append(chris)
+
+
 
     # Commit the changes
     db.session.commit()

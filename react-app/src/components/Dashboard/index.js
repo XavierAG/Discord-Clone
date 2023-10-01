@@ -50,9 +50,9 @@ export default function Dashboard() {
   return (
     <div id="dashboard-container">
       {/* Side navbar */}
-      <div className="dashboard-serverbar">
+      <section className="dashboard-serverbar">
         <ServersBar />
-      </div>
+      </section>
 
       <div id="dashboard-columns-container">
         {/* Left column (channel lists, server list buttons) */}
