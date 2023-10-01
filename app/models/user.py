@@ -14,15 +14,16 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    image_url = db.Column(db.String(255))
+    image_url = db.Column(db.String(255), nullable=True)
+
 
     servers = db.relationship('Server', back_populates='users', cascade="all, delete")
     messages = db.relationship("Message", back_populates='users', cascade="all, delete")
     add = db.relationship(
         "User",
         secondary=friends,
-        primaryjoin=(friends.c.friend_id == id),
-        secondaryjoin=(friends.c.the_friend_id == id),
+        primaryjoin=(friends.c.user_id == id),
+        secondaryjoin=(friends.c.friend_id== id),
         backref=db.backref("added", lazy="dynamic"),
         lazy="dynamic"
     )
@@ -42,5 +43,6 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'image_url': self.image_url
         }

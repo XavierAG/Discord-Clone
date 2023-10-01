@@ -6,7 +6,6 @@
   overflow-y: hidden;
 }
 .dashboard-serverbar {
- border: 1px solid red;
  width: 72px;
 
 }
@@ -18,9 +17,7 @@
 }
 
 #column-1-background {
-  background-color: #2B2D31;
-  flex: 0.3;
-  border: 1px solid green;
+  background-color: #2b2d31;
   flex: 0.2;
 }
 
@@ -38,10 +35,7 @@
     flex: 0.3;
   }
 
-  .scrollable-column {
-    overflow-y: hidden;
-    overflow-x:hidden;
-  }
+
   .server-scrollable-column {
     max-height: 100%;
     overflow-y: hidden;
@@ -56,27 +50,12 @@
   .servers-container::-webkit-scrollbar-thumb {
     background-color: transparent;
   }
-  /*column2 scrollbar*/
-  .scrollable-column::-webkit-scrollbar {
-    background-color: #585858;
-    width: 8px;
-    border-radius: 4px;
-  }
-  .scrollable-column::-webkit-scrollbar-thumb {
-    background-color: #1e1f22;
-    border-radius: 4px;
-  }
-  .scrollable-column::-webkit-scrollbar:hover {
-    width: 12px;
-  }
-  .scrollable-column::-webkit-scrollbar-thumb:hover {
-    width: 12px;
-  }
+
 
   #column-2-wrapper{
     height: 100%;
-    overflow-y: auto; /* Enable vertical scrolling if needed */
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    overflow-y: hidden;
   }

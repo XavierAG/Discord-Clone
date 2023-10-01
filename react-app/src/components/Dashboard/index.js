@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authenticate, logout, deleteUserThunk } from "../../store/session";
 import ChannelBar from "../ChannelBar";
 import ServersBar from "../ServersBar";
@@ -8,13 +8,14 @@ import Chat from "../chat";
 import ChannelMessages from "../ChannelMessages";
 import MessageForm from "../MessageForm";
 import "./index.css";
+import Friends from "../Friends";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { server_id } = useParams();
   const { channel_id } = useParams();
-  const { user_id } = useParams();
+  const sessionUser = useSelector((state) => state.session.user);
 
   const dataContainerRef = useRef(null);
 
@@ -40,8 +41,8 @@ export default function Dashboard() {
 
   const handleDeleteUser = (e) => {
     e.preventDefault();
-    if (user_id) {
-      dispatch(deleteUserThunk(user_id)).then(() => history.push("/"));
+    if (sessionUser) {
+      dispatch(deleteUserThunk(sessionUser.id)).then(() => history.push("/"));
     } else {
       console.error("Invalid user_id");
     }
@@ -71,10 +72,15 @@ export default function Dashboard() {
         {/* Right column (messages, public servers list) */}
         <div id="column-2-background">
           <div id="column-2-wrapper">
-            <div id="placeholder-column-2" className="scrollable-column">
-              {channel_id ? <Chat ref={dataContainerRef} /> : <h1>Friends</h1>}
-            </div>
-            <div className="message-form"></div>
+            {channel_id ? (
+              <Chat ref={dataContainerRef} />
+            ) : server_id ? (
+              <h1>SERVER DETAILS</h1>
+            ) : (
+              <h1>
+                <Friends />
+              </h1>
+            )}
           </div>
         </div>
         {/* <div id="column-3-background">

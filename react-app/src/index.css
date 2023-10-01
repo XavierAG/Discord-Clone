@@ -2,6 +2,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans");
 @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans");
 * {
+  font-family: 'gg-sans', "Noto Sans", Helvetica;
   margin: 0px;
   padding: 0px;
+}
+@font-face {
+  font-family: 'gg sans';
+  src: url('./assets/fonts/gg sans Regular.ttf');
 }

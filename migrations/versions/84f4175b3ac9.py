@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: c3e287c46464
+Revision ID: 84f4175b3ac9
 Revises:
-Create Date: 2023-09-30 18:58:00.273700
+Create Date: 2023-10-01 14:29:27.975180
 
 """
 from alembic import op
@@ -12,8 +12,9 @@ import os
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
+
 # revision identifiers, used by Alembic.
-revision = 'c3e287c46464'
+revision = '84f4175b3ac9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,10 +33,10 @@ def upgrade():
     sa.UniqueConstraint('username')
     )
     op.create_table('friends',
+    sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('friend_id', sa.Integer(), nullable=True),
-    sa.Column('the_friend_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['friend_id'], ['users.id'], ),
-    sa.ForeignKeyConstraint(['the_friend_id'], ['users.id'], )
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], )
     )
     op.create_table('servers',
     sa.Column('id', sa.Integer(), nullable=False),

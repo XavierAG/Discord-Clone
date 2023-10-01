@@ -33,7 +33,12 @@ const setCurrentChannel = (channelId) => ({
 export const addChannelToStore = (channel) => ({
   type: ADD_CHANNEL_TO_STORE,
   channel,
+})
+export const selectChannel = (channelId) => ({
+  type: "SELECT_CHANNEL",
+  channelId,
 });
+
 
 //Channel Thunks
 
@@ -98,7 +103,12 @@ export const setCurrentChannelThunk = (channelId) => async (dispatch) => {
 
 // Channels Reducer
 
-export default function reducer(state = {}, action) {
+const initialState = {
+  allChannels: {},
+  currentChannel: null, // Initially, no channel is selected
+  selectedChannel: null, // To keep track of the currently selected channel
+}
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_CHANNELS: {
       let allChannels = {};
@@ -133,6 +143,11 @@ export default function reducer(state = {}, action) {
           ...state.allChannels,
           [newChannel.id]: newChannel,
         },
+      };
+      case "SELECT_CHANNEL":
+      return {
+        ...state,
+        selectedChannel: action.channelId,
       };
     default:
       return state;
