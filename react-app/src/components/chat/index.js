@@ -47,7 +47,7 @@ const Chat = () => {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [channel_id]);
 
   //Fetching all messages with the Message thunk
   useEffect(() => {
@@ -89,10 +89,6 @@ const Chat = () => {
     e.preventDefault();
     const setMessage = chatInput; // Create a copy of chatInput
     const messageContent = chatInput;
-    console.log("THIS IS MESSAGE SOCKET", messageContent);
-    socket.emit("chat", { user: sessionUser.id, content: messageContent });
-    setChatInput(""); // Reset chatInput
-
     const data = {
       content: messageContent, // Use the copied messageContent
       owner_id: sessionUser.id,
@@ -101,6 +97,9 @@ const Chat = () => {
     dispatch(
       messageStore.sendMessageThunk({ channel_id, messageContent, sessionUser })
     );
+    console.log("THIS IS MESSAGE SOCKET", messageContent);
+    socket.emit("chat", { user: sessionUser.id, content: messageContent });
+    setChatInput(""); // Reset chatInput
   };
 
   return (
