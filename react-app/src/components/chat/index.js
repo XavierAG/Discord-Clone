@@ -42,10 +42,10 @@ const Chat = () => {
     socket.on("chat", (chat) => {
       setMessage((messages) => [...messages, chat]);
     });
-    // when component unmounts, disconnect
-    return () => {
+    //when component unmounts, disconnect
+    return (() => {
       socket.disconnect();
-    };
+    });
   }, []);
 
   //Fetching all messages with the Message thunk

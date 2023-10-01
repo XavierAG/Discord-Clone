@@ -46,8 +46,7 @@ function App() {
           {/* <ServersBar isLoaded={isLoaded} /> */}
           <Route exact path="/servers">
             <PublicServers />
-            <CreateServerForm />
-            <ServerSearch />
+            {/* <CreateServerForm /> */}
           </Route>
           <Route exact path="/servers/:serverId">
             <EditServerForm />

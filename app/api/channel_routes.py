@@ -43,7 +43,7 @@ def delete_channel(channel_id):
     if not channel:
          return { "message": "Channel does not exist" }, 400
     if server.owner_id == current_user.id:
-        handle_delete_channel(channel.to_dict())
+        # handle_delete_channel(channel.to_dict())
         db.session.delete(channel)
         db.session.commit()
         return {"result": "Sucessfully Deleted Channel"}
