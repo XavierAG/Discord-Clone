@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import './index.css';
+import "./Friends.css";
 
 const Friends = () => {
   const sessionUser = useSelector((state) => state.session.user);
-  console.log('SESSION USER:', sessionUser);
+  const [showFriends, setShowFriends] = useState(true);
 
   const [friends, setFriends] = useState([]);
-  console.log('FRIENDS:', friends);
+  const [users, setUsers] = useState([]);
+  const toggleTab = (showFriendsTab) => {
+    setShowFriends(showFriendsTab);
+  };
 
   useEffect(() => {
     // Fetch user's friends when the component mounts
-    const user_id = sessionUser.id
+    const user_id = sessionUser.id;
     fetch(`/api/users/${user_id}/friends`)
       .then((response) => response.json())
       .then((data) => {
@@ -24,24 +27,76 @@ const Friends = () => {
       .catch((error) => {
         console.error("Error fetching friends:", error);
       });
+    fetch(`/api/users/`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.users) {
+          console.log("USERS", data.users);
+          setUsers(data.users);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+      });
   }, []);
+  const isFriend = (userId) => {
+    return friends.some((friend) => friend.id === userId);
+  };
+  const addFriend = (user_id) => {
+    fetch(`api/users/${user_id}/friends`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+  };
 
   return (
     <div>
-      <h1>Friends</h1>
-      <img alt="test" src={sessionUser.img_url} />
-      <ul>
-        {friends.map((friend) => (
-          <li key={friend.id}>
-            <img
-              alt="friend"
-              className="friend-pic"
-              src={friend.image_url}
-            />
-            <p>{friend.username}</p>
-          </li>
-        ))}
-      </ul>
+      <div className="friends-buttons">
+        <div
+          className={`friends-nav ${showFriends ? "active-friend" : ""}`}
+          onClick={() => toggleTab(true)}
+        >
+          Friends
+        </div>
+        <div
+          className={`friends-nav ${!showFriends ? "active-friend" : ""}`}
+          onClick={() => toggleTab(false)}
+        >
+          All Users
+        </div>
+      </div>
+      <div>
+        {showFriends ? (
+          <p className="list-header">Friends - {friends.length}</p>
+        ) : (
+          <p className="list-header"> All Users - {users.length - 1}</p>
+        )}
+      </div>
+      <div className="divider"></div>
+      {showFriends ? (
+        <ul className="listed-names">
+          {friends.map((friend) => (
+            <li className="li-friends" key={friend.id}>
+              <p className="listed-name">{friend.username}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <ul className="listed-names">
+          {users
+            .filter((user) => user.id !== sessionUser.id)
+            .map((user) => (
+              <li className="li-friends" key={user.id}>
+                <p className="listed-name">{user.username}</p>
+                {isFriend(user.id) ? (
+                  <span className="checkmark">✔</span>
+                ) : (
+                  <button onClick={addFriend(user.id)}>add</button>
+                )}
+              </li>
+            ))}
+        </ul>
+      )}
     </div>
   );
 };
