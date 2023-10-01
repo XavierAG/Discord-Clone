@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postServerThunk } from "../../store/servers";
 import { useModal } from "../../context/Modal";
+import { createServerCaption } from "../../assets/helpers/block-text";
+import './index.css';
 
 const CreateServerForm = () => {
   const dispatch = useDispatch();
@@ -61,57 +63,95 @@ const CreateServerForm = () => {
   };
 
   return (
-    <div>
-      <h2>Add a New Server</h2>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div>
-          {errors.name
-            ?
+    <>
+      <div id="create-server-container">
+        <h2
+          id="create-server-heading"
+        >Customize your server</h2>
+        <p id="create-server-caption">{createServerCaption}</p>
+        <form
+          id="create-server-form"
+          onSubmit={handleSubmit}
+          encType="multipart/form-data"
+        >
+          <section id="server-img-section">
+            <div id="img-upload-container">
+              <input
+                type="file"
+                accept="image/*"
+                id="image_url"
+                name="image_url"
+                onChange={(e) => setImageInput(e.target.files[0])}
+              />
+              {imageLoading &&
+                <p
+                  className="create-server-item"
+                >LOADING...</p>}
+              {errors.image
+                ?
+                <label
+                  className="error-text"
+                  htmlFor="name"
+                >{errors.image}</label>
+                :
+                <label
+                  className="create-server-item"
+                  htmlFor="name">SERVER IMAGE</label>}
+            </div>
+          </section>
+          <section>
+            {errors.name
+              ?
+              <label
+                className="error-text"
+                htmlFor="name"
+              ><span
+                className="err-str"
+              >SERVER NAME -</span>
+                <span
+                  className="err-sub-str"
+                >Server name is required</span></label>
+              :
+              <label
+                htmlFor="name"
+                className="create-server-item"
+              >SERVER NAME</label>}
+            <input
+              className="create-server-input"
+              type="text"
+              id="name"
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </section>
+          <section id="server-private-section">
             <label
-              className="error-text"
-              htmlFor="name"
-            >Server name is required</label>
-            :
-            <label htmlFor="name">Server Name:</label>}
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div>
-          {errors.image
-            ?
-            <label
-              className="error-text"
-              htmlFor="name"
-            >{errors.image}</label>
-            :
-            <label htmlFor="name">Server image</label>}
-          <input
-            type="file"
-            accept="image/*"
-            id="image_url"
-            name="image_url"
-            onChange={(e) => setImageInput(e.target.files[0])}
-          />
-        </div>
-        <div>
-          <label htmlFor="private">Private:</label>
-          <input
-            type="checkbox"
-            id="private"
-            name="private"
-            checked={isPrivate}
-            onChange={(e) => setIsPrivate(e.target.checked)}
-          />
-        </div>
-        <button type="submit">Create Server</button>
-        {imageLoading && <p>Loading...</p>}
-      </form>
-    </div>
+              className="create-server-item"
+              htmlFor="private"
+            >PRIVATE</label>
+            <input
+              type="checkbox"
+              id="server-private"
+              name="private"
+              checked={isPrivate}
+              onChange={(e) => setIsPrivate(e.target.checked)}
+            />
+          </section>
+        </form>
+      </div>
+      <div id="server-submit-container">
+        <button
+          id="create-server-back"
+          onClick={closeModal}
+        >Back</button>
+        <button
+          id="create-server-submit"
+          type="submit"
+          form='create-server-form'
+        >Create</button>
+      </div>
+    </>
   );
 };
 
