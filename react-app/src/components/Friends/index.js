@@ -15,7 +15,7 @@ const Friends = () => {
 
   useEffect(() => {
     // Fetch user's friends when the component mounts
-    const user_id = sessionUser.id
+    const user_id = sessionUser.id;
     fetch(`/api/users/${user_id}/friends`)
       .then((response) => response.json())
       .then((data) => {
@@ -27,9 +27,6 @@ const Friends = () => {
       .catch((error) => {
         console.error("Error fetching friends:", error);
       });
-<<<<<<< HEAD
-  }, []);
-=======
     fetch(`/api/users/`)
       .then((response) => response.json())
       .then((data) => {
@@ -51,7 +48,6 @@ const Friends = () => {
       headers: { "Content-Type": "application/json" },
     });
   };
->>>>>>> x-friends
 
   return (
     <div>
