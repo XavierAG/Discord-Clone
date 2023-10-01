@@ -81,7 +81,7 @@ function App() {
           <Route exact path="/app/:server_id/:channel_id/delete">
             <DeleteChannel />
           </Route>
-          <Route exact path="/:id/friends">
+          <Route exact path="/:user_id/friends">
             <Friends />
           </Route>
         </Switch>
