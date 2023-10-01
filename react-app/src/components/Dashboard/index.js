@@ -63,9 +63,6 @@ export default function Dashboard() {
             <button onClick={handleLogout} className="login-logout">
               Log Out
             </button>
-            <button onClick={handleDeleteUser} className="login-logout">
-              Delete User
-            </button>
           </div>
         </div>
 
