@@ -34,6 +34,10 @@ export const addChannelToStore = (channel) => ({
   type: ADD_CHANNEL_TO_STORE,
   channel,
 })
+export const selectChannel = (channelId) => ({
+  type: "SELECT_CHANNEL",
+  channelId,
+});
 
 
 //Channel Thunks

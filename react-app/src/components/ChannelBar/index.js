@@ -12,6 +12,7 @@ import UpdateChannel from "../UpdateChannel";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faGear, faHashtag, faPlus} from '@fortawesome/free-solid-svg-icons'; // Import the specific icon you want to use
+import { selectChannel } from "../../store/channel";
 
 // Rest of your code
 
@@ -33,6 +34,10 @@ export default function ChannelBar() {
   const handleCarrotClick = () =>{
     setNav(!nav)
   }
+  
+  const handleChannelClick = (channelId) => {
+  dispatch(selectChannel(channelId));
+};
 
   const handleDivColor = (channelId) => {
     setDivColor((prevColors) => {
@@ -45,20 +50,34 @@ export default function ChannelBar() {
   
       // Toggle the state for the clicked channel
       updatedColors[channelId] = !prevColors[channelId];
-  
+
+      localStorage.setItem('channelColors', JSON.stringify(updatedColors));
+
       return updatedColors;
     });
+  
+    // Call the handleChannelClick function
+    handleChannelClick(channelId);
   };
+  
   
   // Get all channels of the server from the store
   const allChannels = useSelector((state) =>
     state.channels.allChannels ? state.channels.allChannels : {}
   );
   const channels = Object.values(allChannels);
+  
   useEffect(() => {
+    // Load the saved channel colors from local storage
+    const savedColors = localStorage.getItem('channelColors');
+    if (savedColors) {
+      setDivColor(JSON.parse(savedColors));
+    }
+  
     dispatch(authenticate());
     dispatch(channelStore.getChannelsThunk(server_id));
   }, [dispatch, server_id]);
+  
 
   return (
     <div className="channels-bar-container">
