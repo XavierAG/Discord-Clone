@@ -71,10 +71,7 @@ export default function Dashboard() {
         {/* Right column (messages, public servers list) */}
         <div id="column-2-background">
           <div id="column-2-wrapper">
-            <div id="placeholder-column-2" className="scrollable-column">
               {channel_id ? <Chat ref={dataContainerRef} /> : <h1>Friends</h1>}
-            </div>
-            <div className="message-form"></div>
           </div>
         </div>
         {/* <div id="column-3-background">

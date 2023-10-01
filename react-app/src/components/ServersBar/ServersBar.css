@@ -84,9 +84,24 @@
   background-color: transparent;
 }
 
-#server-modal {
+.server-modal {
   border-radius: 100%;
+  border: none;
   height: 48px;
   width: 48px;
   background-color: red;
+}
+.create-channel{
+  background-color: transparent;
+  border-radius: 0px;
+  height: fit-content;
+  width: fit-content;
+  cursor: pointer;
+  font-size: 12px;
+  color: grey;
+  margin-right: 0.5rem;
+  margin-top: 0.2rem;
+}
+.create-channel:hover{
+  color: rgb(201, 201, 201);;
 }
