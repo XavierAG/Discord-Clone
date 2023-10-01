@@ -1,0 +1,30 @@
+#dash-pub-serv-page {
+  display: flex;
+}
+
+#dash-pub-serv-container {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+#dash-pub-serv-list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.pub-serv-element {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  object-fit: cover;
+  background: #232428;
+}
+
+.pub-img {
+  border-radius: .5rem .5rem 0 0;
+  width: 16rem;
+  height: 9rem;
+  object-fit: cover;
+}
