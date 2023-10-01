@@ -1,0 +1,111 @@
+/* CreateChannelModal.css */
+
+
+
+h2 {
+    color: black;
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-left: 40px;
+
+  }
+
+  /* Input Fields */
+  .channel-name,
+  .private-channel {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  h3 {
+    color: black;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  input[type="text"],
+  input[type="checkbox"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #36393f;
+    font-size: 14px;
+  }
+
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-top: 6px;
+  }
+
+  /* Error Message */
+  .error-container {
+    text-align: left;
+    margin-top: 5px;
+  }
+
+  .error-text {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin: 4px 0;
+  }
+
+  /* Buttons */
+  .channel-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 30px;
+  }
+
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+
+  #create-channel-button {
+    background-color: #43b581;
+    color: #fff;
+  }
+
+
+#cancel-button {
+    background-color: rgb(83, 63, 63);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+
+  #cancel-button:hover {
+    background-color: rgb(224, 12, 12);
+  }
+
+  /* Create Channel Button */
+  #create-channel-button {
+    background-color: #69be92;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  #create-channel-button:hover {
+    background-color: #07b34c;
+  }
