@@ -42,8 +42,8 @@ export default function CreateChannelModal({ server_id }) {
       }
       if (createdChannel) {
         dispatch(channelStore.addChannelToStore(createdChannel));
-        closeModal();
         history.push(`/app/${server_id}/${createdChannel.id}`);
+        closeModal();
         return;
       }
     }
