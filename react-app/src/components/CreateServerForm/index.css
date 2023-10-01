@@ -39,6 +39,7 @@
 }
 
 .create-server-input {
+  box-sizing: border-box;
   border: none;
   border-radius: .2rem;
   background: #EBEBEB;
