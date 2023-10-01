@@ -105,8 +105,15 @@ export default function messagesReducer(state = initialState, action) {
       );
       return channelMessagesState;
     case SEND_MESSAGE:
-      const sendState = { ...state, [action.message.id]: action.message };
-      return sendState;
+      const newMessage = action.message;
+      console.log("GETTING SPREAD", newMessage);
+      return {
+        ...state,
+        channelMessagesState: {
+          ...state.channelMessagesState,
+          [newMessage.id]: newMessage,
+        },
+      };
     case EDIT_MESSAGE:
       const editState = { ...state, [action.message.id]: action.message };
       return editState;
@@ -115,7 +122,6 @@ export default function messagesReducer(state = initialState, action) {
       delete deleteState[action.messageId];
       return deleteState;
     case ADD_MESSAGE_TO_STORE:
-      const newMessage = action.message;
       console.log("GETTING SPREAD", newMessage);
       return {
         ...state,

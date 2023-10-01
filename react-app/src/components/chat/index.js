@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { authenticate } from "../../store/session";
 import * as messageStore from "../../store/messages";
 import { io } from "socket.io-client";
-import './index.css'
+import "./index.css";
 let socket;
 
 const Chat = () => {
@@ -19,7 +19,6 @@ const Chat = () => {
   const { channel_id } = useParams();
   const dispatch = useDispatch();
 
-  console.log('this is the channel id', parseInt(channel_id));
   //Fetching state for Message
   const messageState = useSelector((state) => state.messages);
   console.log("messagestate", messageState);
@@ -42,12 +41,12 @@ const Chat = () => {
     socket = io();
 
     socket.on("chat", (chat) => {
-      setMessage((messages) => [...messages, chat]);
+      dispatch(messageStore.getchannelMessagesThunk(channel_id));
     });
     //when component unmounts, disconnect
-    return (() => {
+    return () => {
       socket.disconnect();
-    });
+    };
   }, []);
 
   //Fetching all messages with the Message thunk
@@ -57,26 +56,24 @@ const Chat = () => {
 
   //Keeping Track of new Messages, pushing to the user to user(Scroll-Down)
   // Keeping Track of new Messages, pushing to the user to user(Scroll-Down)
-useEffect(() => {
-  if (messagesContainerRef.current) {
-    if (messagesArray.length > 0) {
-      setEmpty(false);
-      // Scroll to the bottom of the messages container
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
-    } else {
-      setEmpty(true);
+  useEffect(() => {
+    if (messagesContainerRef.current) {
+      if (messagesArray.length > 0) {
+        setEmpty(false);
+        // Scroll to the bottom of the messages container
+        messagesContainerRef.current.scrollTop =
+          messagesContainerRef.current.scrollHeight;
+      } else {
+        setEmpty(true);
+      }
     }
-  }
-}, [messagesContainerRef, messagesArray, message]);
-
+  }, [messagesContainerRef, messagesArray, message]);
 
   // Adding Channnel Name to message Input Field
   let name;
 
   let entries = Object.entries(allChannels);
-  console.log('these are the entries', entries);
   for (const [key, value] of entries) {
-    console.log('these are the values', value['id'], value['id'] === channel_id);
     if (parseInt(channel_id) === value["id"]) {
       name = value["name"];
     }
@@ -109,7 +106,11 @@ useEffect(() => {
   return (
     sessionUser && (
       <div className="channel-form">
-        <div id="channel-messages-container" className="scrollable-column" ref={messagesContainerRef}>
+        <div
+          id="channel-messages-container"
+          className="scrollable-column"
+          ref={messagesContainerRef}
+        >
           {messagesArray
             .filter((messages) => messages.content) // Filter messages with content
             .map((messages, ind) => (
@@ -118,12 +119,6 @@ useEffect(() => {
                 className="message-container"
               >{`${sessionUser.username}: ${messages.content}`}</div>
             ))}
-          {message.map((messages, ind) => (
-            <div key={ind}
-            className="message-container">
-              {`${sessionUser.username}: ${messages.content}`}
-            </div>
-          ))}
         </div>
         <div className="form">
           <form onSubmit={sendChat}>
@@ -131,7 +126,7 @@ useEffect(() => {
               type="text"
               value={chatInput}
               onChange={updateChatInput}
-              placeholder={`Message #${name || 'channel'}`}
+              placeholder={`Message #${name || "channel"}`}
             />
             <button type="submit">Send</button>
           </form>
