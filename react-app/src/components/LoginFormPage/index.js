@@ -34,13 +34,13 @@ function LoginFormPage({ toggleProp }) {
   };
 
   const demoUser = async() => {
-    const email = 'demo@aa.io'
+    const email = 'demo1@aa.io'
     const  password = 'password'
         const demoData = await dispatch(login(email, password)
       );
-      
+
       console.log("Demo Data:", demoData); // Log the data returned from the login action
-      
+
 
   };
 

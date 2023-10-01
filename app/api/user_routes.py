@@ -41,23 +41,28 @@ def friends(user_id):
 @user_routes.route('/<int:user_id>/friends', methods=['POST'])
 @login_required
 def add_friends(user_id):
-
     user = User.query.get(user_id)
     friends = user.add.all()
+    friends_list = [friend.to_dict() for friend in friends]
 
     print("user", user)
-    print("friends", friends)
+    print("friendslist", friends_list)
     if not user:
         return {"error": "User not found"}, 404
 
     if current_user.id == user_id:
         return {"error": "You cannot add yourself as a friend"}, 400
 
-    if User.query.filter(User.add.any(friend_id=user_id)).first():
-        return {"error": "You are already friend with this user"}, 400
+    # if User.query.filter(User.add.any(friend_id=user_id)).first():
+    #     return {"error": "You are already friend with this user"}, 400
 
-    new_friendship = friends(user_id= current_user.id, friend_id=user_id)
-    db.session.add(new_friendship)
+    for friend in friends_list:
+        if friend["id"] == user_id:
+            return {"error": "You are already friend with this user"}, 400
+
+
+    # new_friendship = friends(user_id= current_user.id, friend_id=user_id)
+    current_user.add.append(user)
     db.session.commit()
 
     return {"message": "Friend added sucessfully"}
