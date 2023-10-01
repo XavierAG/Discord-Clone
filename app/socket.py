@@ -5,8 +5,9 @@ import os
 # configure cors_allowed_origins
 if os.environ.get('FLASK_ENV') == 'production':
     origins = [
-        'https://discord-clone2-oqdu.onrender.com'
-        'https://Biscord.onrender.com',
+        'https://discord-clone2-oqdu.onrender.com',
+        'https://biscord.onrender.com',
+        'http://biscord.onrender.com',
     ]
 else:
     origins = "*"
