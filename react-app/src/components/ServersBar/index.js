@@ -9,6 +9,7 @@ import * as channelActions from "../../store/channel";
 import "./ServersBar.css";
 
 export default function ServersBar() {
+  const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
   // Get servers from state

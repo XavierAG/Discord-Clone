@@ -2,22 +2,52 @@ from app.models import db, User, environment, SCHEMA
 from sqlalchemy.sql import text
 
 
+discord_logo = 'https://static-00.iconduck.com/assets.00/discord-icon-512x511-blfje7wy.png'
+default_img_url = 'https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg'
+
+
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     demo1 = User(
-        username='demo1', email='demo1@aa.io', password='password')
+        username='demo1',
+        email='demo1@aa.io',
+        password='password',
+        image_url="https://static-00.iconduck.com/assets.00/discord-icon-512x511-blfje7wy.png"
+        )
     demo2 = User(
-        username='demo2', email='demo2@aa.io', password='password')
+        username='demo2',
+        email='demo2@aa.io',
+        password='password',
+        image_url="https://static-00.iconduck.com/assets.00/discord-icon-512x511-blfje7wy.png"
+        )
     bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password')
+        username='bobbie',
+        email='bobbie@aa.io',
+        password='password',
+        image_url="https://static-00.iconduck.com/assets.00/discord-icon-512x511-blfje7wy.png"
+        )
     jack = User(
-        username='jack', email='jack@aa.io', password='password')
+        username='jack',
+        email='jack@aa.io',
+        password='password'
+        )
     chris = User(
-        username='chris', email='chris@aa.io', password='password')
+        username='chris',
+        email='chris@aa.io',
+        password='password'
+        )
     jimmy = User(
-        username='jimmy', email='jimmy@aa.io', password='password')
+        username='jimmy',
+        email='jimmy@aa.io',
+        password='password',
+        image_url="https://static-00.iconduck.com/assets.00/discord-icon-512x511-blfje7wy.png"
+        )
     xavier = User(
-        username='javier', email='xavier@aa.io', password='password')
+        username='javier',
+        email='xavier@aa.io',
+        password='password',
+        image_url="https://static-00.iconduck.com/assets.00/discord-icon-512x511-blfje7wy.png"
+        )
 
     db.session.add(demo1)
     db.session.add(demo2)

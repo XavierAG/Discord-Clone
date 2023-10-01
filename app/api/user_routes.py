@@ -30,8 +30,15 @@ def friends(user_id):
     """
     Query for a user by id and returns that user in a dictionary
     """
+    user1 = User.query.get(1)
+    print('USER 1:', user1.image_url)
+
     user = User.query.get(user_id)
+    print('USER IMG:', user.image_url)
     friends = user.add.all()
+
+    print('FRIENDS:', [friend.to_dict() for friend in friends])
+
     # user.add gets persons friends
     # user.added gets people who have added that user
     # if user.add = user.added = friends
