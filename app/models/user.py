@@ -21,8 +21,8 @@ class User(db.Model, UserMixin):
     add = db.relationship(
         "User",
         secondary=friends,
-        primaryjoin=(friends.c.friend_id == id),
-        secondaryjoin=(friends.c.the_friend_id == id),
+        primaryjoin=(friends.c.user_id == id),
+        secondaryjoin=(friends.c.friend_id== id),
         backref=db.backref("added", lazy="dynamic"),
         lazy="dynamic"
     )

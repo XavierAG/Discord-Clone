@@ -17,21 +17,41 @@
 
 .update-channel-link {
 text-decoration: none;
-color: rgb(210, 224, 12);
 display: flex;
+color: inherit;
 flex-direction: row
 }
-.channel{
+.update-channel-link :hover{
+color: rgb(201, 201, 201);
+}
+#channel{
     display: flex;
     flex-direction: row;
     color: white;
     width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+#channel-text{
+    font-size: 12px;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+}
+.channel-background{
+    background-color: #393b42;
+}
+#inner-channel{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    margin: 0 0.5rem 0 0.5rem;
+    align-items: center;
+    border-radius: 1rem;
 }
 .server-name{
     display: flex;
     flex-direction: row;
     color: white;
-    border: 1px solid black;
+    border-bottom: 2px solid #313338;
     font-size: 10px;
     padding: 10px;
     justify-content: space-between;
@@ -39,7 +59,22 @@ flex-direction: row
 }
 .drop-down{
     font-size: 12px;
+    cursor: pointer;
+}
+.drop-down :hover{
+    font-size: 10px;
+
+}
+.server-setting-nav{
+    position:absolute;
+    background-color: #111214;
+    width: 150px;
+    left: 95px;
+    text-align: center;
+    height: 200px;
+    
 }
 .edit-server{
-    
+    text-decoration: none;
+    color: white;
 }

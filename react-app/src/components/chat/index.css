@@ -1,0 +1,104 @@
+.form{
+  bottom: 0;
+  width: 100%;
+  background-color: #313338;
+  padding: 10px;
+  display: flex;
+  box-sizing: border-box;
+  
+  
+}
+.form input{
+  padding: 1rem;
+  outline: none;
+  background-color: #383a40;
+  border: none;
+  color: white;
+  border-radius: 10px 0px 0px 10px;
+  width: 85%
+}
+.form button{
+  padding: 1rem;
+  border: none;
+  border-radius: 0px 10px 10px 0px; 
+  margin-left: -1px; /* Add this to remove potential gap between input and button */
+  
+}
+.message-bar{
+  flex-grow: 1;
+  width:100%;
+}
+.message-form{
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+#channel-messages-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
+   flex-grow: 1;
+}
+
+.scrollable-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  overflow-x:hidden;
+  box-sizing: border-box; /* Include border and padding in the total width */
+}
+.message-container{
+  text-align: left;
+  margin: 20px 0 20px 20px;
+  font-size: 16px;
+  color: white;
+  width: 100%;
+  
+}
+
+/* column2 scrollbar
+#channel-messages-container::-webkit-scrollbar {
+  background-color: #585858;
+  width: 8px;
+  border-radius: 4px;
+}
+#channel-messages-container::-webkit-scrollbar-thumb {
+  background-color: #1e1f22;
+  border-radius: 4px;
+}
+#channel-messages-container::-webkit-scrollbar:hover {
+  width: 12px;
+}
+#channel-messages-container::-webkit-scrollbar-thumb:hover {
+  width: 12px;
+} */
+.scrollable-column::-webkit-scrollbar {
+  background-color: #585858;
+  width: 8px;
+  border-radius: 4px;
+}
+.scrollable-column::-webkit-scrollbar-thumb {
+  background-color: #1e1f22;
+  border-radius: 4px;
+}
+.scrollable-column::-webkit-scrollbar:hover {
+  width: 12px;
+}
+.scrollable-column::-webkit-scrollbar-thumb:hover {
+  width: 12px;
+}
+
+.channel-form{
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  flex-direction: column;
+  box-sizing: border-box; /* Include border and padding in the total width */
+}
+.form form{
+  width: 100%;
+}
