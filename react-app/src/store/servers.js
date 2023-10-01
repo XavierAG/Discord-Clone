@@ -43,47 +43,72 @@ export const getServersThunk = () => async (dispatch) => {
 };
 
 //Create a Server
-export const postServerThunk = (server) => async (dispatch) => {
-  try {
-    const res = await fetch("/api/servers/", {
+export const postServerThunk = (server, newImage) => async (dispatch) => {
+  let res;
+  if (newImage) {
+    res = await fetch("/api/servers/", {
       method: "POST",
       body: server,
     });
-    if (res.ok) {
-      const data = await res.json();
-      dispatch(postServer(data));
-      // console.log('RES:', data);
-      return data;
-    } else {
-      const errors = await res.json();
-      throw errors;
-    }
-  } catch (error) {
-    throw error;
+  } else {
+    res = await fetch("/api/servers/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(server),
+    });
+  }
+  if (res.ok) {
+    const data = await res.json();
+    // console.log('RES:', data);
+    dispatch(postServer(data));
+    return data;
+  } else {
+    const errors = await res.json();
+    throw errors;
   }
 };
 
 // Edit a server based on its ID
-export const editServerThunk = (serverId, server) => async (dispatch) => {
-  // console.log('SERVER ID:', serverId);
-  // console.log('SERVER:', server);
-  try {
-    const res = await fetch(`/api/servers/${serverId}`, {
-      method: "PUT",
-      body: server,
-    });
+export const editServerThunk =
+  (serverId, server, newImage) => async (dispatch) => {
+    // console.log('SERVER ID:', serverId);
+    // console.log('SERVER:', server);
+    console.log("NEW IMG ARG:", newImage);
+    let res;
+    if (newImage) {
+      res = await fetch(`/api/servers/${serverId}`, {
+        method: "PUT",
+        body: server,
+      });
+    } else {
+      console.log("EDIT DATA", server);
+      res = await fetch(`/api/servers/${serverId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(server),
+      });
+    }
     if (res.ok) {
       const data = await res.json();
-      // console.log('EDIT RESPONSE:', data);
+      console.log("EDIT RESPONSE:", data);
       dispatch(postServer(data));
       return data;
     } else {
       const errors = await res.json();
-      // console.log('EDIT ERRORS:', errors);
+      console.log("EDIT ERRORS:", errors);
       throw errors;
     }
-  } catch (error) {
-    throw error;
+  };
+
+export const getServerImage = (imgUrl) => async (dispatch) => {
+  console.log("FETCH URL:", imgUrl);
+  const res = await fetch(`${imgUrl}`);
+  if (res.ok) {
+    const img = await res.json();
+    console.log("IMAGE FETCH:", img);
+    return img;
+  } else {
+    return null;
   }
 };
 

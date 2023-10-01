@@ -26,6 +26,7 @@ class User(db.Model, UserMixin):
         backref=db.backref("added", lazy="dynamic"),
         lazy="dynamic"
     )
+
     @property
     def password(self):
         return self.hashed_password

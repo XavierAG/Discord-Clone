@@ -13,6 +13,7 @@ import ServerSearch from "./components/ServerSearch";
 import UpdateChannel from "./components/UpdateChannel";
 import Friends from "./components/Friends";
 import Chat from "./components/chat";
+import DeleteChannel from "./components/DeleteChannel";
 // import Navigation from "./components/Navigation";
 // import ChannelBar from "./components/ChannelList";
 // import ServersBar from "./components/ServersBar";
@@ -57,6 +58,9 @@ function App() {
           <Route exact path="/app">
             <Dashboard />
           </Route>
+          {/* <Route exact path="/app/:user_id">
+            <Dashboard />
+          </Route> */}
           <Route exact path="/app/:server_id">
             <Dashboard />
           </Route>
@@ -74,6 +78,9 @@ function App() {
           </Route>
           <Route exact path="/:server_id/:channel_id">
             <UpdateChannel />
+          </Route>
+          <Route exact path="/app/:server_id/:channel_id/delete">
+            <DeleteChannel />
           </Route>
           <Route exact path="/:id/friends">
             <Friends />

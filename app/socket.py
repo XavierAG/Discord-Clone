@@ -1,9 +1,15 @@
 from flask_socketio import SocketIO, emit
-import  os
+import os
 
 
 # configure cors_allowed_origins
-origins = "*"
+if os.environ.get('FLASK_ENV') == 'production':
+    origins = [
+        'https://Biscord.onrender.com',
+        'https://Biscord.onrender.com'
+    ]
+else:
+    origins = "*"
 
 # initialize your socket instance
 socketio = SocketIO(cors_allowed_origins=origins)

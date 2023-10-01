@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store/session";
 import * as channelStore from "../../store/channel";
+import OpenModalButton from "../OpenModalButton";
+import DeleteChannel from "../DeleteChannel";
 import * as serverStore from "../../store/servers";
 import "./UpdateChannel.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -16,6 +18,7 @@ export default function UpdateChannel() {
   const [serverId, setServerId] = useState(null);
   const { server_id, channel_id } = useParams();
   const history = useHistory();
+
   useEffect(() => {
     const fetchChannel = async () => {
       try {
@@ -46,6 +49,17 @@ export default function UpdateChannel() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validationErrors = {};
+
+    if (!name.trim()) {
+      validationErrors.name = "Channel name is required";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     const res = await dispatch(
       channelStore.editChannelThunk({
         name,
@@ -63,9 +77,24 @@ export default function UpdateChannel() {
     setName(e.name);
     setisPrivate(e.private);
   };
+
   return (
     <div>
+      <OpenModalButton
+        className="login-logout"
+        buttonText="Delete Channel"
+        modalComponent={
+          <DeleteChannel channel_id={channel_id} server_id={serverId} />
+        }
+      ></OpenModalButton>
       <form onSubmit={handleSubmit}>
+        {/* Display validation error for channel name */}
+        {errors.name && (
+          <p className="error-message">
+            <span className="error-icon">⚠️</span>
+            {errors.name}
+          </p>
+        )}
         <input
           type="text"
           value={name}
