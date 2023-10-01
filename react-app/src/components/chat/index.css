@@ -102,3 +102,22 @@
 .form form{
   width: 100%;
 }
+
+@media (max-width: 911px) {
+  .form input {
+      width: 75%; /* Adjust styles for smaller screens if necessary */
+  }
+}
+@media (max-width: 646px) {
+  .form input {
+      width: 50%; /* Adjust styles for smaller screens if necessary */
+  }
+}
+@media (max-width: 459px) {
+  .form input {
+      display: none; /* Adjust styles for smaller screens if necessary */
+  }
+  .form button {
+      display: none; /* Adjust styles for smaller screens if necessary */
+  }
+}

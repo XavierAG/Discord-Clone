@@ -1,12 +1,15 @@
 .channel-navlinks{
     text-decoration: none;
     color: #949ba4;
-    /* margin: 5px 0px 5px 10px; */
-    margin-left: 10px;
+    margin: 5px 0px 5px 10px;
+    box-sizing: border-box;
 
 }
 .channel-list-container{
-    padding-left: 10px;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    flex-wrap: nowrap;
 }
 
 .create-bar-container{
@@ -42,10 +45,12 @@ color: rgb(201, 201, 201);
 #inner-channel{
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem 1rem 0.5rem 1rem;
-    margin: 0 0.5rem 0 0.5rem;
+    padding: 0.5rem 1rem; /* Adjust padding */
+    margin: 0 0.5rem; /* Adjust margin */
     align-items: center;
     border-radius: 1rem;
+    box-sizing: border-box;
+    flex-wrap: nowrap;
 }
 .server-name{
     display: flex;
@@ -78,3 +83,10 @@ color: rgb(201, 201, 201);
     text-decoration: none;
     color: white;
 }
+@media (max-width: 1165px) {
+    #inner-channel {
+        width: 170px; /* Adjust styles for smaller screens if necessary */
+    }
+  }
+
+  
