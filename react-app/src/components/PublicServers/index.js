@@ -5,7 +5,7 @@ import { authenticate } from "../../store/session";
 import ServerSearch from "../ServerSearch";
 import ServersBar from "../ServersBar";
 import * as serverActions from "../../store/servers";
-import './index.css';
+import "./index.css";
 
 export default function PublicServers() {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export default function PublicServers() {
           {servers.map((server) => (
             <div className="pub-serv-element" key={server.id}>
               <img className="pub-img" src={server.image_url} />
-              <h1>{server.name}</h1>
+              <h1 className="server-find-name">{server.name}</h1>
               {/* <p>{server.private ? "Private" : "Public"}</p> */}
             </div>
           ))}

@@ -80,7 +80,7 @@ const Friends = () => {
         <ul className="listed-names">
           {friends.map((friend) => (
             <li className="li-friends" key={friend.id}>
-              <img className="server-pic" src={friend.image_url} />
+              <img className="user-pic" src={friend.image_url} />
               <p className="listed-name">{friend.username}</p>
             </li>
           ))}
@@ -91,11 +91,13 @@ const Friends = () => {
             .filter((user) => user.id !== sessionUser.id)
             .map((user) => (
               <li className="li-friends" key={user.id}>
+                <img className="user-pic" src={user.image_url} />
                 <p className="listed-name">{user.username}</p>
                 {isFriend(user.id) ? (
-                  <span className="checkmark">✔</span>
+                  <span className="checkmark">Friend ✔</span>
                 ) : (
                   <button
+                    className="add-friend-b"
                     onClick={() => {
                       addFriend(user.id);
                       window.location.reload();

@@ -12,7 +12,7 @@ def seed_users():
         username='demo1',
         email='demo1@aa.io',
         password='password',
-        image_url="https://static-00.iconduck.com/assets.00/discord-icon-512x511-blfje7wy.png"
+        image_url="https://www.loginradius.com/blog/static/00a89fc56461ea1529439d89072c93f1/701ee/react.jpg"
         )
     demo2 = User(
         username='demo2',
@@ -24,23 +24,25 @@ def seed_users():
         username='bobbie',
         email='bobbie@aa.io',
         password='password',
-        image_url="https://static-00.iconduck.com/assets.00/discord-icon-512x511-blfje7wy.png"
+        image_url="https://legendary-digital-network-assets.s3.amazonaws.com/wp-content/uploads/2022/06/08141001/LEGO-Minifugure-realistic.jpg"
         )
     jack = User(
         username='jack',
         email='jack@aa.io',
-        password='password'
+        password='password',
+        image_url="https://static-00.iconduck.com/assets.00/discord-icon-512x511-blfje7wy.png"
         )
     chris = User(
         username='chris',
         email='chris@aa.io',
-        password='password'
+        password='password',
+        image_url="https://static-00.iconduck.com/assets.00/discord-icon-512x511-blfje7wy.png"
         )
     jimmy = User(
         username='jimmy',
         email='jimmy@aa.io',
         password='password',
-        image_url="https://static-00.iconduck.com/assets.00/discord-icon-512x511-blfje7wy.png"
+        image_url="https://www.loginradius.com/blog/static/00a89fc56461ea1529439d89072c93f1/701ee/react.jpg"
         )
     xavier = User(
         username='javier',

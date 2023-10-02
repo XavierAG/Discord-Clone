@@ -15,7 +15,7 @@ function LoginFormPage({ toggleProp }) {
   const [errors, setErrors] = useState([]);
 
   const errSpans = [
-    <span className="err-str">EMAIL OR PHONE NUMBER</span>,
+    <span className="err-str">EMAIL</span>,
     <span className="err-str">PASSWORD</span>,
     <span className="err-sub-str">- Login or password is invalid</span>,
   ];
@@ -34,15 +34,15 @@ function LoginFormPage({ toggleProp }) {
   };
 
   const demoUser1 = async () => {
-    const email = 'demo1@aa.io'
-    const password = 'password'
+    const email = "demo1@aa.io";
+    const password = "password";
     const demoData = await dispatch(login(email, password));
     console.log("Demo Data:", demoData); // Log the data returned from the login action
   };
 
   const demoUser2 = async () => {
-    const email = 'demo2@aa.io'
-    const password = 'password'
+    const email = "demo2@aa.io";
+    const password = "password";
     const demoData = await dispatch(login(email, password));
     console.log("Demo Data:", demoData); // Log the data returned from the login action
   };
@@ -76,9 +76,9 @@ function LoginFormPage({ toggleProp }) {
           </section>
           <section className="login-form-section">
             {errors.length > 1 ||
-              errors.find(
-                (err) => err === "password : Password was incorrect."
-              ) ? (
+            errors.find(
+              (err) => err === "password : Password was incorrect."
+            ) ? (
               <p className="error-text">
                 {errSpans[1]}
                 {errSpans[2]}
@@ -100,12 +100,12 @@ function LoginFormPage({ toggleProp }) {
             <button className="login-submit" type="submit">
               Log In
             </button>
-            <button
-              className="login-submit"
-              onClick={demoUser1}>Demo User 1</button>
-            <button
-              className="login-submit"
-              onClick={demoUser2}>Demo User 2</button>
+            <button className="login-submit" onClick={demoUser1}>
+              Demo User 1
+            </button>
+            <button className="login-submit" onClick={demoUser2}>
+              Demo User 2
+            </button>
           </section>
         </form>
         <div className="register-container">

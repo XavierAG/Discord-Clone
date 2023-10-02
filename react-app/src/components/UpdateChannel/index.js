@@ -79,7 +79,7 @@ export default function UpdateChannel() {
   };
 
   return (
-    <div>
+    <div className="update-channel-page">
       <OpenModalButton
         className="login-logout"
         buttonText="Delete Channel"
@@ -87,7 +87,7 @@ export default function UpdateChannel() {
           <DeleteChannel channel_id={channel_id} server_id={serverId} />
         }
       ></OpenModalButton>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="update-channel-form">
         {/* Display validation error for channel name */}
         {errors.name && (
           <p className="error-message">
