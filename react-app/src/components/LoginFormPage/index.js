@@ -67,7 +67,7 @@ function LoginFormPage({ toggleProp }) {
               </p>
             )}
             <input
-              type="text"
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -76,9 +76,9 @@ function LoginFormPage({ toggleProp }) {
           </section>
           <section className="login-form-section">
             {errors.length > 1 ||
-            errors.find(
-              (err) => err === "password : Password was incorrect."
-            ) ? (
+              errors.find(
+                (err) => err === "password : Password was incorrect."
+              ) ? (
               <p className="error-text">
                 {errSpans[1]}
                 {errSpans[2]}

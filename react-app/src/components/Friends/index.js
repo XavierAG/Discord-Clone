@@ -50,7 +50,7 @@ const Friends = () => {
     });
   };
 
-  if (!friends || !users) return null;
+  if (!sessionUser || !friends || !users.length) return null;
 
   return (
     <div>

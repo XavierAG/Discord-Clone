@@ -6,6 +6,7 @@ import ServerSearch from "../ServerSearch";
 import ServersBar from "../ServersBar";
 import * as serverActions from "../../store/servers";
 import "./index.css";
+import { Link } from "react-router-dom";
 
 export default function PublicServers() {
   const dispatch = useDispatch();
@@ -31,15 +32,19 @@ export default function PublicServers() {
       </nav>
       <div id="dash-pub-serv-container">
         <section id="serv-seach-section">
-          <ServerSearch />
+          {/* <ServerSearch /> */}
         </section>
         <section id="dash-pub-serv-list">
           {servers.map((server) => (
-            <div className="pub-serv-element" key={server.id}>
-              <img className="pub-img" src={server.image_url} />
-              <h1 className="server-find-name">{server.name}</h1>
-              {/* <p>{server.private ? "Private" : "Public"}</p> */}
-            </div>
+            <Link
+              className='public-server-link'
+              exact to={`/app/${server.id}`}>
+              <div className="pub-serv-element" key={server.id}>
+                <img className="pub-img" src={server.image_url} />
+                <h1 className="server-find-name">{server.name}</h1>
+                {/* <p>{server.private ? "Private" : "Public"}</p> */}
+              </div>
+            </Link>
           ))}
         </section>
       </div>

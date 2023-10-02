@@ -1,3 +1,46 @@
 .err-sub-str {
   font-style: italic;
 }
+
+.signup-input {
+  width: 40rem;
+  background: #1E1F22;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: .25rem;
+  font-size: 14px;
+}
+
+.signup-input:focus {
+  outline: none;
+}
+
+#username-input {
+  width: 40rem;
+  background: #1E1F22;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: .25rem;
+  font-size: 14px;
+}
+
+#username-input:focus {
+  outline: none;
+}
+
+#signup-img-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#signup-img {
+  width: fit-content;
+  background-color: #313338;
+  color: #A1A5AC;
+  margin: 0;
+  padding: 0;
+  width: 11.5rem;
+}

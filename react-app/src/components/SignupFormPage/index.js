@@ -12,6 +12,8 @@ function SignupFormPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [imageInput, setImageInput] = useState('');
+  const [imageLoading, setImageLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   let errorsObj = {};
   if (errors.length) {
@@ -30,11 +32,30 @@ function SignupFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let data;
+    let newImage;
+    if (imageInput) {
+      data = new FormData();
+      data.append("image_url", imageInput);
+      data.append("email", email);
+      data.append("username", username);
+      data.append("password", password);
+      newImage = true;
+    } else {
+      data = {
+        email,
+        username,
+        password
+      };
+      newImage = false;
+    };
+
     if (password === confirmPassword) {
-      const data = await dispatch(signUp(username, email, password));
-      if (data) {
-        console.log("DATA:", data);
-        setErrors(data);
+      const res = await dispatch(signUp(data, newImage));
+      if (res) {
+        console.log("DATA:", res);
+        setErrors(res);
       } else {
         history.push("/app");
       };
@@ -50,6 +71,34 @@ function SignupFormPage() {
       <div className="login-container">
         <h1 className="login-heading">Create an account</h1>
         <form className="login-form" onSubmit={handleSubmit}>
+
+          <section id="signup-img-section">
+            <div id="sign-img-container">
+              <input
+                type="file"
+                accept="image/*"
+                className="signup-input"
+                id="signup-img"
+                name="image_url"
+                onChange={(e) => setImageInput(e.target.files[0])}
+              />
+              {imageLoading &&
+                <p
+                  className="create-server-item"
+                >LOADING...</p>}
+              {errors.image
+                ?
+                <label
+                  className="error-text"
+                  htmlFor="name"
+                >{errors.image}</label>
+                :
+                <label
+                  className="login-form-item"
+                  htmlFor="name">PROFILE PICTURE</label>}
+            </div>
+          </section>
+
           <section className="login-form-section">
             {errorsObj.email ? (
               <p className="error-text">EMAIL - {errorsObj.email}</p>
@@ -59,7 +108,7 @@ function SignupFormPage() {
               </p>
             )}
             <input
-              className="login-input"
+              className="signup-input"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -75,7 +124,7 @@ function SignupFormPage() {
               </p>
             )}
             <input
-              className="login-input"
+              id="username-input"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -87,7 +136,7 @@ function SignupFormPage() {
               PASSWORD<span className="asterisk">*</span>
             </p>
             <input
-              className="login-input"
+              className="signup-input"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -106,7 +155,7 @@ function SignupFormPage() {
               </p>
             )}
             <input
-              className="login-input"
+              className="signup-input"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
