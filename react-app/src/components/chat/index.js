@@ -114,7 +114,7 @@ const Chat = () => {
               <div
                 key={ind}
                 className="message-container"
-              >{`${sessionUser.username}: ${messages.content}`}</div>
+              >{`${messages.user.username}: ${messages.content}`}</div>
             ))}
         </div>
         <div className="form">
