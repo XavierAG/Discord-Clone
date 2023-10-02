@@ -37,7 +37,6 @@ const setCurrentServer = (serverId) => ({
 export const getServersThunk = () => async (dispatch) => {
   const res = await fetch("/api/servers/");
   const data = await res.json();
-  // console.log("FETCH RESPONSE:", data);
   dispatch(getServers(data));
   return data;
 };
@@ -59,7 +58,6 @@ export const postServerThunk = (server, newImage) => async (dispatch) => {
   }
   if (res.ok) {
     const data = await res.json();
-    // console.log('RES:', data);
     dispatch(postServer(data));
     return data;
   } else {
@@ -71,9 +69,6 @@ export const postServerThunk = (server, newImage) => async (dispatch) => {
 // Edit a server based on its ID
 export const editServerThunk =
   (serverId, server, newImage) => async (dispatch) => {
-    // console.log('SERVER ID:', serverId);
-    // console.log('SERVER:', server);
-    console.log("NEW IMG ARG:", newImage);
     let res;
     if (newImage) {
       res = await fetch(`/api/servers/${serverId}`, {
@@ -81,7 +76,6 @@ export const editServerThunk =
         body: server,
       });
     } else {
-      console.log("EDIT DATA", server);
       res = await fetch(`/api/servers/${serverId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -90,7 +84,6 @@ export const editServerThunk =
     }
     if (res.ok) {
       const data = await res.json();
-      console.log("EDIT RESPONSE:", data);
       dispatch(postServer(data));
       return data;
     } else {
@@ -101,11 +94,9 @@ export const editServerThunk =
   };
 
 export const getServerImage = (imgUrl) => async (dispatch) => {
-  console.log("FETCH URL:", imgUrl);
   const res = await fetch(`${imgUrl}`);
   if (res.ok) {
     const img = await res.json();
-    console.log("IMAGE FETCH:", img);
     return img;
   } else {
     return null;
@@ -118,7 +109,6 @@ export const deleteServerThunk = (serverId) => async (dispatch) => {
     method: "DELETE",
   });
   const data = await res.json();
-  console.log("DELETE RES:", data);
   dispatch(deleteServer(serverId));
   return data;
 };
@@ -176,7 +166,6 @@ export default function reducer(state = initialState, action) {
     case DELETE_SERVERS:
       const deleteState = {};
       const delAllArr = Object.values(state.allServers);
-      console.log("ALL SERVERS ARRAY:", delAllArr);
       delAllArr.map(
         (server) =>
           (deleteState[server.id] = {

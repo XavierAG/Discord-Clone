@@ -79,7 +79,6 @@ export const deleteUserThunk = (user_id) => async (dispatch) => {
     method: "DELETE",
   });
   const data = await res.json();
-  console.log("Data!!!!", data);
   dispatch(deleteUser(user_id));
   return data;
 };

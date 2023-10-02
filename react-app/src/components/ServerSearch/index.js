@@ -9,9 +9,7 @@ export default function ServerSearch() {
   const handleSearch = async () => {
     try {
       const res = await fetch(`api/servers/search?query=${query}`);
-      console.log("ressss", res);
       const data = await res.json();
-      console.log("DATA =>>>", data);
       setSearchResults(data);
     } catch (error) {
       console.log("Error server not found", error);

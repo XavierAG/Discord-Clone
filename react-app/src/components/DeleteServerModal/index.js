@@ -6,7 +6,7 @@ import { deleteServerThunk } from "../../store/servers";
 
 export default function DeleteServerModal({ server_id }) {
   // const { server_id } = useParams();
-  console.log('PARAM:', server_id);
+
   const history = useHistory();
   const dispatch = useDispatch();
   const { closeModal } = useModal();

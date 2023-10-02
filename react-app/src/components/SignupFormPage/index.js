@@ -33,7 +33,6 @@ function SignupFormPage() {
     if (password === confirmPassword) {
       const data = await dispatch(signUp(username, email, password));
       if (data) {
-        console.log("DATA:", data);
         setErrors(data);
       } else {
         history.push("/app");

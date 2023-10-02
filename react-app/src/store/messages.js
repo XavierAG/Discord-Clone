@@ -54,7 +54,6 @@ export const sendMessageThunk = (data) => async (dispatch) => {
       }),
     });
     const message = await res.json();
-    // console.log('SEND MESSAGE FETCH RESPONSE:', message);
     dispatch(sendMessage(message));
     return message;
   } catch (error) {
@@ -71,7 +70,6 @@ export const editMessageThunk = (messageId, data) => async (dispatch) => {
       body: JSON.stringify(data),
     });
     const message = await res.json();
-    // console.log('EDIT MESSAGE FETCH RESPONSE:', message);
     dispatch(editMessage(message));
     return message;
   } catch (error) {
@@ -85,7 +83,6 @@ export const deleteMessageThunk = (messageId) => async (dispatch) => {
     method: "DELETE",
   });
   const data = await res.json();
-  // console.log('DELETE MESSAGE FETCH RESPONSE:', message);
   dispatch(deleteMessage(messageId));
   return data;
 };
@@ -106,7 +103,6 @@ export default function messagesReducer(state = initialState, action) {
       return channelMessagesState;
     case SEND_MESSAGE:
       const newMessage = action.message;
-      console.log("GETTING SPREAD", newMessage);
       return {
         ...state,
         channelMessagesState: {
@@ -122,7 +118,6 @@ export default function messagesReducer(state = initialState, action) {
       delete deleteState[action.messageId];
       return deleteState;
     case ADD_MESSAGE_TO_STORE:
-      console.log("GETTING SPREAD", newMessage);
       return {
         ...state,
         channelMessagesState: {
