@@ -35,4 +35,24 @@
 .listed-name {
     color: #F2F3F5;
     font-size: 16px;
+    padding-left: 10px;
+    padding-right: 40px;
+}
+
+.user-pic {
+    height: 48px;
+    width: 48px;
+    border: 1px solid transparent;
+    border-radius: 24px;
+    object-fit: cover;
+  }
+.checkmark {
+    font-size: 16px;
+    position: absolute;
+    right: 20px;
+    color: green;
+}
+.add-friend-b {
+    position: absolute;
+    right: 20px;
 }

@@ -21,9 +21,7 @@ const Chat = () => {
 
   //Fetching state for Message
   const messageState = useSelector((state) => state.messages);
-  console.log("messagestate", messageState);
   const messagesArray = Object.values(messageState);
-  console.log("messageArray", messagesArray);
 
   // Manually tracking scroll on the Message-DOM
   const [empty, setEmpty] = useState(true);

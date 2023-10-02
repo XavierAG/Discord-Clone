@@ -15,7 +15,7 @@ function LoginFormPage({ toggleProp }) {
   const [errors, setErrors] = useState([]);
 
   const errSpans = [
-    <span className="err-str">EMAIL OR PHONE NUMBER</span>,
+    <span className="err-str">EMAIL</span>,
     <span className="err-str">PASSWORD</span>,
     <span className="err-sub-str">- Login or password is invalid</span>,
   ];
@@ -25,7 +25,7 @@ function LoginFormPage({ toggleProp }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
-    if (!data) {
+    if (data) {
       console.log("DATA:", data);
       setErrors(data);
     } else {
@@ -33,25 +33,19 @@ function LoginFormPage({ toggleProp }) {
     }
   };
 
-  const demoUser = async() => {
-    const email = 'demo1@aa.io'
-    const  password = 'password'
-        const demoData = await dispatch(login(email, password)
-      );
-
-      console.log("Demo Data:", demoData); // Log the data returned from the login action
-
-
+  const demoUser1 = async () => {
+    const email = "demo1@aa.io";
+    const password = "password";
+    const demoData = await dispatch(login(email, password));
+    console.log("Demo Data:", demoData); // Log the data returned from the login action
   };
 
-  // const handleDemoLogin = () => {
-  //   dispatch(
-  //     sessionActions.login({
-  //       email: "demo@aa.io",
-  //       password: "password",
-  //     })
-  //   );
-  // };
+  const demoUser2 = async () => {
+    const email = "demo2@aa.io";
+    const password = "password";
+    const demoData = await dispatch(login(email, password));
+    console.log("Demo Data:", demoData); // Log the data returned from the login action
+  };
 
   return (
     <div id="login-background">
@@ -102,10 +96,17 @@ function LoginFormPage({ toggleProp }) {
               className="login-input"
             />
           </section>
-          <button className="login-submit" type="submit">
-            Log In
-          </button>
-          <button onClick={demoUser}>Demo User</button>
+          <section className="login-form-section">
+            <button className="login-submit" type="submit">
+              Log In
+            </button>
+            <button className="login-submit" onClick={demoUser1}>
+              Demo User 1
+            </button>
+            <button className="login-submit" onClick={demoUser2}>
+              Demo User 2
+            </button>
+          </section>
         </form>
         <div className="register-container">
           <label

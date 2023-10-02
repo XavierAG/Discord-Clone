@@ -40,7 +40,7 @@ export default function ServersBar() {
           <img
             alt="discord"
             className="dis-logo"
-            src="https://cdn.dribbble.com/userupload/5474438/file/original-c32ac002bd40c155894b9396d5d907db.jpg"
+            src="https://discord-x.s3.us-east-2.amazonaws.com/56b84efad17a445f8ff2742c6b0760b7.png"
           />
         </NavLink>
       </div>
