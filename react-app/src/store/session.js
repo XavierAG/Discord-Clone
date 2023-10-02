@@ -84,6 +84,7 @@ export const deleteUserThunk = (user_id) => async (dispatch) => {
 };
 
 export const signUp = (data, newImage) => async (dispatch) => {
+  console.log('DATA TO FETCH:', data, 'BOOLEAN:', newImage);
   let response;
   if (newImage) {
     response = await fetch("/api/auth/signup", {

@@ -51,10 +51,12 @@ function SignupFormPage() {
       newImage = false;
     };
 
+    console.log('DATA:', data, 'NEW IMAGE', newImage);
+
     if (password === confirmPassword) {
-      const data = await dispatch(signUp(username, email, password));
-      if (data) {
-        setErrors(data);
+      const res = await dispatch(signUp(data, newImage));
+      if (res) {
+        setErrors(res);
       } else {
         history.push("/app");
       };

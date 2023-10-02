@@ -15,7 +15,6 @@ const CreateServerForm = () => {
   const [imageLoading, setImageLoading] = useState(false);
   const [name, setName] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
   const [imageInput, setImageInput] = useState('');
   const [errors, setErrors] = useState({})
 

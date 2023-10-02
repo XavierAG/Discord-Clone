@@ -22,7 +22,7 @@ export default function EditServerForm() {
   const [errors, setErrors] = useState("");
 
   useEffect(() => {
-    const servers = dispatch(getServersThunk())
+    dispatch(getServersThunk())
   }, []);
 
   useEffect(() => {
@@ -112,10 +112,6 @@ export default function EditServerForm() {
             name="image_url"
             style={{
               border: 'none',
-              // display: 'none',
-              // width: '1rem',
-              // height: '1rem',
-              // background: 'blue'
             }}
             onChange={(e) => {
               setImageInput(e.target.files[0]);
