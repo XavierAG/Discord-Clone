@@ -95,7 +95,6 @@ const Chat = () => {
     dispatch(
       messageStore.sendMessageThunk({ channel_id, messageContent, sessionUser })
     );
-    console.log("THIS IS MESSAGE SOCKET", messageContent);
     socket.emit("chat", { user: sessionUser.id, content: messageContent });
     setChatInput(""); // Reset chatInput
   };

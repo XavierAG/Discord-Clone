@@ -13,9 +13,7 @@ export default function PublicServers() {
   const allServers = useSelector((state) =>
     state.servers.allServers ? state.servers.allServers : {}
   );
-  // console.log("STATE:", allServers);
   const servers = Object.values(allServers);
-  console.log("SERVERS:", servers);
 
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {

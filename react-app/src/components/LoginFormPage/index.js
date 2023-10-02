@@ -26,7 +26,6 @@ function LoginFormPage({ toggleProp }) {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
-      console.log("DATA:", data);
       setErrors(data);
     } else {
       history.push("/app");
@@ -37,14 +36,12 @@ function LoginFormPage({ toggleProp }) {
     const email = "demo1@aa.io";
     const password = "password";
     const demoData = await dispatch(login(email, password));
-    console.log("Demo Data:", demoData); // Log the data returned from the login action
   };
 
   const demoUser2 = async () => {
     const email = "demo2@aa.io";
     const password = "password";
     const demoData = await dispatch(login(email, password));
-    console.log("Demo Data:", demoData); // Log the data returned from the login action
   };
 
   return (

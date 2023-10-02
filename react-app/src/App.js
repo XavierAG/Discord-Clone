@@ -23,7 +23,6 @@ import DeleteChannel from "./components/DeleteChannel";
 function App() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  // console.log("USER STATE:", sessionUser);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {

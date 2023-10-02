@@ -21,7 +21,6 @@ const Friends = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.friends) {
-          console.log("FRIENDS RES", data.friends);
           setFriends(data.friends);
         }
       })
@@ -32,7 +31,6 @@ const Friends = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.users) {
-          console.log("USERS", data.users);
           setUsers(data.users);
         }
       })
