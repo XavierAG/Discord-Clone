@@ -23,7 +23,7 @@ class Message(db.Model):
             "channel_id": self.channel_id,
             "owner_id": self.owner_id,
             "user": {
-            "id": self.users.id,  # Assuming there's a one-to-one relationship between messages and users
-            "username": self.users.username  # Replace with the actual attribute name of the user's username
+            "id": self.users.id,
+            "username": self.users.username
         }
         }
