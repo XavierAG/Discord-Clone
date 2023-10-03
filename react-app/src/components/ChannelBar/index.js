@@ -4,12 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store/session";
 import { NavLink } from "react-router-dom";
 import * as channelStore from "../../store/channel";
-import * as messageStore from "../../store/messages";
 import OpenModalButton from "../OpenModalButton";
 import CreateChannelModal from "../CreateChannelModal";
 import "./ChannelBar.css";
-import UpdateChannel from "../UpdateChannel";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCaretDown,
@@ -23,8 +20,6 @@ import { selectChannel } from "../../store/channel";
 
 export default function ChannelBar() {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [message, setMessage] = useState([]);
   const [nav, setNav] = useState(false);
   const [divColor, setDivColor] = useState({});
   const { server_id } = useParams();

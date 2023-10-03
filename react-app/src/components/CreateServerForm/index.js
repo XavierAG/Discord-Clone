@@ -15,7 +15,6 @@ const CreateServerForm = () => {
   const [imageLoading, setImageLoading] = useState(false);
   const [name, setName] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
   const [imageInput, setImageInput] = useState('');
   const [errors, setErrors] = useState({})
 
@@ -47,7 +46,6 @@ const CreateServerForm = () => {
       history.push(`/app/${createdServer.id}`);
       closeModal();
     } catch (errRes) {
-      console.log('CAUGHT ERRORS:', errRes);
       setImageLoading(false);
       if (Array.isArray(errRes.errors)) {
         let errorsObj = {}

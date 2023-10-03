@@ -13,7 +13,6 @@ export default function ServerDetailPage() {
     const fetchServerDetails = async () => {
       const response = await fetch(`/api/servers/${server_id}`);
       const data = await response.json();
-      console.log("DATA HUH", data);
       setServerDetails(data.server);
     };
     fetchServerDetails();

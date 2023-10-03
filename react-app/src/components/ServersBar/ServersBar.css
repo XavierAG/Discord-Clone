@@ -72,9 +72,10 @@
 .server-scrollable-column {
   max-height: 100%;
   overflow-y: auto;
-  overflow-x:hidden;
+  overflow-x: hidden;
   border: 1px solid orange;
 }
+
 /*server scrollbar*/
 .server-scrollable-column::-webkit-scrollbar {
   width: 0.1em;
@@ -89,9 +90,15 @@
   border: none;
   height: 48px;
   width: 48px;
-  background-color: red;
+  background-color: #313438;
+  color: #21A759;
+  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.create-channel{
+
+.create-channel {
   background-color: transparent;
   border-radius: 0px;
   height: fit-content;
@@ -102,6 +109,8 @@
   margin-right: 0.5rem;
   margin-top: 0.2rem;
 }
-.create-channel:hover{
-  color: rgb(201, 201, 201);;
+
+.create-channel:hover {
+  color: rgb(201, 201, 201);
+  ;
 }

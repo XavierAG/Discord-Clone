@@ -17,16 +17,12 @@ export default function EditServerForm() {
   const [imageLoading, setImageLoading] = useState(false);
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  // console.log('IMG URL:', imageUrl);
   const [imageInput, setImageInput] = useState('');
-  console.log('IMG INPUT:', imageInput);
   const [isPrivate, setIsPrivate] = useState(false);
   const [errors, setErrors] = useState("");
-  // console.log('ERRORS:', errors);
-  // console.log('ERRORS NAME:', errors.name);
 
   useEffect(() => {
-    const servers = dispatch(getServersThunk())
+    dispatch(getServersThunk())
   }, []);
 
   useEffect(() => {
@@ -116,13 +112,8 @@ export default function EditServerForm() {
             name="image_url"
             style={{
               border: 'none',
-              // display: 'none',
-              // width: '1rem',
-              // height: '1rem',
-              // background: 'blue'
             }}
             onChange={(e) => {
-              console.log('FILE INPUT:', e.target.files[0]);
               setImageInput(e.target.files[0]);
             }}
           />

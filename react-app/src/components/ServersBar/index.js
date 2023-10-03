@@ -6,6 +6,8 @@ import OpenModalButton from "../OpenModalButton";
 import CreateServerForm from "../CreateServerForm";
 import * as serverActions from "../../store/servers";
 import * as channelActions from "../../store/channel";
+import biscordLogo from '../../assets/images/biscord-logo-original.png'
+import compassLogo from '../../assets/images/biscord-compass-logo.png'
 import "./ServersBar.css";
 
 export default function ServersBar() {
@@ -40,7 +42,7 @@ export default function ServersBar() {
           <img
             alt="discord"
             className="dis-logo"
-            src="https://discord-x.s3.us-east-2.amazonaws.com/56b84efad17a445f8ff2742c6b0760b7.png"
+            src={biscordLogo}
           />
         </NavLink>
       </div>
@@ -75,7 +77,7 @@ export default function ServersBar() {
         <NavLink to="/servers">
           <img
             className="under-server-pic"
-            src="https://sb.blackink.ai/storage/v1/object/public/creations/db78e901-3522-49ee-9b3a-25f0fd470268/0aaf6ab5-056b-4c06-9bd3-7fb594d7dcf3_0.webp"
+            src={compassLogo}
           />
         </NavLink>
       </div>

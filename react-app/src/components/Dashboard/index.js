@@ -1,12 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authenticate, logout, deleteUserThunk } from "../../store/session";
+import { authenticate, logout } from "../../store/session";
 import ChannelBar from "../ChannelBar";
 import ServersBar from "../ServersBar";
 import Chat from "../chat";
-import ChannelMessages from "../ChannelMessages";
-import MessageForm from "../MessageForm";
 import ServerDetailPage from "../ServerDetailPage";
 import "./index.css";
 import Friends from "../Friends";
@@ -18,14 +16,12 @@ export default function Dashboard() {
   const { server_id } = useParams();
   const { channel_id } = useParams();
   const sessionUser = useSelector((state) => state.session.user);
+  if (!sessionUser) history.push('/');
 
   const dataContainerRef = useRef(null);
 
-  // Authenticate the user
-  const [isLoaded, setIsLoaded] = useState(false);
-
   useEffect(() => {
-    dispatch(authenticate()).then(() => setIsLoaded(true));
+    dispatch(authenticate());
   }, [dispatch]);
 
   useEffect(() => {
@@ -41,19 +37,6 @@ export default function Dashboard() {
     dispatch(logout()).then(() => history.push("/"));
   };
 
-  const handleDeleteUser = (e) => {
-    e.preventDefault();
-    if (sessionUser) {
-      dispatch(deleteUserThunk(sessionUser.id)).then(() => history.push("/"));
-    } else {
-      console.error("Invalid user_id");
-    }
-  };
-  if (!sessionUser) {
-    history.push("/");
-    return null;
-  }
-
   return (
     <div id="dashboard-container">
       {/* Side navbar */}
@@ -66,9 +49,25 @@ export default function Dashboard() {
         <div id="column-1-background">
           <div id="placeholder-column-1" className="column-1">
             {server_id ? <ChannelBar /> : <WelcomeChannel />}
-            <button onClick={handleLogout} className="logout">
-              Log Out
-            </button>
+            <div id="user-name-logout">
+              {sessionUser && sessionUser.image_url &&
+                <div id="user-thumbnail-container">
+                  <img
+                    id="user-thumbnail"
+                    alt="user"
+                    src={sessionUser.image_url}
+                  />
+                </div>}
+              {sessionUser && !sessionUser.image_url &&
+                <div id="user-thumbnail-alt">
+                  <p>{sessionUser.username.slice(0, 1).toUpperCase()}</p>
+                </div>}
+              {sessionUser && sessionUser.username &&
+                <p id="username">{sessionUser.username}</p>}
+              <button onClick={handleLogout} className="logout">
+                Log Out
+              </button>
+            </div>
           </div>
         </div>
 
