@@ -21,7 +21,6 @@ const Friends = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.friends) {
-          console.log("FRIENDS RES", data.friends);
           setFriends(data.friends);
         }
       })
@@ -32,7 +31,6 @@ const Friends = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.users) {
-          console.log("USERS", data.users);
           setUsers(data.users);
         }
       })
@@ -50,7 +48,7 @@ const Friends = () => {
     });
   };
 
-  if (!friends || !users) return null;
+  if (!sessionUser || !friends || !users.length) return null;
 
   return (
     <div>

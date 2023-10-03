@@ -33,6 +33,11 @@
   height: 9rem;
   object-fit: cover;
 }
+
 .server-find-name {
   color: #B5BABD;
+}
+
+.public-server-link {
+  text-decoration: none;
 }

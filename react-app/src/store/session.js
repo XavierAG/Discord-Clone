@@ -79,24 +79,25 @@ export const deleteUserThunk = (user_id) => async (dispatch) => {
     method: "DELETE",
   });
   const data = await res.json();
-  console.log("Data!!!!", data);
   dispatch(deleteUser(user_id));
   return data;
 };
 
-export const signUp = (username, email, password) => async (dispatch) => {
-  const response = await fetch("/api/auth/signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username,
-      email,
-      password,
-    }),
-  });
-
+export const signUp = (data, newImage) => async (dispatch) => {
+  console.log('DATA TO FETCH:', data, 'BOOLEAN:', newImage);
+  let response;
+  if (newImage) {
+    response = await fetch("/api/auth/signup", {
+      method: "POST",
+      body: data,
+    });
+  } else {
+    response = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+  };
   if (response.ok) {
     const data = await response.json();
     dispatch(setUser(data));
@@ -108,7 +109,7 @@ export const signUp = (username, email, password) => async (dispatch) => {
     }
   } else {
     return ["An error occurred. Please try again."];
-  }
+  };
 };
 
 export default function reducer(state = initialState, action) {

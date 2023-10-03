@@ -25,7 +25,6 @@ export default function UpdateChannel() {
         const response = await fetch(`/api/channels/${channel_id}`);
         if (response.ok) {
           const data = await response.json();
-          console.log("this is old data", data);
           if (data && data.channel) {
             setOldData(data.channel);
             const oldChannel = data.channel;
@@ -34,7 +33,6 @@ export default function UpdateChannel() {
             setisPrivate(oldChannel.private);
           }
         } else {
-          console.log(channel_id);
           throw new Error("failed to fetch server data");
         }
       } catch (error) {
