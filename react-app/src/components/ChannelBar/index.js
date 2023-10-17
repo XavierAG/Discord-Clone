@@ -15,6 +15,7 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons"; // Import the specific icon you want to use
 import { selectChannel } from "../../store/channel";
+import EditServerForm from "../EditServerForm";
 
 // Rest of your code
 
@@ -96,13 +97,14 @@ export default function ChannelBar() {
       {/* if carrot is clicked it opens the nav */}
       {nav && (
         <div className="server-setting-nav">
-          <Link
+          {/* <Link
             exact
             to={`/servers/${server_id}/update`}
             className="edit-server"
           >
             Edit Server
-          </Link>
+          </Link> */}
+          <EditServerForm />
         </div>
       )}
       <div id="channel">

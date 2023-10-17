@@ -82,13 +82,14 @@ export default function EditServerForm() {
       ></OpenModalButton>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
-          {errors.name ? (
-            <label className="error-text" htmlFor="name">
-              {errors.name}
-            </label>
-          ) : (
-            <label htmlFor="name">SERVER NAME</label>
-          )}
+          {errors.name
+            ?
+            <label
+              className="error-text"
+              htmlFor="name"
+            >{errors.name}</label>
+            :
+            <label htmlFor="name">SERVER NAME</label>}
           <input
             type="text"
             id="name"

@@ -5,7 +5,6 @@ import { useModal } from "../../context/Modal";
 import { deleteServerThunk } from "../../store/servers";
 
 export default function DeleteServerModal({ server_id }) {
-  // const { server_id } = useParams();
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -13,8 +12,7 @@ export default function DeleteServerModal({ server_id }) {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    history.push('/app');
-    dispatch(deleteServerThunk(server_id))
+    dispatch(deleteServerThunk(server_id));
     closeModal();
   };
 
