@@ -8,6 +8,7 @@ import { useModal } from "../../context/Modal";
 import * as messageStore from "../../store/messages";
 import { io } from "socket.io-client";
 import "./index.css";
+import EditMessageModal from "../EditmessageModal";
 let socket;
 
 const Chat = () => {
@@ -127,6 +128,11 @@ const Chat = () => {
                     }
                   ></OpenModalButton>
                 )}
+                <OpenModalButton
+                  className="login-logout"
+                  buttonText="Update Message"
+                  modalComponent={<EditMessageModal messageId={messages.id} />}
+                ></OpenModalButton>
               </div>
             ))}
           <div className="delete-review-button"></div>
