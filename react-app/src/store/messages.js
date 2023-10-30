@@ -63,17 +63,19 @@ export const sendMessageThunk = (data) => async (dispatch) => {
 
 // Edit a Message based on its id
 export const editMessageThunk = (messageId, data) => async (dispatch) => {
-  try {
-    const res = await fetch(`/api/messages/${messageId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+  const res = await fetch(`/api/messages/${messageId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (res.ok) {
     const message = await res.json();
     dispatch(editMessage(message));
     return message;
-  } catch (error) {
-    throw error;
+  } else {
+    const data = await res.json();
+    console.log(data);
+    throw data;
   }
 };
 
