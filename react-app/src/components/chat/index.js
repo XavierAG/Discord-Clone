@@ -119,7 +119,7 @@ const Chat = () => {
             .map((messages, ind) => (
               <div key={ind} className="message-container">
                 {`${messages.user.username}: ${messages.content}`}
-                {sessionUser.id == messages.user.id && (
+                {sessionUser.id == messages.owner_id && (
                   <OpenModalButton
                     className="login-logout"
                     buttonText="Delete message"
@@ -128,11 +128,15 @@ const Chat = () => {
                     }
                   ></OpenModalButton>
                 )}
-                <OpenModalButton
-                  className="login-logout"
-                  buttonText="Update Message"
-                  modalComponent={<EditMessageModal messageId={messages.id} />}
-                ></OpenModalButton>
+                {sessionUser.id == messages.owner_id && (
+                  <OpenModalButton
+                    className="login-logout"
+                    buttonText="Update Message"
+                    modalComponent={
+                      <EditMessageModal messageId={messages.id} />
+                    }
+                  ></OpenModalButton>
+                )}
               </div>
             ))}
           <div className="delete-review-button"></div>
