@@ -56,9 +56,15 @@ export default function ServersBar() {
           <NavLink
             exact
             to={`/app/${server.id}`}
+            className="server-tag"
             onClick={() => handleServerClick(server.id)}
           >
-            <img className="server-pic" src={server.image_url} />
+            {server.image_url ? 
+            <img className="server-pic" src={server.image_url} /> :
+            (
+              <p className="server-letter">{server.name[0].toUpperCase()}</p>
+            )}
+            
           </NavLink>
         </div>
       ))}
