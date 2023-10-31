@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { deleteServerThunk } from "../../store/servers";
+import { getServersThunk, deleteServerThunk } from "../../store/servers";
 
 export default function DeleteServerModal({ server_id }) {
 
@@ -12,7 +12,9 @@ export default function DeleteServerModal({ server_id }) {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    dispatch(deleteServerThunk(server_id));
+    dispatch(deleteServerThunk(server_id))
+      .then(() => dispatch(getServersThunk()));
+    history.push('/app');
     closeModal();
   };
 
@@ -23,6 +25,7 @@ export default function DeleteServerModal({ server_id }) {
         onSubmit={handleSubmit}
       >
         <button
+          type="button"
           onClick={closeModal}
         >
           Cancel

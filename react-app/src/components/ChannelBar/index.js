@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store/session";
@@ -21,10 +21,13 @@ import EditServerForm from "../EditServerForm";
 
 export default function ChannelBar() {
   const dispatch = useDispatch();
-  const [nav, setNav] = useState(false);
-  const [divColor, setDivColor] = useState({});
+  const dropdownRef = useRef();
+  // console.log("REF:", dropdownRef);
   const { server_id } = useParams();
   const sessionUser = useSelector((state) => state.session.user);
+
+  const [nav, setNav] = useState(false);
+  const [divColor, setDivColor] = useState({});
 
   // Key into flattened server data for server properties
   const currentServer = useSelector((state) =>
@@ -36,6 +39,18 @@ export default function ChannelBar() {
   const handleCarrotClick = () => {
     setNav(!nav);
   };
+
+  const closeMenu = e => {
+    if (!dropdownRef.current?.contains(e.target)) {
+      setNav(false);
+    };
+  };
+
+  useEffect(() => {
+    if (!nav) return;
+    document.addEventListener("click", closeMenu);
+    return () => document.removeEventListener("click", closeMenu);
+  }, [nav]);
 
   const handleChannelClick = (channelId) => {
     dispatch(selectChannel(channelId));
@@ -71,16 +86,14 @@ export default function ChannelBar() {
   useEffect(() => {
     // Load the saved channel colors from local storage
     const savedColors = localStorage.getItem("channelColors");
-    if (savedColors) {
-      setDivColor(JSON.parse(savedColors));
-    }
-
+    if (savedColors) setDivColor(JSON.parse(savedColors));
     dispatch(authenticate());
     dispatch(channelStore.getChannelsThunk(server_id));
   }, [dispatch, server_id]);
+
   if (!sessionUser) {
     return null;
-  }
+  };
 
   return (
     <div className="channels-bar-container">
@@ -96,15 +109,11 @@ export default function ChannelBar() {
       </div>
       {/* if carrot is clicked it opens the nav */}
       {nav && (
-        <div className="server-setting-nav">
-          {/* <Link
-            exact
-            to={`/servers/${server_id}/update`}
-            className="edit-server"
-          >
-            Edit Server
-          </Link> */}
-          <EditServerForm />
+        <div
+          className="server-setting-nav"
+          ref={dropdownRef}
+        >
+          <EditServerForm setNav={setNav} />
         </div>
       )}
       <div id="channel">

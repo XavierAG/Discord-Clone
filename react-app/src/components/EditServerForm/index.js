@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getServersThunk, editServerThunk } from "../../store/servers";
 import OpenModalButton from "../OpenModalButton";
 import DeleteServerModal from "../DeleteServerModal";
 
-export default function EditServerForm() {
+export default function EditServerForm({ setNav }) {
+  // console.log('NAV', nav);
+  // const [navProp, setNavProp] = useState(nav);
   const dispatch = useDispatch();
   const history = useHistory();
   const { server_id } = useParams();
@@ -58,7 +60,9 @@ export default function EditServerForm() {
         editServerThunk(server_id, data, newImage)
       );
       if (editedServer) {
-        history.push(`/app/${server_id}`);
+        // setNavProp(!nav);
+        // history.push(`/app/${server_id}`);
+        setNav(false);
       };
     } catch (resErr) {
       console.error(resErr);
@@ -131,9 +135,9 @@ export default function EditServerForm() {
         </div>
         <button type="submit">Update Server</button>
       </form>
-      <Link exact to={`/app/${server_id}`}>
+      <button onClick={() => setNav(false)}>
         Cancel
-      </Link>
+      </button>
     </div>
   );
 }
