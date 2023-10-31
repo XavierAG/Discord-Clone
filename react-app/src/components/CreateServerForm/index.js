@@ -20,10 +20,10 @@ const CreateServerForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     let data;
     let newImage;
-  
+
     if (imageInput) {
       data = new FormData();
       data.append("name", name);
@@ -40,18 +40,16 @@ const CreateServerForm = () => {
       newImage = false;
     }
 
-    console.log('this is the data', data);
     let createdServer;
-  
+
     try {
       setImageLoading(true);
       createdServer = await dispatch(postServerThunk(data, newImage));
-      console.log('this is the created server:', createdServer);
       history.push(`/app/${createdServer.id}`);
       closeModal();
     } catch (errRes) {
       setImageLoading(false);
-  
+
       if (errRes.errors && Array.isArray(errRes.errors)) {
         // Handle array of errors
         let errorsObj = {};
@@ -71,7 +69,7 @@ const CreateServerForm = () => {
       }
     }
   };
-  
+
 
   return (
     <>
@@ -158,7 +156,7 @@ const CreateServerForm = () => {
           onClick={closeModal}
         >Back</button>
         <button
-          id="create-server-submit"
+          className="server-submit"
           type="submit"
           form='create-server-form'
         >Create</button>

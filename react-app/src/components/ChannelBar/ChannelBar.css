@@ -1,33 +1,36 @@
-.channel-navlinks{
+.channel-navlinks {
     text-decoration: none;
     color: #949ba4;
     margin: 5px 0px 5px 10px;
     box-sizing: border-box;
 
 }
-.channel-list-container{
+
+.channel-list-container {
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
     flex-wrap: nowrap;
 }
 
-.create-bar-container{
+.create-bar-container {
     display: flex;
     flex-direction: column;
     color: white;
 }
 
 .update-channel-link {
-text-decoration: none;
-display: flex;
-color: inherit;
-flex-direction: row
+    text-decoration: none;
+    display: flex;
+    color: inherit;
+    flex-direction: row
 }
-.update-channel-link :hover{
-color: rgb(201, 201, 201);
+
+.update-channel-link :hover {
+    color: rgb(201, 201, 201);
 }
-#channel{
+
+#channel {
     display: flex;
     flex-direction: row;
     color: white;
@@ -35,24 +38,30 @@ color: rgb(201, 201, 201);
     justify-content: space-between;
     align-items: center;
 }
-#channel-text{
+
+#channel-text {
     font-size: 12px;
     padding: 0.5rem 0 0.5rem 0.5rem;
 }
-.channel-background{
+
+.channel-background {
     background-color: #393b42;
 }
-#inner-channel{
+
+#inner-channel {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem 1rem; /* Adjust padding */
-    margin: 0 0.5rem; /* Adjust margin */
+    padding: 0.5rem 1rem;
+    /* Adjust padding */
+    margin: 0 0.5rem;
+    /* Adjust margin */
     align-items: center;
     border-radius: 1rem;
     box-sizing: border-box;
     flex-wrap: nowrap;
 }
-.server-name{
+
+.server-name {
     display: flex;
     flex-direction: row;
     color: white;
@@ -62,30 +71,35 @@ color: rgb(201, 201, 201);
     margin-top: 10px;
     justify-content: space-between;
     align-items: center;
+    gap: .75rem;
 }
-.drop-down{
+
+.drop-down {
     font-size: 12px;
     cursor: pointer;
 }
-.drop-down :hover{
+
+.drop-down :hover {
     font-size: 10px;
-
 }
-.server-setting-nav{
-    position:absolute;
+
+.server-setting-nav {
+    position: absolute;
     background-color: #111214;
-    width: 150px;
-    left: 95px;
-    text-align: center;
-    height: 200px;
-
+    width: fit-content;
+    margin-top: .25rem;
+    margin-left: .25rem;
+    border-radius: .75rem;
 }
-.edit-server{
+
+.edit-server {
     text-decoration: none;
     color: white;
 }
+
 @media (max-width: 1132px) {
     #inner-channel {
-        width: 170px; /* Adjust styles for smaller screens if necessary */
+        width: 170px;
+        /* Adjust styles for smaller screens if necessary */
     }
-  }
+}

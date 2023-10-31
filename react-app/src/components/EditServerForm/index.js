@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getServersThunk, editServerThunk } from "../../store/servers";
 import OpenModalButton from "../OpenModalButton";
 import DeleteServerModal from "../DeleteServerModal";
+import './index.css';
 
 export default function EditServerForm({ setNav }) {
   // console.log('NAV', nav);
@@ -76,39 +77,22 @@ export default function EditServerForm({ setNav }) {
   };
 
   return (
-    <div>
-      <h2>Edit your Server</h2>
-      {/* <h1>{errors}</h1> */}
-      <OpenModalButton
-        className="login-logout"
-        buttonText="Delete Server"
-        modalComponent={<DeleteServerModal server_id={server_id} />}
-      ></OpenModalButton>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div>
-          {errors.name
-            ?
-            <label
-              className="error-text"
-              htmlFor="name"
-            >{errors.name}</label>
-            :
-            <label htmlFor="name">SERVER NAME</label>}
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div>
+    <div id='edit-server-component'>
+      <form
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+        id="edit-server-form"
+      >
+        <section className="edit-server-item">
           {errors.image ? (
             <label className="error-text" htmlFor="name">
               {errors.image}
             </label>
           ) : (
-            <label htmlFor="name">SERVER IMAGE</label>
+            <label
+              htmlFor="name"
+              className="edit-server-label"
+            >Server Image</label>
           )}
           <input
             type="file"
@@ -122,9 +106,29 @@ export default function EditServerForm({ setNav }) {
               setImageInput(e.target.files[0]);
             }}
           />
-        </div>
-        <div>
-          <label htmlFor="private">PRIVATE</label>
+        </section>
+        <section className="edit-server-item">
+          {errors.name
+            ?
+            <label
+              className="error-text"
+              htmlFor="edit-server-name"
+            >{errors.name}</label>
+            :
+            <label
+              htmlFor="edit-server-name"
+              className="edit-server-label"
+            >Server Name</label>}
+          <input
+            type="text"
+            id="edit-server-name"
+            name="name"
+            // className="edit-server-name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </section>
+        <section id="edit-server-private-container">
           <input
             type="checkbox"
             id="private"
@@ -132,12 +136,27 @@ export default function EditServerForm({ setNav }) {
             checked={isPrivate}
             onChange={(e) => setIsPrivate(e.target.checked)}
           />
-        </div>
-        <button type="submit">Update Server</button>
+          <label
+            htmlFor="private"
+            className="edit-server-label"
+          >Private</label>
+        </section>
+        <button
+          type="submit"
+          className="server-submit"
+          id="edit-server-submit"
+        >Update Server</button>
       </form>
-      <button onClick={() => setNav(false)}>
+      {/* <button onClick={() => setNav(false)}>
         Cancel
-      </button>
+      </button> */}
+      <section>
+        <OpenModalButton
+          className="delete-server-button"
+          buttonText="Delete Server"
+          modalComponent={<DeleteServerModal server_id={server_id} />}
+        ></OpenModalButton>
+      </section>
     </div>
   );
 }
