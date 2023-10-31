@@ -83,6 +83,7 @@ function ProfileButton({ user }) {
           <NavLink
             exact to="/login"
             className="login-logout"
+            id='login'
           >
             Login
           </NavLink>}
