@@ -23,6 +23,10 @@ body {
   align-items: center;
   font-weight: bold;
   letter-spacing: .25px;
+  width: 100%;
+}
+#login{
+  margin-right: 1rem;
 }
 
 #landing-nav-home {
@@ -34,6 +38,7 @@ body {
   letter-spacing: 1px;
   display: flex;
   align-items: center;
+  margin-left: 1rem;
 }
 
 #landing-nav-logo {
