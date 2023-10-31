@@ -118,7 +118,7 @@ const LandingPage = () => {
             </div>
           </div>
           <div>
-            <h3 className="social-names">Xavier</h3>
+            <h3 className="social-names">Xavier Guzman</h3>
             <div className="landing-icons">
               <a
                 href="https://github.com/XavierAG"
