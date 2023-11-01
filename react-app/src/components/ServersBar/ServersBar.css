@@ -114,3 +114,25 @@
   color: rgb(201, 201, 201);
   ;
 }
+.server-letter {
+  height: 48px;
+  width: 48px;
+  border-radius: 24px;
+  background-color: #2f3136;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: white;
+  padding: 2px; /* Adjust the padding as needed */
+}
+.server-letter:hover {
+  border-radius: 20px; /* Adjust the padding as needed */
+}
+
+.server-tag{
+  list-style: none;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+}

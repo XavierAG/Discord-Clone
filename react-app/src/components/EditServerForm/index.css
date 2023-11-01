@@ -1,0 +1,79 @@
+#edit-server-component {
+  display: flex;
+  flex-direction: column;
+  padding: .75rem;
+  gap: .75rem;
+  box-sizing: border-box;
+}
+
+#edit-server-form {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.edit-server-item {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+.edit-server-label {
+  display: flex;
+  align-items: center;
+  font-size: .75rem;
+  letter-spacing: .75px;
+  font-weight: 600;
+  color: #B5BAC1;
+}
+
+#image_url {
+  color: #B5BAC1;
+}
+
+#edit-server-name {
+  border: none;
+  font-weight: 600;
+  background-color: #313338;
+  color: #B5BAC1;
+}
+
+#edit-server-name:focus {
+  outline: none;
+}
+
+#edit-server-private-container {
+  display: flex;
+  align-items: flex-end;
+  gap: .25rem;
+}
+
+#edit-server-submit {
+  padding: none;
+  color: white;
+  font-size: .75rem;
+}
+
+.delete-server-button {
+  all: unset;
+  cursor: pointer;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #DA373C;
+  color: white;
+  font-size: .75rem;
+  font-weight: bold;
+  box-sizing: border-box;
+  height: 2.5rem;
+  width: 100%;
+  text-align: center;
+}
+
+.delete-server-button:hover {
+  background-color: #AD2B30;
+}
+
+.delete-server-button:active {
+  background-color: #822124;
+}

@@ -101,7 +101,7 @@
   color: #4E5058;
 }
 
-#create-server-submit {
+.server-submit {
   cursor: pointer;
   height: 2.5rem;
   background: #5865F2;
@@ -114,10 +114,10 @@
   padding: 0 1.5rem;
 }
 
-#create-server-submit:hover {
+.server-submit:hover {
   background: #4752c4;
 }
 
-#create-server-submit:active {
+.server-submit:active {
   background: #3c45a5;
 }

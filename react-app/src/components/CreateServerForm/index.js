@@ -18,11 +18,12 @@ const CreateServerForm = () => {
   const [imageInput, setImageInput] = useState('');
   const [errors, setErrors] = useState({})
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let data;
     let newImage;
+
     if (imageInput) {
       data = new FormData();
       data.append("name", name);
@@ -34,12 +35,13 @@ const CreateServerForm = () => {
       data = {
         name: name,
         private: isPrivate,
-        owner_id: sessionUser.id
+        owner_id: sessionUser.id,
       };
       newImage = false;
-    };
+    }
 
     let createdServer;
+
     try {
       setImageLoading(true);
       createdServer = await dispatch(postServerThunk(data, newImage));
@@ -47,18 +49,27 @@ const CreateServerForm = () => {
       closeModal();
     } catch (errRes) {
       setImageLoading(false);
-      if (Array.isArray(errRes.errors)) {
-        let errorsObj = {}
-        errRes.errors.forEach(err => {
-          const [key, val] = err.split(' : ');
-          errorsObj[key] = val;
+
+      if (errRes.errors && Array.isArray(errRes.errors)) {
+        // Handle array of errors
+        let errorsObj = {};
+        errRes.errors.forEach((err) => {
+          if (typeof err === "string") {
+            const [key, val] = err.split(" : ");
+            errorsObj[key] = val;
+          }
         });
         setErrors(errorsObj);
+      } else if (errRes.errors && typeof errRes.errors === "string") {
+        // Handle single error as a string
+        setErrors({ image: errRes.errors });
       } else {
-        setErrors({ image: 'There was an error uploading the image' });
-      };
-    };
+        // Handle other types of errors
+        console.error("Unhandled error:", errRes);
+      }
+    }
   };
+
 
   return (
     <>
@@ -145,7 +156,7 @@ const CreateServerForm = () => {
           onClick={closeModal}
         >Back</button>
         <button
-          id="create-server-submit"
+          className="server-submit"
           type="submit"
           form='create-server-form'
         >Create</button>
