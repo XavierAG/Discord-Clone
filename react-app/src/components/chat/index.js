@@ -119,6 +119,7 @@ const Chat = () => {
             .map((messages, ind) => (
               <div key={ind} className="message-container">
                 {`${messages.user.username}: ${messages.content}`}
+                
                 {sessionUser.id == messages.owner_id && (
                   <OpenModalButton
                     className="login-logout"

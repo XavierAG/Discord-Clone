@@ -118,11 +118,13 @@ export default function ChannelBar() {
       )}
       <div id="channel">
         <p id="channel-text">CHANNELS</p>
+        {sessionUser.id === currentServer.owner_id && (
         <OpenModalButton
           className="create-channel"
           buttonText={<FontAwesomeIcon icon={faPlus} />}
           modalComponent={<CreateChannelModal server_id={server_id} />}
         />
+        )}
       </div>
       <div className="channels-list-container">
         {channels.map((channel) => (
