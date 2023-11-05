@@ -1,14 +1,15 @@
-.form{
+.form {
   bottom: 0;
   width: 100%;
   background-color: #313338;
   padding: 10px;
   display: flex;
   box-sizing: border-box;
-  
-  
+
+
 }
-.form input{
+
+.form input {
   padding: 1rem;
   outline: none;
   background-color: #383a40;
@@ -17,30 +18,34 @@
   border-radius: 10px 0px 0px 10px;
   width: 85%
 }
-.form button{
+
+.form button {
   padding: 1rem;
   border: none;
-  border-radius: 0px 10px 10px 0px; 
-  margin-left: -1px; /* Add this to remove potential gap between input and button */
-  
+  border-radius: 0px 10px 10px 0px;
+  margin-left: -1px;
+  /* Add this to remove potential gap between input and button */
+
 }
-.message-bar{
+
+.message-bar {
   flex-grow: 1;
-  width:100%;
+  width: 100%;
 }
-.message-form{
+
+.message-form {
   display: flex;
   flex-direction: column;
 }
 
 
 
-#channel-messages-container{
+#channel-messages-container {
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow-x: hidden;
-   flex-grow: 1;
+  flex-grow: 1;
 }
 
 .scrollable-column {
@@ -48,16 +53,25 @@
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  overflow-x:hidden;
-  box-sizing: border-box; /* Include border and padding in the total width */
+  overflow-x: hidden;
+  box-sizing: border-box;
+  /* Include border and padding in the total width */
 }
+<<<<<<< HEAD
 .message-container{
   text-align: left;
   padding: 20px 0 20px 20px;
+=======
+
+.message-container {
+  margin: 20px 0 20px 20px;
+>>>>>>> fb7d17e (package, package-lock, and message modal icons)
   font-size: 16px;
   color: white;
   width: 100%;
-  
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 .message-container:hover{
   background-color: #2E3035;
@@ -80,48 +94,83 @@
 #channel-messages-container::-webkit-scrollbar-thumb:hover {
   width: 12px;
 } */
+
 .scrollable-column::-webkit-scrollbar {
   background-color: #585858;
   width: 8px;
   border-radius: 4px;
 }
+
 .scrollable-column::-webkit-scrollbar-thumb {
   background-color: #1e1f22;
   border-radius: 4px;
 }
+
 .scrollable-column::-webkit-scrollbar:hover {
   width: 12px;
 }
+
 .scrollable-column::-webkit-scrollbar-thumb:hover {
   width: 12px;
 }
 
-.channel-form{
+.channel-form {
   display: flex;
   height: 100vh;
   width: 100%;
   flex-direction: column;
-  box-sizing: border-box; /* Include border and padding in the total width */
+  box-sizing: border-box;
+  /* Include border and padding in the total width */
 }
-.form form{
+
+.form form {
   width: 100%;
 }
 
 @media (max-width: 911px) {
   .form input {
-      width: 75%; /* Adjust styles for smaller screens if necessary */
+    width: 75%;
+    /* Adjust styles for smaller screens if necessary */
   }
 }
+
 @media (max-width: 646px) {
   .form input {
-      width: 50%; /* Adjust styles for smaller screens if necessary */
+    width: 50%;
+    /* Adjust styles for smaller screens if necessary */
   }
 }
+
 @media (max-width: 459px) {
   .form input {
-      display: none; /* Adjust styles for smaller screens if necessary */
+    display: none;
+    /* Adjust styles for smaller screens if necessary */
   }
+
   .form button {
-      display: none; /* Adjust styles for smaller screens if necessary */
+    display: none;
+    /* Adjust styles for smaller screens if necessary */
   }
+}
+
+.edit-message-button {
+  all: unset;
+  cursor: pointer;
+  font-size: .75rem;
+  color: #949BA4;
+}
+
+.edit-message-button:hover {
+  color: #F0F0F0;
+}
+
+.delete-message-button {
+  all: unset;
+  cursor: pointer;
+  font-size: .75rem;
+  color: #949BA4;
+}
+
+.delete-message-button:hover {
+  color: #DA373C;
 }
