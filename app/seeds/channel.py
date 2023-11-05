@@ -3,27 +3,27 @@ from sqlalchemy.sql import text
 
 def seed_channels():
     channel1 = Channel(
-        name='General',
+        name='general',
         server_id=1,
         private=False
         )
     channel2 = Channel(
-        name='Announcements',
+        name='games',
         server_id=1,
         private=True
         )
     channel3 = Channel(
-        name='Off-Topic',
+        name='off-topic',
         server_id=2,
         private=False
         )
     channel4 = Channel(
-        name='Support',
+        name='support',
         server_id=2,
         private=False
         )
     channel5 = Channel(
-        name='Development',
+        name='development',
         server_id=3,
         private=False
         )
