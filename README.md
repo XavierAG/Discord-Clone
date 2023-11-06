@@ -10,8 +10,8 @@ This is a collaborative project emulating user control of Servers, channels to p
 
 <!-- Include screenshots of your app in action (once completed). You can embed them using Markdown, like this: -->
 
-![Screenshot 1](screenshot1.png)
-![Screenshot 2](screenshot2.png)
+![Screenshot 1](images/screenshot-1024-768-landing.jpg)
+![Screenshot 2](images/screenshot-1024-768-dashboard.jpg)
 
 ## Technologies/Languages/Plugins/APIs Used
 
