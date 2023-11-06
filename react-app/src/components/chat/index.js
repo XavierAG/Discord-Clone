@@ -9,6 +9,13 @@ import * as messageStore from "../../store/messages";
 import { io } from "socket.io-client";
 import "./index.css";
 import EditMessageModal from "../EditmessageModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCaretDown,
+  faGear,
+  faHashtag,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 let socket;
 
 const Chat = () => {
@@ -121,21 +128,20 @@ const Chat = () => {
                 {`${messages.user.username}: ${messages.content}`}
                 {sessionUser.id == messages.owner_id && (
                   <OpenModalButton
-                    className="login-logout"
-                    buttonText="Delete message"
+                    className="edit-message-button"
+                    buttonText={<i className="fas fa-pen" />}
                     modalComponent={
-                      <DeleteMessageModal messageId={messages.id} />
+                      <EditMessageModal messageId={messages.id} />
                     }
                   ></OpenModalButton>
                 )}
                 {sessionUser.id == messages.owner_id && (
                   <OpenModalButton
-                    className="login-logout"
-                    buttonText="Update Message"
-                    modalComponent={
-                      <EditMessageModal messageId={messages.id} />
-                    }
-                  ></OpenModalButton>
+                    className="delete-message-button"
+                    buttonText={<i className="fas fa-trash" />}
+                    modalComponent={<DeleteMessageModal messageId={messages.id} />}
+                  >
+                  </OpenModalButton>
                 )}
               </div>
             ))}

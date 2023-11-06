@@ -12,7 +12,7 @@ def seed_users():
         username='demo1',
         email='demo1@aa.io',
         password='password',
-        image_url="https://www.loginradius.com/blog/static/00a89fc56461ea1529439d89072c93f1/701ee/react.jpg"
+        image_url="http://cmstucke-s3-bucket.s3.amazonaws.com/6bc40f99ccb247d5a04004b769ff32cf.png"
         )
     demo2 = User(
         username='demo2',

@@ -23,13 +23,13 @@ def seed_servers():
   )
   server4= Server(
     name= 'movie_server',
-    image_url= "https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg",
+    image_url= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_B8S20od2MNZhhSdL7yGvET0R6j5C2UHtBBDonAZOILc3nx_Icc5yOGLroKLIGd1ZhPA&usqp=CAU",
     private= False,
     owner_id = 3
   )
   server5= Server(
     name= 'best_server',
-    image_url= "https://www.tinkeringmonkey.com/wp-content/uploads/2020/09/app-academy-closeup2-scaled.jpg",
+    image_url= "https://preview.redd.it/i-let-my-friend-borrow-my-tech-deck-and-he-sub-consciously-v0-eg0o5o6jlkb81.jpg?width=640&crop=smart&auto=webp&s=3857e5f409df03d9f40821bf1517fd69bfa33d1f",
     private= False,
     owner_id = 3
   )
