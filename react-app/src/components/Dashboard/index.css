@@ -101,16 +101,10 @@
 
 .user-img-and-username {
   display: flex;
-<<<<<<< HEAD
   justify-content: flex-start;
   align-items: center;
   padding-bottom: 1rem;
   gap: .5rem;
-=======
-  align-items: center;
-  gap:  0.5rem;
-  margin-bottom: 1rem;
->>>>>>> d78abd8 (fixed)
 }
 
 #user-thumbnail-alt {
