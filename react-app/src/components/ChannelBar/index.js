@@ -119,11 +119,11 @@ export default function ChannelBar() {
       <div id="channel">
         <p id="channel-text">CHANNELS</p>
         {sessionUser.id === currentServer.owner_id && (
-        <OpenModalButton
-          className="create-channel"
-          buttonText={<FontAwesomeIcon icon={faPlus} />}
-          modalComponent={<CreateChannelModal server_id={server_id} />}
-        />
+          <OpenModalButton
+            className="create-channel"
+            buttonText={<FontAwesomeIcon icon={faPlus} />}
+            modalComponent={<CreateChannelModal server_id={server_id} />}
+          />
         )}
       </div>
       <div className="channels-list-container">
@@ -143,13 +143,14 @@ export default function ChannelBar() {
                 <p>
                   <FontAwesomeIcon icon={faHashtag} /> {channel.name}
                 </p>
-                <NavLink
-                  className="update-channel-link"
-                  exact
-                  to={`/${server_id}/${channel.id}`}
-                >
-                  <FontAwesomeIcon icon={faGear} />
-                </NavLink>
+                {sessionUser.id === currentServer.owner_id &&
+                  <NavLink
+                    className="update-channel-link"
+                    exact
+                    to={`/${server_id}/${channel.id}`}
+                  >
+                    <FontAwesomeIcon icon={faGear} />
+                  </NavLink>}
               </div>
             </div>
           </NavLink>
