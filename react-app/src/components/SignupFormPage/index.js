@@ -28,6 +28,7 @@ function SignupFormPage() {
       !username ||
       !password ||
       !confirmPassword ||
+      username.length < 4 ||
       password.length < 8 ||
       confirmPassword.length < 8
       ? { background: "#444B95", color: "#98999A" }
@@ -86,7 +87,6 @@ function SignupFormPage() {
                 className="signup-input"
                 id="signup-img"
                 name="image_url"
-                placeholder="Please provide a valid email"
                 onChange={(e) => setImageInput(e.target.files[0])}
               />
               {imageLoading &&
@@ -118,6 +118,7 @@ function SignupFormPage() {
               className="signup-input"
               type="email"
               value={email}
+              placeholder="A valid email is required"
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -134,6 +135,7 @@ function SignupFormPage() {
               id="username-input"
               type="text"
               value={username}
+              placeholder="Username must be at least four characters"
               onChange={(e) => setUsername(e.target.value)}
               required
             />
@@ -146,6 +148,7 @@ function SignupFormPage() {
               className="signup-input"
               type="password"
               value={password}
+              placeholder="Password must be at least six characters"
               onChange={(e) => setPassword(e.target.value)}
               required
             />
@@ -165,6 +168,7 @@ function SignupFormPage() {
               className="signup-input"
               type="password"
               value={confirmPassword}
+              placeholder="Confirm password must match password"
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
@@ -178,6 +182,7 @@ function SignupFormPage() {
               !username ||
               !password ||
               !confirmPassword ||
+              username.length < 4 ||
               password.length < 8 ||
               confirmPassword.length < 8
             }
