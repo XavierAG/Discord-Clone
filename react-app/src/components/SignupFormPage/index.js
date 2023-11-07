@@ -24,7 +24,12 @@ function SignupFormPage() {
   }
 
   const loginStyle =
-    !email || !username || !password || !confirmPassword
+    !email ||
+      !username ||
+      !password ||
+      !confirmPassword ||
+      password.length < 8 ||
+      confirmPassword.length < 8
       ? { background: "#444B95", color: "#98999A" }
       : { background: "#4752C4", color: "white" };
 
@@ -81,6 +86,7 @@ function SignupFormPage() {
                 className="signup-input"
                 id="signup-img"
                 name="image_url"
+                placeholder="Please provide a valid email"
                 onChange={(e) => setImageInput(e.target.files[0])}
               />
               {imageLoading &&
@@ -167,7 +173,14 @@ function SignupFormPage() {
             className="login-submit"
             type="submit"
             style={loginStyle}
-            disabled={!email || !username || !password || !confirmPassword}
+            disabled={
+              !email ||
+              !username ||
+              !password ||
+              !confirmPassword ||
+              password.length < 8 ||
+              confirmPassword.length < 8
+            }
           >
             Sign Up
           </button>
