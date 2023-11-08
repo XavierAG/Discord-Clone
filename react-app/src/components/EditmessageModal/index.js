@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Modal, useModal } from "../../context/Modal";
+import { useModal } from "../../context/Modal";
 import { editMessageThunk } from "../../store/messages";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import './index.css';
 
 const EditMessageModal = ({ messageId }) => {
   const dispatch = useDispatch();
@@ -11,9 +12,9 @@ const EditMessageModal = ({ messageId }) => {
   const message = useSelector((state) => state.messages[messageId]);
   console.log("messageState", message);
   console.log("messageId", messageId);
-  const sessionUser = useSelector((state) => state.session.user);
+  // const sessionUser = useSelector((state) => state.session.user);
   const [content, setContent] = useState("");
-  const [channelId, setChannelId] = useState("");
+  // const [channelId, setChannelId] = useState("");
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -37,19 +38,25 @@ const EditMessageModal = ({ messageId }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      id="update-message-form"
+      onSubmit={handleSubmit}
+    >
       {errors.content ? (
         <label className="error-text" htmlFor="content">
           {errors.content}
         </label>
       ) : null}
       <input
-        id="content"
+        id="update-message-input"
         type="text"
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
-      <button type="submit">Edit Message</button>
+      <button
+        id="update-message-submit"
+        type="submit"
+      ><i className="fas fa-pen" /></button>
     </form>
   );
 };
