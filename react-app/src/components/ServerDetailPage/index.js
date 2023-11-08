@@ -20,7 +20,9 @@ export default function ServerDetailPage() {
 
   return (
     <div className="server-details-page">
-      <h1 className="welcome-server"> Welcome to {serverDetails.name}</h1>;
+      <h1 className="welcome-server"> Welcome to {serverDetails.name?.length > 30 ?
+        serverDetails.name.slice(0, 27) + '...' :
+        serverDetails.name}</h1>;
     </div>
   );
 }

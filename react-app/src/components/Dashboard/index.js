@@ -51,21 +51,22 @@ export default function Dashboard() {
             {server_id ? <ChannelBar /> : <WelcomeChannel />}
             <div id="user-name-logout">
               <div className="user-img-and-username">
-              {sessionUser && sessionUser.image_url &&
-                <div id="user-thumbnail-container">
-                  <img
-                    id="user-thumbnail"
-                    alt="user"
-                    src={sessionUser.image_url}
-                  />
-                </div>}
-              {sessionUser && !sessionUser.image_url &&
-                <div id="user-thumbnail-alt">
-                  <p>{sessionUser.username.slice(0, 1).toUpperCase()}</p>
-                </div>}
-              {sessionUser && sessionUser.username &&
-                <p id="username">{sessionUser.username}</p>
-                }
+                {sessionUser && sessionUser.image_url &&
+                  <div id="user-thumbnail-container">
+                    <img
+                      id="user-thumbnail"
+                      alt="user"
+                      src={sessionUser.image_url}
+                    />
+                  </div>}
+                {sessionUser && !sessionUser.image_url &&
+                  <div id="user-thumbnail-alt">
+                    <p>{sessionUser.username.slice(0, 1).toUpperCase()}</p>
+                  </div>}
+                {sessionUser && sessionUser.username &&
+                  <p id="username">{sessionUser.username.length > 15 ?
+                    sessionUser.username.slice(0, 12) + '...' :
+                    sessionUser.username}</p>}
               </div>
               <button onClick={handleLogout} className="logout">
                 Log Out
