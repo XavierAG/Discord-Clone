@@ -110,9 +110,6 @@
 #user-thumbnail-alt {
   width: 2rem;
   height: 2rem;
-  /* position: absolute; */
-  bottom: 0;
-  /* margin-bottom: 3.6rem; */
   left: 5.5rem;
   display: flex;
   justify-content: center;
