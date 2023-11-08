@@ -57,8 +57,9 @@
     /* Adjust margin */
     align-items: center;
     border-radius: 1rem;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     flex-wrap: nowrap;
+    /* max-width: 15rem; */
 }
 
 .server-name {
