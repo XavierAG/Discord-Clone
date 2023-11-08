@@ -47,6 +47,13 @@ const Friends = () => {
     });
   };
 
+  const handleRemove = (user_id) => {
+    fetch(`api/users/${user_id}/friends`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+  };
+
   if (!sessionUser || !friends || !users.length) return null;
 
   return (
@@ -77,8 +84,20 @@ const Friends = () => {
         <ul className="listed-names">
           {friends.map((friend) => (
             <li className="li-friends" key={friend.id}>
-              <img alt={friend.username} className="user-pic" src={friend.image_url} />
-              <p className="listed-name">{friend.username}</p>
+              <div className="friend-info">
+                <img alt={friend.username} className="user-pic" src={friend.image_url} />
+                <p className="listed-name">{friend.username}</p>
+              </div>
+              <div>
+                <button
+                  onClick={() => {
+                    handleRemove(friend.id);
+                    window.location.reload();
+                  }}
+                >
+                  remove friend
+                </button>
+              </div>
             </li>
           ))}
         </ul>
