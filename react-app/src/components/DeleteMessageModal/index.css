@@ -1,0 +1,8 @@
+#delete-messsage-modal {
+  padding: .5rem;
+}
+
+#delete-message-button:hover {
+  color: white;
+  background-color: #DA373C;
+}
