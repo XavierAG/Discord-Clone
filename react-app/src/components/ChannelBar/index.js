@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store/session";
 import { NavLink } from "react-router-dom";
@@ -22,7 +22,6 @@ import EditServerForm from "../EditServerForm";
 export default function ChannelBar() {
   const dispatch = useDispatch();
   const dropdownRef = useRef();
-  // console.log("REF:", dropdownRef);
   const { server_id } = useParams();
   const sessionUser = useSelector((state) => state.session.user);
 

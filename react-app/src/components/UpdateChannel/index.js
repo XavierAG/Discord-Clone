@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { authenticate } from "../../store/session";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import * as channelStore from "../../store/channel";
 import OpenModalButton from "../OpenModalButton";
 import DeleteChannel from "../DeleteChannel";
-import * as serverStore from "../../store/servers";
 import "./UpdateChannel.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function UpdateChannel() {
-  const currentServer = useSelector((state) => state.servers.currentServer);
-  const currentChannel = useSelector((state) => state.channels.currentChannel);
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [oldData, setOldData] = useState({});
@@ -36,7 +32,7 @@ export default function UpdateChannel() {
           throw new Error("failed to fetch server data");
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     fetchChannel();

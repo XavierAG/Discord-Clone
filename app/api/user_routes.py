@@ -31,17 +31,13 @@ def friends(user_id):
     Query for a user by id and returns that user in a dictionary
     """
     user1 = User.query.get(1)
-    print('USER 1:', user1.image_url)
-
     user = User.query.get(user_id)
-    print('USER IMG:', user.image_url)
     friends = user.add.all()
-
-    print('FRIENDS:', [friend.to_dict() for friend in friends])
 
     # user.add gets persons friends
     # user.added gets people who have added that user
     # if user.add = user.added = friends
+
     return {'friends': [friend.to_dict() for friend in friends]}
 
 
@@ -52,8 +48,6 @@ def add_friends(user_id):
     friends = user.add.all()
     friends_list = [friend.to_dict() for friend in friends]
 
-    print("user", user)
-    print("friendslist", friends_list)
     if not user:
         return {"error": "User not found"}, 404
 
@@ -66,7 +60,6 @@ def add_friends(user_id):
     for friend in friends_list:
         if friend["id"] == user_id:
             return {"error": "You are already friend with this user"}, 400
-
 
     # new_friendship = friends(user_id= current_user.id, friend_id=user_id)
     current_user.add.append(user)

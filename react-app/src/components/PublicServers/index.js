@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store/session";
-import ServerSearch from "../ServerSearch";
 import ServersBar from "../ServersBar";
 import * as serverActions from "../../store/servers";
 import "./index.css";
@@ -38,7 +36,7 @@ export default function PublicServers() {
               className='public-server-link'
               exact to={`/app/${server.id}`}>
               <div className="pub-serv-element" key={server.id}>
-                <img className="pub-img" src={server.image_url} />
+                <img alt={server.name} className="pub-img" src={server.image_url} />
                 <h1 className="server-find-name">{server.name}</h1>
                 {/* <p>{server.private ? "Private" : "Public"}</p> */}
               </div>
