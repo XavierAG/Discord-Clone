@@ -98,7 +98,9 @@ export default function ChannelBar() {
   return (
     <div className="channels-bar-container">
       <div className="server-name">
-        <h1>{currentServer.name}</h1>
+        <h1>{currentServer.name?.length > 15 ?
+          currentServer.name.slice(0, 12) + '...' :
+          currentServer.name}</h1>
         {sessionUser.id === currentServer.owner_id && (
           <FontAwesomeIcon
             className="drop-down"
@@ -141,7 +143,9 @@ export default function ChannelBar() {
                 onClick={() => handleDivColor(channel.id)}
               >
                 <p>
-                  <FontAwesomeIcon icon={faHashtag} /> {channel.name}
+                  <FontAwesomeIcon icon={faHashtag} /> {channel.name.length > 17 ?
+                    channel.name.slice(0, 14) + '...' :
+                    channel.name}
                 </p>
                 {sessionUser.id === currentServer.owner_id &&
                   <NavLink

@@ -1,0 +1,20 @@
+#update-message-form {
+  padding: .5rem;
+  background-color: #313338;
+}
+
+#update-message-input {
+  background-color: #383A40;
+  outline: none;
+  color: #EFEFEF;
+  border-radius: .4rem 0 0 .4rem;
+  border: none;
+  height: 1.5rem;
+  font-size: 14px;
+}
+
+#update-message-submit {
+  border-radius: 0 .4rem .4rem 0;
+  border: none;
+  height: 2.5rem;
+}
