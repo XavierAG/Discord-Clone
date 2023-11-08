@@ -47,6 +47,13 @@ const Friends = () => {
     });
   };
 
+  const handleRemove = (user_id) => {
+    fetch(`api/users/${user_id}/friends`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+  };
+
   if (!sessionUser || !friends || !users.length) return null;
 
   return (
@@ -77,6 +84,20 @@ const Friends = () => {
         <ul className="listed-names">
           {friends.map((friend) => (
             <li className="li-friends" key={friend.id}>
+              <div className="friend-info">
+                <img className="user-pic" src={friend.image_url} />
+                <p className="listed-name">{friend.username}</p>
+              </div>
+              <div>
+                <button
+                  onClick={() => {
+                    handleRemove(friend.id);
+                    window.location.reload();
+                  }}
+                >
+                  remove friend
+                </button>
+              </div>
               <img alt={friend.username} className="user-pic" src={friend.image_url} />
               <p className="listed-name">{friend.username}</p>
             </li>
@@ -87,8 +108,8 @@ const Friends = () => {
           {users
             .filter((user) => user.id !== sessionUser.id)
             .map((user) => (
-              <li className="li-friends" key={user.id}>
-                <img alt={user.username} className="user-pic" src={user.image_url} />
+              <li className="li-users" key={user.id}>
+                <img className="user-pic" src={user.image_url} />
                 <p className="listed-name">{user.username}</p>
                 {isFriend(user.id) ? (
                   <span className="checkmark">Friend ✔</span>

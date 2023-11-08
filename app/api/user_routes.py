@@ -4,7 +4,9 @@ from app.models import User, db
 
 user_routes = Blueprint('users', __name__)
 
-#User Routes
+# User Routes
+
+
 @user_routes.route('/')
 @login_required
 def users():
@@ -23,6 +25,7 @@ def user(id):
     """
     user = User.query.get(id)
     return user.to_dict()
+
 
 @user_routes.route('/<int:user_id>/friends')
 @login_required
@@ -68,7 +71,21 @@ def add_friends(user_id):
     return {"message": "Friend added sucessfully"}
 
 
+@user_routes.route('/<int:user_id>/friends', methods=['DELETE'])
+@login_required
+def remove_friends(user_id):
+    user = User.query.get(user_id)
 
+    if not user:
+        return {"error": "User not found"}, 404
+
+    if current_user.id == user_id:
+        return {"error": "You cannot remove yourself as a friend"}, 400
+
+    current_user.add.remove(user)
+    db.session.commit()
+
+    return {"message": "Friend removed successfully"}
 
 
 @user_routes.route('/<int:user_id>', methods=['DELETE'])
