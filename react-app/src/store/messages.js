@@ -74,7 +74,6 @@ export const editMessageThunk = (messageId, data) => async (dispatch) => {
     return message;
   } else {
     const data = await res.json();
-    console.log(data);
     throw data;
   }
 };

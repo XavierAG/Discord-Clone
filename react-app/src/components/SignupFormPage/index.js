@@ -13,15 +13,8 @@ function SignupFormPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [imageInput, setImageInput] = useState('');
-  const [imageLoading, setImageLoading] = useState(false);
+  // const [imageLoading, setImageLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  console.log('ERRORS:', errors);
-  // if (errors.length) {
-  //   errors.forEach((err) => {
-  //     const [key, val] = err.split(" : ");
-  //     errorsObj[key] = val;
-  //   });
-  // }
 
   const loginStyle =
     !email ||
@@ -71,7 +64,6 @@ function SignupFormPage() {
     if (password === confirmPassword) {
       const res = await dispatch(signUp(data, newImage));
       if (res) {
-        console.log('ERROR RESPONSE:', res);
         res.forEach((err) => {
           const [key, val] = err.split(" : ");
           errorsObj[key] = val;
@@ -103,10 +95,10 @@ function SignupFormPage() {
                 name="image_url"
                 onChange={(e) => setImageInput(e.target.files[0])}
               />
-              {imageLoading &&
+              {/* {imageLoading &&
                 <p
                   className="create-server-item"
-                >LOADING...</p>}
+                >LOADING...</p>} */}
               {errors.image
                 ?
                 <label

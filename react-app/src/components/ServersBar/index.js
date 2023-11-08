@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
@@ -11,7 +11,6 @@ import compassLogo from '../../assets/images/biscord-compass-logo.png'
 import "./ServersBar.css";
 
 export default function ServersBar() {
-  const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
   // Get servers from state
@@ -60,7 +59,7 @@ export default function ServersBar() {
             onClick={() => handleServerClick(server.id)}
           >
             {server.image_url ?
-              <img className="server-pic" src={server.image_url} /> :
+              <img alt={server.name} className="server-pic" src={server.image_url} /> :
               (
                 <p className="server-letter">{server.name[0].toUpperCase()}</p>
               )}
@@ -82,6 +81,7 @@ export default function ServersBar() {
       <div className="find-servers">
         <NavLink to="/servers">
           <img
+            alt="all servers"
             className="under-server-pic"
             src={compassLogo}
           />

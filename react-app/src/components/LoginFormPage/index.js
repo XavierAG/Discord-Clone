@@ -35,13 +35,13 @@ function LoginFormPage({ toggleProp }) {
   const demoUser1 = async () => {
     const email = "demo1@aa.io";
     const password = "password";
-    const demoData = await dispatch(login(email, password));
+    await dispatch(login(email, password));
   };
 
   const demoUser2 = async () => {
     const email = "demo2@aa.io";
     const password = "password";
-    const demoData = await dispatch(login(email, password));
+    await dispatch(login(email, password));
   };
 
   return (

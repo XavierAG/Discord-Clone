@@ -12,7 +12,7 @@ export default function ServerSearch() {
       const data = await res.json();
       setSearchResults(data);
     } catch (error) {
-      console.log("Error server not found", error);
+      console.error("Error server not found", error);
     }
   };
 

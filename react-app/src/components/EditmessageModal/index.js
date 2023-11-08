@@ -10,11 +10,7 @@ const EditMessageModal = ({ messageId }) => {
   const { channel_id } = useParams();
   const { closeModal } = useModal();
   const message = useSelector((state) => state.messages[messageId]);
-  console.log("messageState", message);
-  console.log("messageId", messageId);
-  // const sessionUser = useSelector((state) => state.session.user);
   const [content, setContent] = useState("");
-  // const [channelId, setChannelId] = useState("");
   const [errors, setErrors] = useState({});
 
   useEffect(() => {

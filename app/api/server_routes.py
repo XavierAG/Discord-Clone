@@ -82,7 +82,6 @@ def create_server():
     """
     form = ServerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print('YOU HAVE MADE IT TO THE CREATE SERVER ROUTE')
     if form.validate_on_submit():
 
         url = None
@@ -93,9 +92,6 @@ def create_server():
             print("image upload", upload)
 
             if "url" not in upload:
-            # if the dictionary doesn't have a url key
-            # it means that there was an error when we tried to upload
-            # so we send back that error message (and we printed it above)
                 errors = [upload]
                 return {'errors': errors}, 400
 
@@ -126,7 +122,6 @@ def edit_server(server_id):
     """
     Update a server by its ID by an authorized user
     """
-    print('YOU HAVE MADE IT TO THE EDIT SERVER ROUTE')
     form = ServerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     server = Server.query.get(server_id)
