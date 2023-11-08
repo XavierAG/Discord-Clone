@@ -34,10 +34,25 @@
 .li-friends {
     list-style: none;
     display: flex;
+    justify-content: space-between;
     padding: 2px 5px 10px 5px;
     border-bottom: 1px #3F4147 solid;
     margin-right: 20px;
     margin-top: 10px;
+    align-items: center;
+}
+.li-users {
+    list-style: none;
+    display: flex;
+    padding: 2px 5px 10px 5px;
+    border-bottom: 1px #3F4147 solid;
+    margin-right: 20px;
+    margin-top: 10px;
+    align-items: center;
+}
+.friend-info {
+    display: flex;
+    flex-direction: row;
     align-items: center;
 }
 
