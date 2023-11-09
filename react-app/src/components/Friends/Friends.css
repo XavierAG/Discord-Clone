@@ -72,6 +72,19 @@
     border-radius: 24px;
     object-fit: cover;
 }
+.user-pic-alt{
+    display: flex;
+    height: 48px;
+    width: 48px;
+    border: 1px solid transparent;
+    border-radius: 24px;
+    object-fit: cover;
+    background: #1E1F22;
+    text-align: center;
+    color: #949BA4;
+    align-items: center;
+    justify-content: center;
+}
 
 .checkmark {
     font-size: 16px;
