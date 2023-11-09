@@ -92,7 +92,7 @@ const Friends = () => {
                     <p>{friend.username.slice(0, 1).toUpperCase()}</p>
                   </div> : <img alt={friend.username} className="user-pic" src={friend.image_url} />
                 }
-                <p className="listed-name">{friend.username}</p>
+                <p className="listed-friend-name">{friend.username}</p>
               </div>
               <div>
                 <button
@@ -102,11 +102,9 @@ const Friends = () => {
                   }}
                 >
                   <FontAwesomeIcon icon={faUserMinus} />
-                  remove friend
+                  
                 </button>
               </div>
-              <img alt={friend.username} className="user-pic" src={friend.image_url} />
-              <p className="listed-name">{friend.username}</p>
             </li>
           ))}
         </ul>
@@ -121,6 +119,7 @@ const Friends = () => {
                     <p>{user.username.slice(0, 1).toUpperCase()}</p>
                   </div> : <img alt={user.username} className="user-pic" src={user.image_url} />
                 }
+                <div className="add-friend-info">
                 <p className="listed-name">{user.username}</p>
                 {isFriend(user.id) ? (
                   <span className="checkmark"><FontAwesomeIcon icon={faUserGroup} /></span>
@@ -135,6 +134,7 @@ const Friends = () => {
                     <FontAwesomeIcon icon={faUserPlus} />
                   </button>
                 )}
+                </div>
               </li>
             ))}
         </ul>

@@ -61,8 +61,12 @@
 .listed-name {
     color: #F2F3F5;
     font-size: 16px;
-    padding-left: 10px;
-    padding-right: 40px;
+    margin-right: 1rem;
+}
+.listed-friend-name {
+    color: #F2F3F5;
+    font-size: 16px;
+    margin-left: 1rem;
 }
 
 .user-pic {
@@ -85,15 +89,15 @@
     align-items: center;
     justify-content: center;
 }
-
+.add-friend-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .checkmark {
     font-size: 16px;
-    position: absolute;
-    right: 20px;
     color: green;
 }
 
 .add-friend-b {
-    position: absolute;
-    right: 20px;
 }
