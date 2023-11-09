@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./Friends.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserGroup, faUserMinus, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Friends = () => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -85,7 +87,11 @@ const Friends = () => {
           {friends.map((friend) => (
             <li className="li-friends" key={friend.id}>
               <div className="friend-info">
-                <img alt={friend.username} className="user-pic" src={friend.image_url} />
+              {!friend.image_url ?
+                  <div className="user-pic-alt">
+                    <p>{friend.username.slice(0, 1).toUpperCase()}</p>
+                  </div> : <img alt={friend.username} className="user-pic" src={friend.image_url} />
+                }
                 <p className="listed-name">{friend.username}</p>
               </div>
               <div>
@@ -95,9 +101,12 @@ const Friends = () => {
                     window.location.reload();
                   }}
                 >
+                  <FontAwesomeIcon icon={faUserMinus} />
                   remove friend
                 </button>
               </div>
+              <img alt={friend.username} className="user-pic" src={friend.image_url} />
+              <p className="listed-name">{friend.username}</p>
             </li>
           ))}
         </ul>
@@ -107,10 +116,14 @@ const Friends = () => {
             .filter((user) => user.id !== sessionUser.id)
             .map((user) => (
               <li className="li-friends" key={user.id}>
-                <img alt={user.username} className="user-pic" src={user.image_url} />
+                {!user.image_url ?
+                  <div className="user-pic-alt">
+                    <p>{user.username.slice(0, 1).toUpperCase()}</p>
+                  </div> : <img alt={user.username} className="user-pic" src={user.image_url} />
+                }
                 <p className="listed-name">{user.username}</p>
                 {isFriend(user.id) ? (
-                  <span className="checkmark">Friend ✔</span>
+                  <span className="checkmark"><FontAwesomeIcon icon={faUserGroup} /></span>
                 ) : (
                   <button
                     className="add-friend-b"
@@ -119,7 +132,7 @@ const Friends = () => {
                       window.location.reload();
                     }}
                   >
-                    add
+                    <FontAwesomeIcon icon={faUserPlus} />
                   </button>
                 )}
               </li>

@@ -111,7 +111,18 @@ const Chat = () => {
             .filter((messages) => messages.content) // Filter messages with content
             .map((messages, ind) => (
               <div key={ind} className="message-container">
-                {`${messages.user.username}: ${messages.content}`}
+                <Tooltip
+                  title={`Message from ${messages.user.username}`}
+                  position="top"
+                  trigger="mouseenter"
+                  arrow={true}
+                  duration={200}
+                >
+                  <div>
+                    {`${messages.user.username}: ${messages.content}`}
+                  </div>
+                </Tooltip>
+                
                 {sessionUser.id == messages.owner_id && (
                   <OpenModalButton
                     className="edit-message-button"
