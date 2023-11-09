@@ -19,22 +19,21 @@ export default function DeleteServerModal({ server_id }) {
   };
 
   return (
-    <div>
-      <h1>Delete Modal</h1>
+    <div className="delete-modal-modal">
+      <h1>Delete Server</h1>
       <form
+        className='delete-modal-form'
         onSubmit={handleSubmit}
       >
         <button
+          className="delete-modal-button"
           type="button"
           onClick={closeModal}
-        >
-          Cancel
-        </button>
+        >Cancel</button>
         <button
+          className="delete-modal-button"
           type="submit"
-        >
-          Delete Server
-        </button>
+        >Delete</button>
       </form>
     </div>
   )
