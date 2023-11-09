@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import React, { useEffect } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +14,7 @@ import "./ServersBar.css";
 
 export default function ServersBar() {
   const dispatch = useDispatch();
+  const [isLoaded, setIsLoaded] = useState(false);
   const history = useHistory();
 
   // Get servers from state
@@ -22,13 +25,20 @@ export default function ServersBar() {
 
   // Authenticate the user then fetch the servers list
   useEffect(() => {
-    dispatch(authenticate()).then(dispatch(serverActions.getServersThunk()));
-  }, [dispatch]);
+    dispatch(authenticate())
+      .then(() => dispatch(serverActions.getServersThunk()))
+      .then(() => dispatch(channelActions.getChannelsThunk()))
+      .then(() => setIsLoaded(true));
+  }, []);
 
   // Add or replace a current-server property in the store
   // then dump current-channel state
   let channels;
   const handleServerClick = async (serverId) => {
+    dispatch(serverActions.setCurrentServerThunk(serverId)).then(
+      dispatch(channelActions.setCurrentChannelThunk(channels.length ?
+        channels[0].id :
+        null)));
     await dispatch(channelActions.setCurrentChannelThunk(null));
     await dispatch(serverActions.setCurrentServerThunk(serverId));
     const { channels } = await dispatch(channelActions.getChannelsThunk(serverId));
@@ -58,7 +68,9 @@ export default function ServersBar() {
         <div className="server-pics" key={server.id}>
           <NavLink
             exact
-            to={`/app/${server.id}`}
+            to={channels.length ?
+              `/app/${server.id}/${channels[0].id}` :
+              `/app/${server.id}`}
             className="server-tag"
             onClick={() => handleServerClick(server.id)}
           >
