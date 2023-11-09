@@ -18,11 +18,11 @@ export default function DeleteChannel({ server_id, channel_id }) {
   };
 
   return (
-    <div>
-      <h1>Delete Modal</h1>
-      <form onSubmit={handleSubmit}>
-        <button onClick={closeModal}>Cancel</button>
-        <button type="submit">Delete Channel</button>
+    <div className="delete-modal-modal">
+      <h1>Delete Channel</h1>
+      <form className='delete-modal-form' onSubmit={handleSubmit}>
+        <button className="delete-modal-button" onClick={closeModal}>Cancel</button>
+        <button className="delete-modal-button" type="submit">Delete</button>
       </form>
     </div>
   );
