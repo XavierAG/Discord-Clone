@@ -70,7 +70,6 @@ export const postChannelThunk = (channel) => async (dispatch) => {
 //Edit a Channel based on its Id
 export const editChannelThunk = (channel) => async (dispatch) => {
   const { name, channel_id, isPrivate } = channel;
-  console.log("name:", name);
   const res = await fetch(`/api/channels/${channel_id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -144,7 +143,7 @@ export default function reducer(state = initialState, action) {
           [newChannel.id]: newChannel,
         },
       };
-      case "SELECT_CHANNEL":
+    case "SELECT_CHANNEL":
       return {
         ...state,
         selectedChannel: action.channelId,

@@ -13,15 +13,8 @@ function SignupFormPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [imageInput, setImageInput] = useState('');
-  const [imageLoading, setImageLoading] = useState(false);
-  const [errors, setErrors] = useState([]);
-  let errorsObj = {};
-  if (errors.length) {
-    errors.forEach((err) => {
-      const [key, val] = err.split(" : ");
-      errorsObj[key] = val;
-    });
-  }
+  // const [imageLoading, setImageLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const loginStyle =
     !email ||
@@ -38,6 +31,17 @@ function SignupFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let errorsObj = {};
+    if (!email) errorsObj.email = 'A valid email is required';
+    if (!username || username.length < 4) errorsObj.username = 'Username must be at least four characters';
+    if (!password || password.length < 8) errorsObj.password = 'Password must be at least eight characters';
+    if (!confirmPassword || confirmPassword.length < 8) errorsObj.confirmPassword = 'Confirm password must match password';
+    const errorsArr = Object.values(errorsObj);
+    if (errorsArr.length) {
+      setErrors({ ...errorsObj });
+      return;
+    };
 
     let data;
     let newImage;
@@ -57,12 +61,14 @@ function SignupFormPage() {
       newImage = false;
     };
 
-    console.log('DATA:', data, 'NEW IMAGE', newImage);
-
     if (password === confirmPassword) {
       const res = await dispatch(signUp(data, newImage));
       if (res) {
-        setErrors(res);
+        res.forEach((err) => {
+          const [key, val] = err.split(" : ");
+          errorsObj[key] = val;
+        });
+        setErrors(errorsObj);
       } else {
         history.push("/app");
       };
@@ -89,10 +95,10 @@ function SignupFormPage() {
                 name="image_url"
                 onChange={(e) => setImageInput(e.target.files[0])}
               />
-              {imageLoading &&
+              {/* {imageLoading &&
                 <p
                   className="create-server-item"
-                >LOADING...</p>}
+                >LOADING...</p>} */}
               {errors.image
                 ?
                 <label
@@ -107,8 +113,8 @@ function SignupFormPage() {
           </section>
 
           <section className="login-form-section">
-            {errorsObj.email ? (
-              <p className="error-text">EMAIL - {errorsObj.email}</p>
+            {errors.email ? (
+              <p className="error-text">EMAIL - {errors.email}</p>
             ) : (
               <p className="login-form-item">
                 EMAIL<span className="asterisk">*</span>
@@ -120,12 +126,12 @@ function SignupFormPage() {
               value={email}
               placeholder="A valid email is required"
               onChange={(e) => setEmail(e.target.value)}
-              required
+            // required
             />
           </section>
           <section className="login-form-section">
-            {errorsObj.username ? (
-              <p className="error-text">USERNAME - {errorsObj.username}</p>
+            {errors.username ? (
+              <p className="error-text">USERNAME - {errors.username}</p>
             ) : (
               <p className="login-form-item">
                 USERNAME<span className="asterisk">*</span>
@@ -137,27 +143,33 @@ function SignupFormPage() {
               value={username}
               placeholder="Username must be at least four characters"
               onChange={(e) => setUsername(e.target.value)}
-              required
+            // required
             />
           </section>
           <section className="login-form-section">
-            <p className="login-form-item">
-              PASSWORD<span className="asterisk">*</span>
-            </p>
+            {errors.password ? (
+              <p className="error-text">
+                PASSWORD -{" "}
+                <span className="err-sub-str">{errors.password}</span>
+              </p>
+            ) :
+              <p className="login-form-item">
+                PASSWORD<span className="asterisk">*</span>
+              </p>}
             <input
               className="signup-input"
               type="password"
               value={password}
-              placeholder="Password must be at least six characters"
+              placeholder="Password must be at least eight characters"
               onChange={(e) => setPassword(e.target.value)}
-              required
+            // required
             />
           </section>
           <section className="login-form-section">
-            {errorsObj.password ? (
+            {errors.confirmPassword ? (
               <p className="error-text">
                 CONFIRM PASSWORD -{" "}
-                <span className="err-sub-str">{errorsObj.password}</span>
+                <span className="err-sub-str">{errors.confirmPassword}</span>
               </p>
             ) : (
               <p className="login-form-item">
@@ -170,22 +182,22 @@ function SignupFormPage() {
               value={confirmPassword}
               placeholder="Confirm password must match password"
               onChange={(e) => setConfirmPassword(e.target.value)}
-              required
+            // required
             />
           </section>
           <button
             className="login-submit"
             type="submit"
             style={loginStyle}
-            disabled={
-              !email ||
-              !username ||
-              !password ||
-              !confirmPassword ||
-              username.length < 4 ||
-              password.length < 8 ||
-              confirmPassword.length < 8
-            }
+          // disabled={
+          //   !email ||
+          //   !username ||
+          //   !password ||
+          //   !confirmPassword ||
+          //   username.length < 4 ||
+          //   password.length < 8 ||
+          //   confirmPassword.length < 8
+          // }
           >
             Sign Up
           </button>

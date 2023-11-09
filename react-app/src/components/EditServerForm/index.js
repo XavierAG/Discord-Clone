@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getServersThunk, editServerThunk } from "../../store/servers";
 import OpenModalButton from "../OpenModalButton";
@@ -7,31 +7,28 @@ import DeleteServerModal from "../DeleteServerModal";
 import './index.css';
 
 export default function EditServerForm({ setNav }) {
-  // console.log('NAV', nav);
-  // const [navProp, setNavProp] = useState(nav);
   const dispatch = useDispatch();
-  const history = useHistory();
   const { server_id } = useParams();
   const server = useSelector((state) =>
     state.servers.allServers[server_id]
       ? state.servers.allServers[server_id]
       : null
   );
-  const [imageLoading, setImageLoading] = useState(false);
+  // const [imageLoading, setImageLoading] = useState(false);
   const [name, setName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  // const [imageUrl, setImageUrl] = useState("");
   const [imageInput, setImageInput] = useState('');
   const [isPrivate, setIsPrivate] = useState(false);
   const [errors, setErrors] = useState("");
 
   useEffect(() => {
     dispatch(getServersThunk())
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (server) {
       setName(server.name);
-      setImageUrl(server.image_url);
+      // setImageUrl(server.image_url);
       setIsPrivate(server.private);
     };
   }, [server]);
@@ -56,7 +53,7 @@ export default function EditServerForm({ setNav }) {
     };
 
     try {
-      setImageLoading(true);
+      // setImageLoading(true);
       const editedServer = await dispatch(
         editServerThunk(server_id, data, newImage)
       );
@@ -67,7 +64,7 @@ export default function EditServerForm({ setNav }) {
       };
     } catch (resErr) {
       console.error(resErr);
-      setImageLoading(false);
+      // setImageLoading(false);
       if (Array.isArray(resErr.errors)) {
         setErrors({ name: 'Server name is required' })
       } else {

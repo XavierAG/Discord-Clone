@@ -44,7 +44,6 @@ export const getServersThunk = () => async (dispatch) => {
 //Create a Server
 export const postServerThunk = (server, newImage) => async (dispatch) => {
   let res;
-  console.log('this is the server thunk data', server);
   if (newImage) {
     res = await fetch("/api/servers/", {
       method: "POST",
@@ -56,11 +55,9 @@ export const postServerThunk = (server, newImage) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(server),
     });
-    console.log('this is the pojo data', res);
   }
   if (res.ok) {
     const data = await res.json();
-    console.log('this is the dispatch data', data);
     dispatch(postServer(data));
     return data;
   } else {
@@ -91,7 +88,6 @@ export const editServerThunk =
       return data;
     } else {
       const errors = await res.json();
-      console.log("EDIT ERRORS:", errors);
       throw errors;
     }
   };
@@ -133,11 +129,11 @@ export default function reducer(state = initialState, action) {
       const { servers } = action.servers;
       servers.map(
         (server) =>
-          (getAllState[server.id] = {
-            ...server,
-            // members: server.members
-            //   .map(member => member = { ...member })
-          })
+        (getAllState[server.id] = {
+          ...server,
+          // members: server.members
+          //   .map(member => member = { ...member })
+        })
       );
       return { allServers: getAllState };
     case POST_SERVERS:
@@ -145,10 +141,10 @@ export default function reducer(state = initialState, action) {
       const postAllArr = Object.values(state.allServers);
       postAllArr.map(
         (server) =>
-          (postState[server.id] = {
-            ...server,
-            // members: server.members.map((member) => (member = { ...member })),
-          })
+        (postState[server.id] = {
+          ...server,
+          // members: server.members.map((member) => (member = { ...member })),
+        })
       );
       postState[action.server.id] = {
         ...action.server,
@@ -171,10 +167,10 @@ export default function reducer(state = initialState, action) {
       const delAllArr = Object.values(state.allServers);
       delAllArr.map(
         (server) =>
-          (deleteState[server.id] = {
-            ...server,
-            // members: server.members.map((member) => (member = { ...member })),
-          })
+        (deleteState[server.id] = {
+          ...server,
+          // members: server.members.map((member) => (member = { ...member })),
+        })
       );
       delete deleteState[action.serverId];
       return deleteState;

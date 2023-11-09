@@ -1,30 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { authenticate } from "../../store/session";
 import DeleteMessageModal from "../DeleteMessageModal";
 import OpenModalButton from "../OpenModalButton";
-import { useModal } from "../../context/Modal";
 import * as messageStore from "../../store/messages";
 import { io } from "socket.io-client";
 import "./index.css";
 import EditMessageModal from "../EditmessageModal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCaretDown,
-  faGear,
-  faHashtag,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
 let socket;
 
 const Chat = () => {
   // setting Chat Input UseState
   const [chatInput, setChatInput] = useState("");
-  const [message, setMessage] = useState([]);
-  const [messageToDelete, setMessageToDelete] = useState(null);
-
-  const { closeModal } = useModal();
 
   //USER Fetch
   const sessionUser = useSelector((state) => state.session.user);
@@ -66,7 +53,6 @@ const Chat = () => {
     dispatch(messageStore.getchannelMessagesThunk(channel_id));
   }, [dispatch, channel_id]);
 
-  //Keeping Track of new Messages, pushing to the user to user(Scroll-Down)
   // Keeping Track of new Messages, pushing to the user to user(Scroll-Down)
   useEffect(() => {
     if (messagesContainerRef.current) {
@@ -79,7 +65,7 @@ const Chat = () => {
         setEmpty(true);
       }
     }
-  }, [messagesContainerRef, messagesArray, message]);
+  }, [messagesContainerRef, messagesArray]);
 
   // Adding Channnel Name to message Input Field
   let name;
@@ -100,11 +86,11 @@ const Chat = () => {
   const sendChat = async (e) => {
     e.preventDefault();
     const setMessage = chatInput; // Create a copy of chatInput
-    const messageContent = chatInput;
-    const data = {
-      content: messageContent, // Use the copied messageContent
-      owner_id: sessionUser.id,
-    };
+    const messageContent = setMessage;
+    // const data = {
+    //   content: messageContent, // Use the copied messageContent
+    //   owner_id: sessionUser.id,
+    // };
 
     dispatch(
       messageStore.sendMessageThunk({ channel_id, messageContent, sessionUser })

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import "./Friends.css";
 
 const Friends = () => {
@@ -16,7 +15,7 @@ const Friends = () => {
 
   useEffect(() => {
     // Fetch user's friends when the component mounts
-    const user_id = sessionUser.id;
+    const user_id = sessionUser?.id;
     fetch(`/api/users/${user_id}/friends`)
       .then((response) => response.json())
       .then((data) => {
@@ -37,13 +36,20 @@ const Friends = () => {
       .catch((error) => {
         console.error("Error fetching users:", error);
       });
-  }, []);
+  }, [sessionUser?.id]);
   const isFriend = (userId) => {
     return friends.some((friend) => friend.id === userId);
   };
   const addFriend = (user_id) => {
     fetch(`api/users/${user_id}/friends`, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+  };
+
+  const handleRemove = (user_id) => {
+    fetch(`api/users/${user_id}/friends`, {
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });
   };
@@ -78,8 +84,20 @@ const Friends = () => {
         <ul className="listed-names">
           {friends.map((friend) => (
             <li className="li-friends" key={friend.id}>
-              <img className="user-pic" src={friend.image_url} />
-              <p className="listed-name">{friend.username}</p>
+              <div className="friend-info">
+                <img alt={friend.username} className="user-pic" src={friend.image_url} />
+                <p className="listed-name">{friend.username}</p>
+              </div>
+              <div>
+                <button
+                  onClick={() => {
+                    handleRemove(friend.id);
+                    window.location.reload();
+                  }}
+                >
+                  remove friend
+                </button>
+              </div>
             </li>
           ))}
         </ul>
@@ -89,7 +107,7 @@ const Friends = () => {
             .filter((user) => user.id !== sessionUser.id)
             .map((user) => (
               <li className="li-friends" key={user.id}>
-                <img className="user-pic" src={user.image_url} />
+                <img alt={user.username} className="user-pic" src={user.image_url} />
                 <p className="listed-name">{user.username}</p>
                 {isFriend(user.id) ? (
                   <span className="checkmark">Friend ✔</span>

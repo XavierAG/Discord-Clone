@@ -48,6 +48,7 @@ const CreateServerForm = () => {
       history.push(`/app/${createdServer.id}`);
       closeModal();
     } catch (errRes) {
+      console.log('ERR RES', errRes);
       setImageLoading(false);
 
       if (errRes.errors && Array.isArray(errRes.errors)) {
