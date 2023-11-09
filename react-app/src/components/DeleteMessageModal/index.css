@@ -1,8 +1,13 @@
-#delete-messsage-modal {
+.delete-modal-modal {
   padding: .5rem;
 }
 
-#delete-message-button:hover {
+.delete-modal-button:hover {
   color: white;
   background-color: #DA373C;
+}
+
+.delete-modal-form {
+  display: flex;
+  justify-content: space-between;
 }

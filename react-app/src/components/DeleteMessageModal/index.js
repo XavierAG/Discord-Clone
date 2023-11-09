@@ -16,10 +16,10 @@ const DeleteMessageModal = ({ messageId }) => {
   };
 
   return (
-    <div id="delete-messsage-modal">
+    <div className="delete-modal-modal">
       <h3>Are you sure you want to delete this message?</h3>
       <button
-        id="delete-message-button"
+        className="delete-modal-button"
         onClick={handleDelete}
       >Delete</button>
     </div>
