@@ -46,6 +46,7 @@
   width: 100%;
   overflow-x: hidden;
   flex-grow: 1;
+  justify-content: flex-end;
 }
 
 .scrollable-column {
@@ -64,8 +65,12 @@
 =======
 
 .message-container {
+<<<<<<< HEAD
   margin: 20px 0 20px 20px;
 >>>>>>> fb7d17e (package, package-lock, and message modal icons)
+=======
+  padding: 10px 0 10px 10px;
+>>>>>>> 0a591d5 (added css and conditional rendering)
   font-size: 16px;
   color: white;
   width: 100%;

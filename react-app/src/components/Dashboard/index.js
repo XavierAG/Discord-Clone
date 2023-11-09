@@ -50,6 +50,7 @@ export default function Dashboard() {
           <div id="placeholder-column-1" className="column-1">
             {server_id ? <ChannelBar /> : <WelcomeChannel />}
             <div id="user-name-logout">
+              <div className="user-img-and-username">
               {sessionUser && sessionUser.image_url &&
                 <div id="user-thumbnail-container">
                   <img
@@ -63,7 +64,9 @@ export default function Dashboard() {
                   <p>{sessionUser.username.slice(0, 1).toUpperCase()}</p>
                 </div>}
               {sessionUser && sessionUser.username &&
-                <p id="username">{sessionUser.username}</p>}
+                <p id="username">{sessionUser.username}</p>
+                }
+              </div>
               <button onClick={handleLogout} className="logout">
                 Log Out
               </button>
