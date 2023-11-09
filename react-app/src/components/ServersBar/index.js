@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store/session";
@@ -12,6 +12,7 @@ import "./ServersBar.css";
 
 export default function ServersBar() {
   const dispatch = useDispatch();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Get servers from state
   const allServers = useSelector((state) =>
@@ -19,17 +20,27 @@ export default function ServersBar() {
   );
   const servers = Object.values(allServers);
 
+  // Get channels from state
+  const allChannels = useSelector((state) =>
+    state.channels.allChannels ? state.channels.allChannels : {}
+  );
+  const channels = Object.values(allChannels);
+
   // Authenticate the user then fetch the servers list
   useEffect(() => {
-    dispatch(authenticate()).then(dispatch(serverActions.getServersThunk()));
-  }, [dispatch]);
+    dispatch(authenticate())
+      .then(() => dispatch(serverActions.getServersThunk()))
+      .then(() => dispatch(channelActions.getChannelsThunk()))
+      .then(() => setIsLoaded(true));
+  }, []);
 
   // Add or replace a current-server property in the store
   // then dump current-channel state
   const handleServerClick = async (serverId) => {
     dispatch(serverActions.setCurrentServerThunk(serverId)).then(
-      dispatch(channelActions.setCurrentChannelThunk(null))
-    );
+      dispatch(channelActions.setCurrentChannelThunk(channels.length ?
+        channels[0].id :
+        null)));
   };
 
   return (
@@ -54,7 +65,9 @@ export default function ServersBar() {
         <div className="server-pics" key={server.id}>
           <NavLink
             exact
-            to={`/app/${server.id}`}
+            to={channels.length ?
+              `/app/${server.id}/${channels[0].id}` :
+              `/app/${server.id}`}
             className="server-tag"
             onClick={() => handleServerClick(server.id)}
           >
