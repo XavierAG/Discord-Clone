@@ -87,7 +87,7 @@ const Friends = () => {
           {friends.map((friend) => (
             <li className="li-friends" key={friend.id}>
               <div className="friend-info">
-              {!friend.image_url ?
+                {!friend.image_url ?
                   <div className="user-pic-alt">
                     <p>{friend.username.slice(0, 1).toUpperCase()}</p>
                   </div> : <img alt={friend.username} className="user-pic" src={friend.image_url} />
@@ -102,7 +102,7 @@ const Friends = () => {
                   }}
                 >
                   <FontAwesomeIcon icon={faUserMinus} />
-                  
+
                 </button>
               </div>
             </li>
@@ -114,26 +114,28 @@ const Friends = () => {
             .filter((user) => user.id !== sessionUser.id)
             .map((user) => (
               <li className="li-friends" key={user.id}>
-                {!user.image_url ?
-                  <div className="user-pic-alt">
-                    <p>{user.username.slice(0, 1).toUpperCase()}</p>
-                  </div> : <img alt={user.username} className="user-pic" src={user.image_url} />
-                }
+                <div className="friends-pfp-name-wrapper">
+                  {!user.image_url ?
+                    <div className="user-pic-alt">
+                      <p>{user.username.slice(0, 1).toUpperCase()}</p>
+                    </div> : <img alt={user.username} className="user-pic" src={user.image_url} />
+                  }
+                  <p className="listed-name">{user.username}</p>
+                </div>
                 <div className="add-friend-info">
-                <p className="listed-name">{user.username}</p>
-                {isFriend(user.id) ? (
-                  <span className="checkmark"><FontAwesomeIcon icon={faUserGroup} /></span>
-                ) : (
-                  <button
-                    className="add-friend-b"
-                    onClick={() => {
-                      addFriend(user.id);
-                      window.location.reload();
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faUserPlus} />
-                  </button>
-                )}
+                  {isFriend(user.id) ? (
+                    <span className="checkmark"><FontAwesomeIcon icon={faUserGroup} /></span>
+                  ) : (
+                    <button
+                      className="add-friend-b"
+                      onClick={() => {
+                        addFriend(user.id);
+                        window.location.reload();
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faUserPlus} />
+                    </button>
+                  )}
                 </div>
               </li>
             ))}
