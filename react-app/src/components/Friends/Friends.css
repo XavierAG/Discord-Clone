@@ -61,8 +61,13 @@
 .listed-name {
     color: #F2F3F5;
     font-size: 16px;
-    padding-left: 10px;
-    padding-right: 40px;
+    margin-right: 1rem;
+}
+
+.listed-friend-name {
+    color: #F2F3F5;
+    font-size: 16px;
+    margin-left: 1rem;
 }
 
 .user-pic {
@@ -73,14 +78,35 @@
     object-fit: cover;
 }
 
+.user-pic-alt {
+    display: flex;
+    height: 48px;
+    width: 48px;
+    border: 1px solid transparent;
+    border-radius: 24px;
+    object-fit: cover;
+    background: #1E1F22;
+    text-align: center;
+    color: #949BA4;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-friend-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .checkmark {
     font-size: 16px;
-    position: absolute;
-    right: 20px;
     color: green;
 }
 
-.add-friend-b {
-    position: absolute;
-    right: 20px;
+.friends-pfp-name-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
+
+.add-friend-b {}

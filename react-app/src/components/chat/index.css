@@ -69,6 +69,10 @@
   align-items: center;
   gap: 1rem;
 }
+.message-container:hover{
+  background-color: #2E3035;
+  
+}
 
 /* column2 scrollbar
 #channel-messages-container::-webkit-scrollbar {

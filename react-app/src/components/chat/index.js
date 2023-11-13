@@ -111,7 +111,12 @@ const Chat = () => {
             .filter((messages) => messages.content) // Filter messages with content
             .map((messages, ind) => (
               <div key={ind} className="message-container">
-                {`${messages.user.username}: ${messages.content}`}
+              
+                  <div>
+                    {`${messages.user.username}: ${messages.content}`}
+                  </div>
+              
+                
                 {sessionUser.id == messages.owner_id && (
                   <OpenModalButton
                     className="edit-message-button"
